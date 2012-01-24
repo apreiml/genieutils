@@ -77,9 +77,9 @@ protected:
   
   enum Operation
   {
-    READ = 0,
-    WRITE = 1,
-    CALC_SIZE = 2
+    OP_READ = 0,
+    OP_WRITE = 1,
+    OP_CALC_SIZE = 2
   };
   
   //----------------------------------------------------------------------------
@@ -202,13 +202,13 @@ protected:
   {
     switch(getOperation())
     {
-      case WRITE:
+      case OP_WRITE:
         write<T>(data);
         break;
-      case READ:
+      case OP_READ:
         data = read<T>();
         break;
-      case CALC_SIZE:
+      case OP_CALC_SIZE:
         size_ += sizeof(T);
         break;
     }
@@ -219,7 +219,7 @@ protected:
   {
     data.serializeSubObject(this);
     
-    if (isOperation(CALC_SIZE))
+    if (isOperation(OP_CALC_SIZE))
       size_ += data.size();
   }
   
@@ -231,13 +231,13 @@ protected:
   {
     switch(getOperation())
     {
-      case WRITE:
+      case OP_WRITE:
         write<T>(*data, len);
         break;
-      case READ:
+      case OP_READ:
         read<T>(data, len);
         break;
-      case CALC_SIZE:
+      case OP_CALC_SIZE:
         size_ += sizeof(T) * len;
         break;
     }
@@ -253,13 +253,13 @@ protected:
     {
       switch(getOperation())
       {
-        case WRITE:
+        case OP_WRITE:
           writeString(str, len);
           break;
-        case READ:
+        case OP_READ:
           str = readString(len);
           break;
-        case CALC_SIZE:
+        case OP_CALC_SIZE:
           size_ += sizeof(char) * len;
           break;
       }
@@ -274,7 +274,7 @@ protected:
   {
     switch(getOperation())
     {
-      case WRITE:
+      case OP_WRITE:
         if (vec.size() != size)
           std::cerr << "Warning!: vector size differs len!" << vec.size() << " " << size <<  std::endl;
         
@@ -284,12 +284,12 @@ protected:
         
         break;
         
-      case READ:
+      case OP_READ:
         vec.resize(size);
         istr_->read((char*)&vec[0], size * sizeof(T));
         break;
      
-      case CALC_SIZE:
+      case OP_CALC_SIZE:
         size_ += size * sizeof(T);
         break;
     }
@@ -301,7 +301,7 @@ protected:
   template <typename T>
   void serializeSub(std::vector<T> &vec, size_t size)
   {
-    if (isOperation(WRITE) || isOperation(CALC_SIZE))
+    if (isOperation(OP_WRITE) || isOperation(OP_CALC_SIZE))
     {
       if (vec.size() != size)
         std::cerr << "Warning!: vector size differs size!" << vec.size() << " " << size <<  std::endl;
@@ -313,7 +313,7 @@ protected:
        
         data->serializeSubObject(this);
         
-        if (isOperation(CALC_SIZE))
+        if (isOperation(OP_CALC_SIZE))
           size_ += data->size();
       }
     }
@@ -336,7 +336,7 @@ protected:
   template <typename T>
   void serializeSize(T &data, size_t size)
   {
-    if (isOperation(WRITE))
+    if (isOperation(OP_WRITE))
       data = size;
     
     serialize<T>(data);
@@ -353,7 +353,7 @@ protected:
   void serializeSize(T &data, std::string str, bool c_str=true)
   {
     // calculate new size
-    if (isOperation(WRITE))
+    if (isOperation(OP_WRITE))
     {
       size_t size = str.size();
       
@@ -375,7 +375,7 @@ protected:
   void serializeSubWithPointers(std::vector<T> &vec, size_t size, 
                                 std::vector<long> &pointers)
   {
-    if (isOperation(WRITE) || isOperation(CALC_SIZE))
+    if (isOperation(OP_WRITE) || isOperation(OP_CALC_SIZE))
     {
       for (unsigned int i=0; i < size; i++)
       {
@@ -385,7 +385,7 @@ protected:
           
           data->serializeSubObject(this);
           
-          if (isOperation(CALC_SIZE))
+          if (isOperation(OP_CALC_SIZE))
             size_ += data->size();
         }
       }
@@ -418,21 +418,21 @@ protected:
   {
     switch(getOperation())
     {
-      case WRITE:
+      case OP_WRITE:
         write<T>(p.first);
       
         if (!only_first)
           write<T>(p.second);
         break;
         
-      case READ:
+      case OP_READ:
         p.first = read<T>();
       
         if (!only_first)
           p.second = read<T>();
         break;
         
-      case CALC_SIZE:
+      case OP_CALC_SIZE:
         size_ += sizeof(T);
         
         if (!only_first)
@@ -441,15 +441,15 @@ protected:
     }
   }
   
-  size_t size_;
-  
 private:
   std::istream *istr_;
   std::ostream *ostr_;
   
   Operation operation_;
   
-  GameVersion game_version_;
+  GameVersion gameVersion_;
+  
+  size_t size_;
 };
 
 //----------------------------------------------------------------------------

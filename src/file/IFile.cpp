@@ -33,40 +33,40 @@ IFile::~IFile()
 }
   
 //------------------------------------------------------------------------------
-void IFile::setFilename(const char *filename)
+void IFile::setFileName(const char *fileName)
 {
-  filename_ = std::string(filename);
+  fileName_ = std::string(fileName);
 }
   
 //------------------------------------------------------------------------------
-const char *IFile::getFilename(void) const
+const char *IFile::getFileName(void) const
 {
-  return filename_.c_str();
+  return fileName_.c_str();
 }
   
 //------------------------------------------------------------------------------
 void IFile::load() throw (std::ios_base::failure)
 {
-  if (filename_.empty())
+  if (fileName_.empty())
     throw std::ios_base::failure("File name not set");
   
-  load(filename_.c_str());
+  load(fileName_.c_str());
 }
 
 //------------------------------------------------------------------------------
-void IFile::load(const char *filename) throw (std::ios_base::failure)
+void IFile::load(const char *fileName) throw (std::ios_base::failure)
 {
-  filename_ = std::string(filename);
+  fileName_ = std::string(fileName);
   
   std::ifstream file;
   
 
-  file.open(filename, std::ifstream::binary);
+  file.open(fileName, std::ifstream::binary);
   
   if (file.fail())
   {
     file.close();
-    throw std::ios_base::failure("Cant read file: \"" + filename_ + "\"");
+    throw std::ios_base::failure("Cant read file: \"" + fileName_ + "\"");
   }
   else
     readObject(file);
@@ -77,24 +77,24 @@ void IFile::load(const char *filename) throw (std::ios_base::failure)
 //------------------------------------------------------------------------------
 void IFile::save(void ) throw (std::ios_base::failure)
 {
-  if (filename_.empty())
+  if (fileName_.empty())
     throw std::ios_base::failure("File name not set");
   
-  saveAs(filename_.c_str());
+  saveAs(fileName_.c_str());
 }
 
 //------------------------------------------------------------------------------
-void IFile::saveAs(const char *filename) throw (std::ios_base::failure)
+void IFile::saveAs(const char *fileName) throw (std::ios_base::failure)
 {
   std::ofstream file;
   
-  file.open(filename, std::ofstream::binary);
+  file.open(fileName, std::ofstream::binary);
   
   if (file.fail())
   {
     file.close();
     throw std::ios_base::failure("Cant write to file: \"" + 
-                                std::string(filename) + "\"");
+                                std::string(fileName) + "\"");
   }
   else
     writeObject(file);

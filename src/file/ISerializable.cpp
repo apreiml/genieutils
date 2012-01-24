@@ -29,7 +29,7 @@ ISerializable::ISerializable()
 {
   istr_ = 0;
   ostr_ = 0;
-  game_version_ = GV_None;
+  gameVersion_ = GV_None;
 }
 
 //------------------------------------------------------------------------------
@@ -46,7 +46,7 @@ void ISerializable::readObject(std::istream &istr)
     std::cout << "Info: (Reading) Game version not set!" << std::endl;
   }
 
-  setOperation(READ);
+  setOperation(OP_READ);
   istr_ = &istr;
   serializeObject();
 
@@ -60,7 +60,7 @@ void ISerializable::writeObject(std::ostream &ostr)
     std::cout << "Info: (Writing) Game version not set!" << std::endl;
   }
 
-  setOperation(WRITE);
+  setOperation(OP_WRITE);
   ostr_ = &ostr;
   serializeObject();
  
@@ -71,7 +71,7 @@ size_t ISerializable::size(void)
 {
   size_ = 0;
   
-  setOperation(CALC_SIZE);
+  setOperation(OP_CALC_SIZE);
   serializeObject();
   
   return size_;
@@ -83,7 +83,7 @@ void ISerializable::serializeSubObject(ISerializable * const other)
   istr_ = other->istr_;
   ostr_ = other->ostr_;
   operation_ = other->operation_;
-  game_version_ = other->game_version_;
+  gameVersion_ = other->gameVersion_;
   serializeObject();
 }
 
@@ -108,13 +108,13 @@ bool ISerializable::isOperation(Operation op) const
 //------------------------------------------------------------------------------
 void ISerializable::setGameVersion(GameVersion gv)
 {
-  game_version_ = gv;
+  gameVersion_ = gv;
 }
 
 //------------------------------------------------------------------------------
 GameVersion ISerializable::getGameVersion(void )
 {
-  return game_version_;
+  return gameVersion_;
 }
 
 //------------------------------------------------------------------------------
@@ -130,7 +130,7 @@ size_t ISerializable::strnlen(const char *str, size_t max_size)
 //------------------------------------------------------------------------------
 std::streampos ISerializable::tellg(void ) const
 {
-  if (isOperation(READ))
+  if (isOperation(OP_READ))
     return istr_->tellg();
   
   return 0;

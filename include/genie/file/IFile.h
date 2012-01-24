@@ -42,19 +42,19 @@ public:
   //----------------------------------------------------------------------------
   /// Sets name of file to work with.
   ///
-  /// @param filename.
+  /// @param fileName.
   //
-  void setFilename(const char *filename);
+  void setFileName(const char *fileName);
   
   //----------------------------------------------------------------------------
   /// Get name of file worked on.
   ///
-  /// @return filename.
+  /// @return fileName.
   //
-  const char *getFilename(void) const;
+  const char *getFileName(void) const;
   
   //----------------------------------------------------------------------------
-  /// Loads the object from file. Can only be called if filename is already set.
+  /// Loads the object from file. Can only be called if fileName is already set.
   ///
   /// @exception std::ios_base::failure thrown if file can't be read (file 
   ///                                   doesn't exist, insufficient rights...)
@@ -65,14 +65,14 @@ public:
   //----------------------------------------------------------------------------
   /// Loads the object from file.
   ///
-  /// @param filename file name
+  /// @param fileName file name
   /// @exception std::ios_base::failure thrown if file can't be read (file 
   ///                                   doesn't exist, insufficient rights...)
   //
-  virtual void load(const char *filename) throw (std::ios_base::failure);
+  virtual void load(const char *fileName) throw (std::ios_base::failure);
   
   //----------------------------------------------------------------------------
-  /// Saves data to file. Can only be called if filename is set through set 
+  /// Saves data to file. Can only be called if fileName is set through set 
   /// method or the file was loaded using the load method.
   ///
   /// @exception std::ios_base::failure thrown if file can't be written (
@@ -83,15 +83,15 @@ public:
   //----------------------------------------------------------------------------
   /// Saves data to a different file.
   ///
-  /// @param filename file name
+  /// @param fileName file name
   /// @exception std::ios_base::failure thrown if file can't be written (
   ///                                   insufficient rights...)
   //
-  virtual void saveAs(const char *filename) throw (std::ios_base::failure);
+  virtual void saveAs(const char *fileName) throw (std::ios_base::failure);
   
   
 private:
-  std::string filename_;
+  std::string fileName_;
 };
 
 }
