@@ -74,20 +74,6 @@ public:
   virtual ~DatFile();
   
   //----------------------------------------------------------------------------
-  /// Set the game version of the dat file to load.
-  ///
-  /// @param gv Game version
-  //
-  //void setGameVersion(GameVersion gv);
-  
-  //----------------------------------------------------------------------------
-  /// Returns the set game version
-  ///
-  /// @return Game version
-  //
-  //GameVersion getGameVersion(void ) const;
-  
-  //----------------------------------------------------------------------------
   /// Set the name of the data file to operate on.
   ///
   /// @param file_name file name

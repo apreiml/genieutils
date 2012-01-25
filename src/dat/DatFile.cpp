@@ -85,19 +85,6 @@ DatFile::~DatFile()
 { 
   unload();
 }
-/*
-//------------------------------------------------------------------------------
-void File::setGameVersion(genie::GameVersion gv)
-{
-  ISerializable::setGameVersion(gv);
-}
-
-//------------------------------------------------------------------------------
-genie::GameVersion File::getGameVersion(void ) const
-{
-  return getGameVersion();
-}*/
-
 
 //------------------------------------------------------------------------------
 void DatFile::setFileName(std::string file_name)
