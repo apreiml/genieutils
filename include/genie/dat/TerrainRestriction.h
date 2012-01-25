@@ -18,8 +18,8 @@
 */
 
 
-#ifndef TERRAINRESTRICTION_H
-#define TERRAINRESTRICTION_H
+#ifndef GENIE_TERRAINRESTRICTION_H
+#define GENIE_TERRAINRESTRICTION_H
 #include <vector>
 #include "genie/file/ISerializable.h"
 #include "TerrainPassGraphic.h"
@@ -47,4 +47,4 @@ private:
 };
 
 }
-#endif // TERRAINRESTRICTION_H
+#endif // GENIE_TERRAINRESTRICTION_H

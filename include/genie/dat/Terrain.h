@@ -18,8 +18,8 @@
 */
 
 
-#ifndef TERRAIN_H
-#define TERRAIN_H
+#ifndef GENIE_TERRAIN_H
+#define GENIE_TERRAIN_H
 #include "genie/file/ISerializable.h"
 
 namespace genie
@@ -78,4 +78,4 @@ public:
 
 }
 
-#endif // TERRAIN_H
+#endif // GENIE_TERRAIN_H

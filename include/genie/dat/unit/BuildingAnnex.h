@@ -18,8 +18,8 @@
 */
 
 
-#ifndef BUILDINGANNEX_H
-#define BUILDINGANNEX_H
+#ifndef GENIE_BUILDINGANNEX_H
+#define GENIE_BUILDINGANNEX_H
 #include "genie/file/ISerializable.h"
 
 namespace genie
@@ -46,4 +46,4 @@ public:
 
 }
 
-#endif // UNITBUILDINGANNEX_H
+#endif // GENIE_UNITBUILDINGANNEX_H

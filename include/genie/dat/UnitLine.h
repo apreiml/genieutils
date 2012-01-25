@@ -18,8 +18,8 @@
 */
 
 
-#ifndef UNITLINE_H
-#define UNITLINE_H
+#ifndef GENIE_UNITLINE_H
+#define GENIE_UNITLINE_H
 #include "genie/file/ISerializable.h"
 
 #include <vector>
@@ -52,4 +52,4 @@ private:
 
 }
 
-#endif // UNITLINE_H
+#endif // GENIE_UNITLINE_H

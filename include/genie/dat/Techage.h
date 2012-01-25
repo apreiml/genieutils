@@ -18,8 +18,8 @@
 */
 
 
-#ifndef TECHAGE_H
-#define TECHAGE_H
+#ifndef GENIE_TECHAGE_H
+#define GENIE_TECHAGE_H
 #include "genie/file/ISerializable.h"
 #include "TechageEffect.h"
 
@@ -49,4 +49,4 @@ private:
 
 }
 
-#endif // TECHAGE_H
+#endif // GENIE_TECHAGE_H

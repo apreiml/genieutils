@@ -18,8 +18,8 @@
 */
 
 
-#ifndef TECHTREE_H
-#define TECHTREE_H
+#ifndef GENIE_TECHTREE_H
+#define GENIE_TECHTREE_H
 #include "genie/file/ISerializable.h"
 
 namespace genie
@@ -227,4 +227,4 @@ private:
 
 }
 
-#endif // TECHTREE_H
+#endif // GENIE_TECHTREE_H

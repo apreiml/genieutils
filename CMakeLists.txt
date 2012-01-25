@@ -47,7 +47,7 @@ set(DAT_SRC
     src/dat/SoundItem.cpp
     src/dat/Sound.cpp
     src/dat/PlayerColour.cpp
-    src/dat/File.cpp
+    src/dat/DatFile.cpp
     src/dat/TerrainPassGraphic.cpp
     src/dat/TerrainRestriction.cpp
 

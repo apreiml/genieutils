@@ -18,8 +18,8 @@
 */
 
 
-#ifndef UNIT_H
-#define UNIT_H
+#ifndef GENIE_UNIT_H
+#define GENIE_UNIT_H
 #include "genie/file/ISerializable.h"
 #include "unit/DamageGraphic.h"
 #include "UnitCommand.h"
@@ -283,4 +283,4 @@ public:
 
 }
 
-#endif // UNIT_H
+#endif // GENIE_UNIT_H

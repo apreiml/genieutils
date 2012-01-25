@@ -18,8 +18,8 @@
 */
 
 
-#ifndef PROJECTILE_H
-#define PROJECTILE_H
+#ifndef GENIE_PROJECTILE_H
+#define GENIE_PROJECTILE_H
 
 #include "genie/file/ISerializable.h"
 #include "AttackOrArmor.h"
@@ -76,4 +76,4 @@ public:
 
 }
 
-#endif // PROJECTILE_H
+#endif // GENIE_PROJECTILE_H

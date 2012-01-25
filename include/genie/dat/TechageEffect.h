@@ -18,8 +18,8 @@
 */
 
 
-#ifndef TECHAGEEFFECT_H
-#define TECHAGEEFFECT_H
+#ifndef GENIE_TECHAGEEFFECT_H
+#define GENIE_TECHAGEEFFECT_H
 #include "genie/file/ISerializable.h"
 
 namespace genie
@@ -47,4 +47,4 @@ public:
 
 }
 
-#endif // TECHAGEEFFECT_H
+#endif // GENIE_TECHAGEEFFECT_H

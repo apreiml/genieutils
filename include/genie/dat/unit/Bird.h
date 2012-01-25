@@ -18,8 +18,8 @@
 */
 
 
-#ifndef BIRD_H
-#define BIRD_H
+#ifndef GENIE_BIRD_H
+#define GENIE_BIRD_H
 
 #include "genie/file/ISerializable.h"
 #include "../UnitCommand.h"
@@ -58,4 +58,4 @@ public:
 
 }
 
-#endif // BIRD_H
+#endif // GENIE_BIRD_H

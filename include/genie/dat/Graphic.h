@@ -18,8 +18,8 @@
 */
 
 
-#ifndef GRAPHIC_H
-#define GRAPHIC_H
+#ifndef GENIE_GRAPHIC_H
+#define GENIE_GRAPHIC_H
 #include "genie/file/ISerializable.h"
 #include "GraphicDelta.h"
 #include "GraphicAttackSound.h"
@@ -118,4 +118,4 @@ private:
 
 }
 
-#endif // GRAPHIC_H
+#endif // GENIE_GRAPHIC_H

@@ -18,8 +18,8 @@
 */
 
 
-#ifndef SOUNDITEM_H
-#define SOUNDITEM_H
+#ifndef GENIE_SOUNDITEM_H
+#define GENIE_SOUNDITEM_H
 #include "genie/file/ISerializable.h"
 
 namespace genie
@@ -52,4 +52,4 @@ public:
 
 }
 
-#endif // SOUNDITEM_H
+#endif // GENIE_SOUNDITEM_H

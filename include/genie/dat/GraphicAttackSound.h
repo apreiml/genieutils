@@ -18,8 +18,8 @@
 */
 
 
-#ifndef GRAPHICATTACKSOUND_H
-#define GRAPHICATTACKSOUND_H
+#ifndef GENIE_GRAPHICATTACKSOUND_H
+#define GENIE_GRAPHICATTACKSOUND_H
 #include "genie/file/ISerializable.h"
 
 namespace genie
@@ -45,4 +45,4 @@ public:
 
 }
 
-#endif // GRAPHICATTACKSOUND_H
+#endif // GENIE_GRAPHICATTACKSOUND_H

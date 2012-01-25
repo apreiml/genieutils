@@ -18,8 +18,8 @@
 */
 
 
-#ifndef RESEARCH_H
-#define RESEARCH_H
+#ifndef GENIE_RESEARCH_H
+#define GENIE_RESEARCH_H
 #include "genie/file/ISerializable.h"
 #include "ResourceUsage.h"
 
@@ -112,4 +112,4 @@ private:
 
 }
 
-#endif // RESEARCH_H
+#endif // GENIE_RESEARCH_H

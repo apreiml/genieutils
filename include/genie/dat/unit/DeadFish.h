@@ -18,8 +18,8 @@
 */
 
 
-#ifndef DEADFISH_H
-#define DEADFISH_H
+#ifndef GENIE_DEADFISH_H
+#define GENIE_DEADFISH_H
 
 #include "genie/file/ISerializable.h"
 
@@ -55,4 +55,4 @@ public:
 
 }
 
-#endif // DEADFISH_H
+#endif // GENIE_DEADFISH_H

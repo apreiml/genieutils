@@ -18,8 +18,8 @@
 */
 
 
-#ifndef UNITHEADER_H
-#define UNITHEADER_H
+#ifndef GENIE_UNITHEADER_H
+#define GENIE_UNITHEADER_H
 #include "genie/file/ISerializable.h"
 #include "UnitCommand.h"
 
@@ -44,4 +44,4 @@ private:
 
 }
 
-#endif // UNITHEADER_H
+#endif // GENIE_UNITHEADER_H

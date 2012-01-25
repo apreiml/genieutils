@@ -18,7 +18,7 @@
 */
 
 
-#include "genie/dat/File.h"
+#include "genie/dat/DatFile.h"
 
 #include <fstream>
 #include <vector>
@@ -30,7 +30,7 @@
 #include <boost/iostreams/device/back_inserter.hpp>
 #include <boost/iostreams/copy.hpp>
 
-#include "genie/dat/Types.h"
+#include "genie/Types.h"
 
 namespace genie
 {
@@ -38,7 +38,7 @@ namespace genie
 typedef boost::interprocess::basic_vectorstream< std::vector<char> > v_stream;
 
 //------------------------------------------------------------------------------
-File::File() : GraphicsRendering(0), ZeroSpace(0), RenderingPlusSomething(0), 
+DatFile::DatFile() : GraphicsRendering(0), ZeroSpace(0), RenderingPlusSomething(0), 
                UnknownPreTechTree(0),
                Unknown2(0), verbose_(false), file_name_(""), file_(0), 
                file_version_(0)
@@ -53,7 +53,7 @@ File::File() : GraphicsRendering(0), ZeroSpace(0), RenderingPlusSomething(0),
 }
 
 //------------------------------------------------------------------------------
-File::File(std::string file_name, GameVersion gv, bool raw) : 
+DatFile::DatFile(std::string file_name, GameVersion gv, bool raw) : 
            GraphicsRendering(0), ZeroSpace(0), RenderingPlusSomething(0), 
            UnknownPreTechTree(0),
            Unknown2(0), verbose_(false), file_name_(""), file_(0), 
@@ -81,7 +81,7 @@ File::File(std::string file_name, GameVersion gv, bool raw) :
 
 
 //------------------------------------------------------------------------------
-File::~File()
+DatFile::~DatFile()
 { 
   unload();
 }
@@ -100,20 +100,20 @@ genie::GameVersion File::getGameVersion(void ) const
 
 
 //------------------------------------------------------------------------------
-void File::setFileName(std::string file_name)
+void DatFile::setFileName(std::string file_name)
 {
   file_name_ = file_name;
 }
 
 //------------------------------------------------------------------------------
-std::string File::getFileName(void ) const
+std::string DatFile::getFileName(void ) const
 {
   return file_name_;
 }
 
 
 //------------------------------------------------------------------------------
-void File::load(std::string file_name, bool raw)
+void DatFile::load(std::string file_name, bool raw)
 {
   unload();
   
@@ -141,7 +141,7 @@ void File::load(std::string file_name, bool raw)
 }
 
 //------------------------------------------------------------------------------
-void File::save(std::string file_name, bool raw)
+void DatFile::save(std::string file_name, bool raw)
 {
   std::auto_ptr<std::iostream> buf_stream;
   
@@ -170,7 +170,7 @@ void File::save(std::string file_name, bool raw)
 }
 
 //------------------------------------------------------------------------------
-void File::extractRaw(std::string to_file_name)
+void DatFile::extractRaw(std::string to_file_name)
 {
   unload();
   
@@ -184,14 +184,14 @@ void File::extractRaw(std::string to_file_name)
 }
 
 //------------------------------------------------------------------------------
-void File::extractRaw(std::string in_file, std::string out_file)
+void DatFile::extractRaw(std::string in_file, std::string out_file)
 {
   setFileName(in_file);
   extractRaw(out_file);
 }
 
 //------------------------------------------------------------------------------
-void File::compress(std::string in_file, std::string out_file)
+void DatFile::compress(std::string in_file, std::string out_file)
 {
   unload();
   
@@ -201,13 +201,13 @@ void File::compress(std::string in_file, std::string out_file)
 }
 
 //------------------------------------------------------------------------------
-void File::setVerboseMode(bool verbose)
+void DatFile::setVerboseMode(bool verbose)
 {
   verbose_ = verbose;
 }
 
 //------------------------------------------------------------------------------
-void File::serializeObject(void )
+void DatFile::serializeObject(void )
 {
   serialize<char>(&file_version_, FILE_VERSION_LEN);
   
@@ -389,7 +389,7 @@ void File::serializeObject(void )
 }
 
 //------------------------------------------------------------------------------
-void File::unload()
+void DatFile::unload()
 {
   TerrainRestrictionPointers1.clear();
   TerrainRestrictionPointers2.clear();
@@ -425,7 +425,7 @@ void File::unload()
 }
 
 //------------------------------------------------------------------------------
-boost::iostreams::zlib_params File::getZlibParams(void ) const
+boost::iostreams::zlib_params DatFile::getZlibParams(void ) const
 {  
   namespace io = boost::iostreams;
   
@@ -444,7 +444,7 @@ boost::iostreams::zlib_params File::getZlibParams(void ) const
 }
 
 //------------------------------------------------------------------------------
-std::auto_ptr<std::istream> File::openFile(std::string file_name, bool compressed)
+std::auto_ptr<std::istream> DatFile::openFile(std::string file_name, bool compressed)
 {
   namespace io = boost::iostreams;
   
@@ -482,14 +482,14 @@ std::auto_ptr<std::istream> File::openFile(std::string file_name, bool compresse
 }
 
 //------------------------------------------------------------------------------
-std::auto_ptr<std::iostream> File::createBufferStream(void)
+std::auto_ptr<std::iostream> DatFile::createBufferStream(void)
 {
   std::vector<char> file_buf;
   
   return std::auto_ptr<std::iostream> (new v_stream(file_buf));
 }
 
-void File::writeFile(std::istream &istr, std::string file_name, bool compress)
+void DatFile::writeFile(std::istream &istr, std::string file_name, bool compress)
 {
   namespace io = boost::iostreams;
   

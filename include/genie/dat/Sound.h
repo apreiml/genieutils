@@ -18,8 +18,8 @@
 */
 
 
-#ifndef SOUND_H
-#define SOUND_H
+#ifndef GENIE_SOUND_H
+#define GENIE_SOUND_H
 #include "genie/file/ISerializable.h"
 
 #include <vector>
@@ -47,4 +47,4 @@ private:
 
 }
 
-#endif // SOUND_H
+#endif // GENIE_SOUND_H

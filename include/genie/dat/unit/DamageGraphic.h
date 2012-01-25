@@ -18,8 +18,8 @@
 */
 
 
-#ifndef DAMAGEGRAPHIC_H
-#define DAMAGEGRAPHIC_H
+#ifndef GENIE_DAMAGEGRAPHIC_H
+#define GENIE_DAMAGEGRAPHIC_H
 #include "genie/file/ISerializable.h"
 
 namespace genie
@@ -47,4 +47,4 @@ public:
 
 }
 
-#endif // UNITDAMAGEGRAPHIC_H
+#endif // GENIE_UNITDAMAGEGRAPHIC_H

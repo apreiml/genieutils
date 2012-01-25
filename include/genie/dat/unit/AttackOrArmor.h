@@ -18,8 +18,8 @@
 */
 
 
-#ifndef ATTACKORARMOR_H
-#define ATTACKORARMOR_H
+#ifndef GENIE_ATTACKORARMOR_H
+#define GENIE_ATTACKORARMOR_H
 #include "genie/file/ISerializable.h"
 
 namespace genie
@@ -46,4 +46,4 @@ public:
 
 }
 
-#endif // UNITATTACKORARMOR_H
+#endif // GENIE_UNITATTACKORARMOR_H

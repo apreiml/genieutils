@@ -18,8 +18,8 @@
 */
 
 
-#ifndef RESOURCEUSAGE_H
-#define RESOURCEUSAGE_H
+#ifndef GENIE_RESOURCEUSAGE_H
+#define GENIE_RESOURCEUSAGE_H
 #include "genie/file/ISerializable.h"
 
 namespace genie
@@ -63,4 +63,4 @@ public:
 
 }
 
-#endif // RESOURCEUSAGE_H
+#endif // GENIE_RESOURCEUSAGE_H

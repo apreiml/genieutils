@@ -18,8 +18,8 @@
 */
 
 
-#ifndef CIV_H
-#define CIV_H
+#ifndef GENIE_CIV_H
+#define GENIE_CIV_H
 #include "genie/file/ISerializable.h"
 #include "Unit.h"
 
@@ -75,4 +75,4 @@ private:
 
 }
 
-#endif // CIV_H
+#endif // GENIE_CIV_H

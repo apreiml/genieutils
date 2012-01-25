@@ -18,7 +18,7 @@
 */
 
 #include <iostream>
-#include "genie/dat/File.h"
+#include "genie/dat/DatFile.h"
 #include <boost/program_options.hpp>
 
 namespace po = boost::program_options;
@@ -65,7 +65,7 @@ int main(int argc, char **argv)
       return 0;
     }
     
-    genie::File file;
+    genie::DatFile file;
     
     if (vm.count("verbose"))
       file.setVerboseMode(true);

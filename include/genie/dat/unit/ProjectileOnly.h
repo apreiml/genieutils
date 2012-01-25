@@ -18,8 +18,8 @@
 */
 
 
-#ifndef PROJECTILEONLY_H
-#define PROJECTILEONLY_H
+#ifndef GENIE_PROJECTILEONLY_H
+#define GENIE_PROJECTILEONLY_H
 
 #include "genie/file/ISerializable.h"
 
@@ -62,4 +62,4 @@ public:
 
 }
 
-#endif // PROJECTILEONLY_H
+#endif // GENIE_PROJECTILEONLY_H

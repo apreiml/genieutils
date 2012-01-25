@@ -18,8 +18,8 @@
 */
 
 
-#ifndef BUILDING_H
-#define BUILDING_H
+#ifndef GENIE_BUILDING_H
+#define GENIE_BUILDING_H
 
 #include "genie/file/ISerializable.h"
 #include "BuildingAnnex.h"
@@ -72,4 +72,4 @@ public:
 
 }
 
-#endif // BUILDING_H
+#endif // GENIE_BUILDING_H

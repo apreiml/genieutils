@@ -18,8 +18,8 @@
 */
 
 
-#ifndef PLAYERCOLOUR_H
-#define PLAYERCOLOUR_H
+#ifndef GENIE_PLAYERCOLOUR_H
+#define GENIE_PLAYERCOLOUR_H
 #include "genie/file/ISerializable.h"
 
 namespace genie
@@ -51,4 +51,4 @@ public:
 
 }
 
-#endif // PLAYERCOLOUR_H
+#endif // GENIE_PLAYERCOLOUR_H

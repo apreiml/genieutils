@@ -18,8 +18,8 @@
 */
 
 
-#ifndef GRAPHICDELTA_H
-#define GRAPHICDELTA_H
+#ifndef GENIE_GRAPHICDELTA_H
+#define GENIE_GRAPHICDELTA_H
 #include "genie/file/ISerializable.h"
 
 namespace genie
@@ -46,4 +46,4 @@ public:
 
 }
 
-#endif // GRAPHICDELTA_H
+#endif // GENIE_GRAPHICDELTA_H

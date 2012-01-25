@@ -18,8 +18,8 @@
 */
 
 
-#ifndef CREATABLE_H
-#define CREATABLE_H
+#ifndef GENIE_CREATABLE_H
+#define GENIE_CREATABLE_H
 
 #include "genie/file/ISerializable.h"
 #include "../ResourceUsage.h"
@@ -83,4 +83,4 @@ public:
 
 }
 
-#endif // CREATABLE_H
+#endif // GENIE_CREATABLE_H

@@ -18,8 +18,8 @@
 */
 
 
-#ifndef TERRAINPASSGRAPHIC_H
-#define TERRAINPASSGRAPHIC_H
+#ifndef GENIE_TERRAINPASSGRAPHIC_H
+#define GENIE_TERRAINPASSGRAPHIC_H
 #include "genie/file/ISerializable.h"
 
 namespace genie
@@ -42,4 +42,4 @@ public:
 
 }
 
-#endif // TERRAINPASSGRAPHIC_H
+#endif // GENIE_TERRAINPASSGRAPHIC_H

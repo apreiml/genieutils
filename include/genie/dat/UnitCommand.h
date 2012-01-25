@@ -18,8 +18,8 @@
 */
 
 
-#ifndef UNITCOMMAND_H
-#define UNITCOMMAND_H
+#ifndef GENIE_UNITCOMMAND_H
+#define GENIE_UNITCOMMAND_H
 #include "genie/file/ISerializable.h"
 
 namespace genie
@@ -64,4 +64,4 @@ public:
 
 }
 
-#endif // UNITCOMMAND_H
+#endif // GENIE_UNITCOMMAND_H
