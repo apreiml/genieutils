@@ -73,6 +73,8 @@ public:
   //
   void setGameVersion(GameVersion gv);
   
+  //----------------------------------------------------------------------------
+  GameVersion getGameVersion(void);
 protected:
   
   enum Operation
@@ -102,9 +104,6 @@ protected:
   /// @param op operation to check
   //
   bool isOperation(Operation op) const;
-  
-  //----------------------------------------------------------------------------
-  GameVersion getGameVersion(void);
   
   //----------------------------------------------------------------------------
   /// @return position of the istreams get pointer.
