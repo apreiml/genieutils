@@ -285,7 +285,10 @@ protected:
         
       case OP_READ:
         vec.resize(size);
-        istr_->read((char*)&vec[0], size * sizeof(T));
+        
+        for (unsigned int i=0; i < size; i++)
+          vec[i] = read<T>();
+        
         break;
      
       case OP_CALC_SIZE:

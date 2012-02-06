@@ -133,14 +133,14 @@ void Graphic::serializeObject(void )
    * Unknown values after the \0 on some strings. In RoR the size should be
    * ok, but it may not be right in >= SWGB
    */
-  if (isOperation(WRITE))
+  if (isOperation(OP_WRITE))
   {
-    if (CstrName == 0 || Name != std::string(CstrName))
+    if (CstrName == 0 || Name.compare(CstrName) != 0)
       serialize<std::string>(Name, getNameSize());
     else
       serialize<char>(&CstrName, getNameSize());
     
-    if (CstrName2 == 0 || Name2 != std::string(CstrName2))
+    if (CstrName2 == 0 || Name2.compare(CstrName2) != 0)
       serialize<std::string>(Name2, getName2Size());
     else
       serialize<char>(&CstrName2, getName2Size());
@@ -188,7 +188,7 @@ void Graphic::serializeObject(void )
   
   if (AttackSoundUsed != 0)
   {
-    if (isOperation(WRITE) && AttackSounds.size() > AngleCount)
+    if (isOperation(OP_WRITE) && AttackSounds.size() > AngleCount)
       std::cerr << "Warning: There'are more GraphicAttackSounds than angles!"
                 << std::endl;
                 
