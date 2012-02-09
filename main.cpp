@@ -1,35 +1,71 @@
 #include <iostream>
-#include <genie/file/ICompressedFile.h>
-
-class TestFile : public genie::IFile
-{
-public:
-  TestFile() : test(0xEFBE) {}
-  
-  short test;
-protected:
-  virtual void serializeObject(void )
-  {
-    serialize<short>(test);
-  }
-};
+#include <genie/resource/ColorPalette.h>
+#include <fstream>
+#include <genie/resource/SlpFile.h>
+#include <genie/resource/SlpFrame.h>
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/Sprite.hpp>
+#include <SFML/Window/Event.hpp>
+#include <SFML/Graphics/Texture.hpp>
 
 
 int main(int argc, char **argv) {
-    std::cout << "Hello, world!" << std::endl;
+
+  genie::ColorPalettePtr pal(new genie::ColorPalette());
+  
+  std::fstream file;
+  
+  file.open("slptest/backgrd1.pal", std::ios::in | std::ios::binary);
+  
+  
+  pal->parsePalette(file);
+  
+  
+  genie::SlpFile slp;
+  slp.setColorPalette(pal);
+  
+  slp.load("slptest/backgrd1.slp");
+  
+  std::cout << "Framecount: " <<  slp.getFrameCount() << std::endl;
+  std::cout << " " <<  slp.getFrame(0) << std::endl;
     
-    TestFile file;
-    
-    try
+  
+  sf::RenderWindow App(sf::VideoMode(800, 600, 32), "SFML Graphics");
+
+    // Create the sprite
+
+    sf::Texture text;
+ 
+    text.LoadFromImage(*slp.getFrame()->getImage());
+    sf::Sprite Sprite(text);
+
+    // Change its properties
+    Sprite.SetPosition(0, 0);
+
+    // Start game loop
+    while (App.IsOpened())
     {
-    
-    file.load("asdf.test");    
-    file.saveAs("xx");
+        // Process events
+        sf::Event Event;
+        while (App.PollEvent(Event))
+        {
+            // Close window : exit
+            if (Event.Type == sf::Event::Closed)
+                App.Close();
+        }
+
+        // Get elapsed time
+        float ElapsedTime = App.GetFrameTime();
+
+        // Clear screen
+        App.Clear();
+
+        // Display sprite in our window
+        App.Draw(Sprite);
+
+        // Display window contents on screen
+        App.Display();
     }
-    catch (std::ios_base::failure e)
-    {
-      std::cout << e.what() << std::endl;
-    }
-    
-    return 0;
+
+  return 0;
 }

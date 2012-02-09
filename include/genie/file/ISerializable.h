@@ -98,6 +98,10 @@ protected:
   //
   Operation getOperation(void ) const;
   
+  void setIStream(std::istream &istr) { istr_ = &istr; }
+  std::istream * getIStream(void) { return istr_; }
+  void setOStream(std::ostream &ostr) { ostr_ = &ostr; }
+  
   //----------------------------------------------------------------------------
   /// Check if given operation is active.
   ///

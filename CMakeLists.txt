@@ -7,6 +7,7 @@ project(genieutils)
 find_package(ZLIB REQUIRED)
 #find_package(Boost 1.42 COMPONENTS iostreams program_options REQUIRED)
 find_package(Boost 1.42 COMPONENTS iostreams program_options unit_test_framework REQUIRED)
+find_package(SFML COMPONENTS SYSTEM WINDOW GRAPHICS REQUIRED)
 
 set(Boost_USE_STATIC_LIBS        ON)
 set(Boost_USE_MULTITHREADED      ON)
@@ -15,6 +16,7 @@ set(Boost_USE_STATIC_RUNTIME    OFF)
 include_directories(
     include/
     ${Boost_INCLUDE_DIRS}
+    ${SFML_INCLUDE_DIR}
     )
 
 
@@ -67,6 +69,16 @@ set(DAT_SRC
     src/dat/unit/Building.cpp
     )
 
+set(RESOURCE_SRC
+    src/resource/ColorPalette.cpp
+    src/resource/SlpFile.cpp
+    src/resource/SlpFrame.cpp
+    )
+
+set(UTIL_SRC
+    src/util/Logger.cpp
+    )
+
 # Tool sources:
 
 set(TEST_SRC
@@ -84,7 +96,8 @@ set(BINCOMP_SRC src/tools/bincompare/bincomp.cpp
 # Executeable:
 #------------------------------------------------------------------------------#
 
-add_library(${Genieutils_LIBRARY} ${FILE_SRC} ${LANG_SRC} ${DAT_SRC})
+add_library(${Genieutils_LIBRARY} ${FILE_SRC} ${LANG_SRC} ${DAT_SRC} 
+                                  ${RESOURCE_SRC} ${UTIL_SRC})
 target_link_libraries(${Genieutils_LIBRARY} ${ZLIB_LIBRARIES} ${Boost_LIBRARIES})
 
 #add_executable(main main.cpp)
@@ -104,4 +117,11 @@ target_link_libraries(${Genieutils_LIBRARY} ${ZLIB_LIBRARIES} ${Boost_LIBRARIES}
   target_link_libraries(datextract ${ZLIB_LIBRARIES} ${Boost_LIBRARIES} ${Genieutils_LIBRARY})
 
   add_executable(bincomp ${BINCOMP_SRC})
+
+  add_executable(main main.cpp)
+  target_link_libraries(main ${Genieutils_LIBRARY}
+                      ${SFML_WINDOW_LIBRARY}
+                      ${SFML_SYSTEM_LIBRARY}
+                      ${SFML_GRAPHICS_LIBRARY}
+  )
 #endif (GDAT_TOOLS)
