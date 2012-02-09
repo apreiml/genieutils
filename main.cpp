@@ -43,7 +43,7 @@ int main(int argc, char **argv) {
     Sprite.SetPosition(0, 0);
 
     // Start game loop
-    while (App.IsOpened())
+    while (App.IsOpen())
     {
         // Process events
         sf::Event Event;
@@ -53,9 +53,6 @@ int main(int argc, char **argv) {
             if (Event.Type == sf::Event::Closed)
                 App.Close();
         }
-
-        // Get elapsed time
-        float ElapsedTime = App.GetFrameTime();
 
         // Clear screen
         App.Clear();
