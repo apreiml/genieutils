@@ -35,6 +35,7 @@ Logger& SlpFile::log = Logger::getLogger("genie.SlpFile");
 SlpFile::SlpFile() : IFile()
 {
   loaded_ = false;
+  pos_ = 0;
 }
 
 //------------------------------------------------------------------------------
@@ -62,6 +63,9 @@ void SlpFile::loadFile()
     return;
   
   //file_.setToPos(); 
+    std::cout << pos_ << std::endl;
+  
+  getIStream()->seekg(pos_);
   
   readHeader();
   
@@ -75,6 +79,8 @@ void SlpFile::loadFile()
     frame = new SlpFrame();
     frame->setColorPalette(color_palette_.get());
     frame->loadHeader(*getIStream());
+    
+    frame->file_pos_ = pos_;
     
     frames_.push_back(frame);
   }

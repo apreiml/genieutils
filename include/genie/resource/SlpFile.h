@@ -17,8 +17,8 @@
 */
 
 
-#ifndef SLPFILE_H
-#define SLPFILE_H
+#ifndef GENIE_SLPFILE_H
+#define GENIE_SLPFILE_H
 
 #include <istream>
 #include <vector>
@@ -49,6 +49,8 @@ public:
   //SlpFile(uint32_t id, uint32_t pos, uint32_t len, std::iostream *iostr);
   
   SlpFile();
+  
+  void setStreamPos(std::streampos pos) { pos_ = pos; }
   
   //----------------------------------------------------------------------------
   /// Destructor
@@ -106,6 +108,7 @@ private:
   
   uint32_t id_;
   uint32_t len_;
+  std::streampos pos_; // position inside the stream (default 0)
   
   uint32_t num_frames_;
   
@@ -119,6 +122,8 @@ private:
   void readHeader();
 };
 
+typedef boost::shared_ptr<SlpFile> SlpFilePtr;
+
 }
 
-#endif // SLPFILE_H
+#endif // GENIE_SLPFILE_H

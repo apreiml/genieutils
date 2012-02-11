@@ -7,6 +7,7 @@
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Window/Event.hpp>
 #include <SFML/Graphics/Texture.hpp>
+#include "genie/resource/DrsFile.h"
 
 
 int main(int argc, char **argv) {
@@ -15,7 +16,7 @@ int main(int argc, char **argv) {
   
   std::fstream file;
   
-  file.open("slptest/backgrd1.pal", std::ios::in | std::ios::binary);
+  file.open("slptest/50500.pal", std::ios::in | std::ios::binary);
   
   
   pal->parsePalette(file);
@@ -29,14 +30,21 @@ int main(int argc, char **argv) {
   std::cout << "Framecount: " <<  slp.getFrameCount() << std::endl;
   std::cout << " " <<  slp.getFrame(0) << std::endl;
     
+  genie::DrsFile drs;
+  
+  drs.pal_ = pal;
+  
+  drs.load("slptest/graphics.drs");
   
   sf::RenderWindow App(sf::VideoMode(800, 600, 32), "SFML Graphics");
 
     // Create the sprite
 
     sf::Texture text;
+    
  
-    text.LoadFromImage(*slp.getFrame()->getImage());
+    text.LoadFromImage(*drs.getSlpFile(2)->getFrame()->getImage());
+    //text.LoadFromImage(*slp.getFrame()->getImage());
     sf::Sprite Sprite(text);
 
     // Change its properties

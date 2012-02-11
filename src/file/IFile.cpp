@@ -58,20 +58,20 @@ void IFile::load(const char *fileName) throw (std::ios_base::failure)
 {
   fileName_ = std::string(fileName);
   
-  std::ifstream file;
+  //std::ifstream file;
   
 
-  file.open(fileName, std::ifstream::binary);
+  file_.open(fileName, std::ios::binary | std::ios::in);
   
-  if (file.fail())
+  if (file_.fail())
   {
-    file.close();
+    file_.close();
     throw std::ios_base::failure("Cant read file: \"" + fileName_ + "\"");
   }
   else
-    readObject(file);
+    readObject(file_);
   
-  file.close();
+  //file_.close();
 }
 
 //------------------------------------------------------------------------------

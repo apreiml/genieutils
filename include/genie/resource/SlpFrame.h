@@ -17,8 +17,8 @@
 */
 
 
-#ifndef SLPFRAME_H
-#define SLPFRAME_H
+#ifndef GENIE_SLPFRAME_H
+#define GENIE_SLPFRAME_H
 
 #include "genie/file/ISerializable.h"
 
@@ -116,8 +116,9 @@ public:
   //
   int32_t getHotspotY() const;
   
-private:
+  
   std::streampos file_pos_;
+private:
   
   uint32_t cmd_table_offset_;
   uint32_t outline_table_offset_;
@@ -199,4 +200,4 @@ private:
 
 }
 
-#endif // SLPFRAME_H
+#endif // GENIE_SLPFRAME_H

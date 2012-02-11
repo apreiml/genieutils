@@ -19,6 +19,7 @@ include_directories(
     ${SFML_INCLUDE_DIR}
     )
 
+add_definitions(-Wall)
 
 #------------------------------------------------------------------------------#
 # Source files: 
@@ -73,6 +74,7 @@ set(RESOURCE_SRC
     src/resource/ColorPalette.cpp
     src/resource/SlpFile.cpp
     src/resource/SlpFrame.cpp
+    src/resource/DrsFile.cpp
     )
 
 set(UTIL_SRC

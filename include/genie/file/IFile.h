@@ -22,6 +22,7 @@
 #include "ISerializable.h"
 
 #include <boost/utility.hpp>
+#include <fstream>
 
 namespace genie
 {
@@ -92,6 +93,8 @@ public:
   
 private:
   std::string fileName_;
+  
+  std::fstream file_;
 };
 
 }
