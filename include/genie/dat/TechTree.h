@@ -37,8 +37,6 @@ public:
   TechTree();
   virtual ~TechTree();
   
-  virtual void serializeObject(void);
-  
   std::vector<TechTreeAge> TechTreeAges;
   
   long Unknown2; //1
@@ -55,6 +53,8 @@ private:
   unsigned short total_unit_count_; // short in >= swgb
   unsigned char total_research_count_;
   
+  virtual void serializeObject(void);
+  
 };
 
 /// Contains all items of an age in techtree
@@ -63,8 +63,6 @@ class TechTreeAge : public ISerializable
 public:
   TechTreeAge();
   virtual ~TechTreeAge();
-  
-  virtual void serializeObject(void);
   
   long Unknown1;
   long ID; //Age ID?
@@ -84,6 +82,8 @@ private:
   unsigned char building_count_;
   unsigned char unit_count_;
   unsigned char research_count_;
+  
+  virtual void serializeObject(void);
 };
 
 class BuildingConnection : public ISerializable
@@ -91,8 +91,6 @@ class BuildingConnection : public ISerializable
 public:
   BuildingConnection();
   virtual ~BuildingConnection();
-  
-  virtual void serializeObject(void);
   
   long ID;
   char Unknown1; //always 2
@@ -132,6 +130,8 @@ private:
   unsigned char building_count_;
   unsigned char unit_count_;
   unsigned char research_count_;
+  
+  virtual void serializeObject(void);
 };
 
 class UnitConnection : public ISerializable
@@ -139,8 +139,6 @@ class UnitConnection : public ISerializable
 public:
   UnitConnection();
   virtual ~UnitConnection();
-  
-  virtual void serializeObject(void);
   
   long ID;
   char Unknown1; //always 2
@@ -179,6 +177,8 @@ public:
 private:
   unsigned char unit_count_;
   
+  virtual void serializeObject(void);
+  
 };
 
 class ResearchConnection : public ISerializable
@@ -186,8 +186,6 @@ class ResearchConnection : public ISerializable
 public:
   ResearchConnection();
   virtual ~ResearchConnection();
-  
-  virtual void serializeObject(void);
   
   long ID;
   char Unknown1; //always 2
@@ -223,6 +221,8 @@ private:
   unsigned char building_count_;
   unsigned char unit_count_;
   unsigned char research_count_;
+  
+  virtual void serializeObject(void);
 };
 
 }

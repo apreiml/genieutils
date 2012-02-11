@@ -35,14 +35,14 @@ public:
   Sound();
   virtual ~Sound();
   
-  virtual void serializeObject(void);
-  
   long ID;
   long Unknown1;      // This is always equal to 300000
   std::vector<SoundItem> Items;
 
 private:
   unsigned short ItemCount;
+  
+  virtual void serializeObject(void);
 };
 
 }

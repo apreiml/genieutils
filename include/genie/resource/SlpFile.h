@@ -25,9 +25,9 @@
 
 #include "genie/file/IFile.h"
 #include "genie/util/Logger.h"
+#include "PalFile.h"
 
 #include <SFML/Graphics/Image.hpp>
-#include "ColorPalette.h"
 
 namespace genie
 {
@@ -68,7 +68,7 @@ public:
   
   bool isLoaded(void) const;
   
-  void setColorPalette(ColorPalettePtr palette) { color_palette_ = palette; }
+  void setColorPalette(PalFilePtr palette) { color_palette_ = palette; }
   
   //----------------------------------------------------------------------------
   /// Return number of frames stored in the file. Available after load.
@@ -112,7 +112,7 @@ private:
   
   uint32_t num_frames_;
   
-  ColorPalettePtr color_palette_;
+  PalFilePtr color_palette_;
   
   typedef std::vector<SlpFrame *> FrameVector;
   FrameVector frames_;

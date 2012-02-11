@@ -24,13 +24,11 @@
 //Debug
 #include <assert.h>
 
-#include "genie/resource/ColorPalette.h"
+#include "genie/resource/PalFile.h"
 
 
 namespace genie
 {
-
-using std::auto_ptr;
 
 //------------------------------------------------------------------------------
 /*SlpFrame::SlpFrame(std::iostream* iostr, std::streampos pos, 
@@ -113,8 +111,6 @@ void SlpFrame::loadHeader(std::istream &istr)
 {
   setIStream(istr);
   setOperation(OP_READ);
-  
-  file_pos_ = 0; //TODO
   
   cmd_table_offset_     = read<uint32_t>();
   outline_table_offset_ = read<uint32_t>();
@@ -282,7 +278,6 @@ void SlpFrame::load(std::istream &istr)
 void SlpFrame::readEdges()
 {
   std::streampos cmd_table_pos = file_pos_ + std::streampos(cmd_table_offset_);
-  std::cout << cmd_table_pos << " " << file_pos_ << std::endl;
   
   assert(left_edges_ == 0 && right_edges_ == 0);
   

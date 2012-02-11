@@ -38,33 +38,17 @@ class DrsFile : public IFile
 
 public:
   //----------------------------------------------------------------------------
-  /// Constructor that opens the file from a stream.
+  /// Default Constructor.
   ///
-  /// @param iostr io stream
-  /// @param pos start of file
   //
-  //DrsFile(std::iostream *iostr, std::streampos pos);
-  
-  //----------------------------------------------------------------------------
-  /// Constructor that opens a file with given name
-  ///
-  /// @param file_name file to open
-  //
-  DrsFile();//std::string file_name);
-  
-  virtual void serializeObject(void);
+  DrsFile();
   
   //----------------------------------------------------------------------------
   /// Destructor
   //
   virtual ~DrsFile();
     
-  //----------------------------------------------------------------------------
-  /// Loads table and resource headers.
-  //
-  virtual void loadHeader();
-  
-  ColorPalettePtr pal_;
+  PalFilePtr pal_;
   
   SlpFilePtr getSlpFile(uint32_t id)
   {
@@ -87,6 +71,14 @@ private:
   
   typedef std::map<uint32_t, SlpFilePtr> SlpMap;
   SlpMap slp_map_;
+  
+   //----------------------------------------------------------------------------
+  /// Loads table and resource headers.
+  //
+  void loadHeader();
+  
+  virtual void serializeObject(void);
+  
 };
 
 }

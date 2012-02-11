@@ -37,8 +37,6 @@ public:
   Creatable();
   virtual ~Creatable();
   
-  virtual void serializeObject(void);
-  
   static short getResourceCostsSize();
   
   typedef ResourceUsage<short, short, short> ResourceCost;
@@ -76,6 +74,9 @@ public:
    */
   char Unknown29;//not in aoe/ror
   short DisplayedPierceArmour;
+  
+private:
+  virtual void serializeObject(void);
   
 };
 

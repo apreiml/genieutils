@@ -33,13 +33,13 @@ public:
   UnitHeader();
   virtual ~UnitHeader();
   
-  virtual void serializeObject(void);
-  
   bool Exists;
   std::vector<UnitCommand> Commands;
   
 private:
   unsigned short CommandCount;
+  
+  virtual void serializeObject(void);
 };
 
 }

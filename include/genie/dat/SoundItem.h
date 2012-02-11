@@ -32,8 +32,6 @@ public:
   SoundItem();
   virtual ~SoundItem();
   
-  virtual void serializeObject(void);
-  
   short getFileNameSize();
   
   /// File name of the resource
@@ -48,6 +46,9 @@ public:
   short Probability;
   short Civ;//not in aoe/ror
   short Unknown1;//not in aoe/ror; seems to be unused in tc
+  
+private:
+  virtual void serializeObject(void);
 };
 
 }

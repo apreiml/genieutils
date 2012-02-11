@@ -34,8 +34,6 @@ public:
   UnitLine();
   virtual ~UnitLine();
   
-  virtual void serializeObject(void);
-  
   short ID;
   
   std::string Name;
@@ -47,6 +45,8 @@ private:
   unsigned short name_len_;
   
   unsigned short unit_count_;
+  
+  virtual void serializeObject(void);
   
 };
 

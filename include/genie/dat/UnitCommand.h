@@ -32,8 +32,6 @@ public:
   UnitCommand();
   virtual ~UnitCommand();
   
-  virtual void serializeObject(void);
-  
   short One;
   short ID;
   char Unknown1;
@@ -60,6 +58,9 @@ public:
   
   static short getGraphicsSize(void);
   std::vector<short> Graphics;
+  
+private:
+  virtual void serializeObject(void);
 };
 
 }

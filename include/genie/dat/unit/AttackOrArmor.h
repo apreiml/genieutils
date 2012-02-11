@@ -36,10 +36,11 @@ public:
   AttackOrArmor();
   virtual ~AttackOrArmor();
   
-  virtual void serializeObject(void);
-  
   short Class;
   short Amount;
+  
+private:  
+  virtual void serializeObject(void);
 };
 
 }

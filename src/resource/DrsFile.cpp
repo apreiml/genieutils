@@ -31,8 +31,6 @@ using std::string;
 Logger& DrsFile::log = Logger::getLogger("freeaoe.DrsFile");
 
 //------------------------------------------------------------------------------
-//DrsFile::DrsFile(string file_name, ResourceManager *resource_manager)
-//                 : file_(file_name), resource_manager_(resource_manager)
 DrsFile::DrsFile()
 {
   header_loaded_ = false;
@@ -42,7 +40,6 @@ DrsFile::DrsFile()
 //------------------------------------------------------------------------------
 DrsFile::~DrsFile()
 {
-
 }
 
 void DrsFile::serializeObject(void)
@@ -89,7 +86,6 @@ void DrsFile::loadHeader()
           slp->setStreamPos(pos);
           slp->setColorPalette(pal_);
           
-          std::cout << id << std::endl;
           slp_map_[id] = slp;
 //           slpfile *slp = new slpfile(id, pos, len, file_.getiostream());
 //           resource_manager_->addSlpFile(slp);

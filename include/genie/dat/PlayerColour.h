@@ -31,8 +31,6 @@ class PlayerColour : public ISerializable
 public:
   PlayerColour();
   virtual ~PlayerColour();
-    
-  virtual void serializeObject(void);
   
   static const short NAME_LEN = 30;
   //char *Name; // AoE/RoR only char [30]
@@ -47,6 +45,9 @@ public:
   long Unknown3; // not in aoe/ror
   long Unknown4; // not in aoe/ror
   long Unknown5; // not in aoe/ror
+    
+private:
+  virtual void serializeObject(void);
 };
 
 }

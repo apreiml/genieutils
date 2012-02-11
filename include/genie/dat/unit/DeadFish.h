@@ -37,8 +37,6 @@ public:
   DeadFish();
   virtual ~DeadFish();
   
-  virtual void serializeObject(void);
-  
   std::pair<short, short> WalkingGraphic;
   float RotationSpeed;
   char Unknown11;
@@ -49,6 +47,9 @@ public:
   
   short getUnknown16Size();
   std::vector<char> Unknown16; //17 //4 short, float, 3 short aoe/ror 1 char
+  
+private:
+  virtual void serializeObject(void);
 };
 
 }

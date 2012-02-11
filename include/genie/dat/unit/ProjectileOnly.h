@@ -36,8 +36,6 @@ public:
   ProjectileOnly();
   virtual ~ProjectileOnly();
   
-  virtual void serializeObject(void);
-  
   char StretchMode;
   char CompensationMode;
   char DropAnimationMode;
@@ -56,6 +54,8 @@ public:
   /// even if it has a very high arc.
   float ProjectileArc;
   
+private:  
+  virtual void serializeObject(void);
 };
 
 }

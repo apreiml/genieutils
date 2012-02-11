@@ -34,7 +34,6 @@ public:
   Civ();
   virtual ~Civ();
   
-  virtual void serializeObject(void);
   
   /// Always one
   char One;
@@ -71,6 +70,8 @@ public:
   
 private:
   unsigned short UnitCount;
+  
+  virtual void serializeObject(void);
 };
 
 }

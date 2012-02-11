@@ -43,14 +43,7 @@ public:
   }
   
   virtual ~ResourceUsage() {}
-  
-  virtual void serializeObject(void)
-  {
-    serialize<T>(Type);
-    serialize<A>(Amount);
-    serialize<E>(Enabled);
-  }
-  
+ 
   /// Resource ID TODO add resource ids
   T Type;
   
@@ -59,6 +52,15 @@ public:
   
   /// Bool that determines wheter it is used or not
   E Enabled;
+    
+private:
+  virtual void serializeObject(void)
+  {
+    serialize<T>(Type);
+    serialize<A>(Amount);
+    serialize<E>(Enabled);
+  }
+ 
 };
 
 }

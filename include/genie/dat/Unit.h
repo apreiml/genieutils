@@ -78,8 +78,6 @@ public:
   Unit();
   virtual ~Unit();
   
-  virtual void serializeObject(void );
-  
   /// See enum UnitType
   char Type;
   
@@ -279,6 +277,8 @@ public:
   
   unit::Building Building;
   
+private:  
+  virtual void serializeObject(void );
 };
 
 }

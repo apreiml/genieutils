@@ -71,7 +71,7 @@ set(DAT_SRC
     )
 
 set(RESOURCE_SRC
-    src/resource/ColorPalette.cpp
+    src/resource/PalFile.cpp
     src/resource/SlpFile.cpp
     src/resource/SlpFrame.cpp
     src/resource/DrsFile.cpp

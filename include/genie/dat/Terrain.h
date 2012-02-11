@@ -32,8 +32,6 @@ public:
   Terrain();
   virtual ~Terrain();
   
-  virtual void serializeObject(void);
-  
   short Unknown1;
   short Unknown2; //must be one or the game will crash
   
@@ -74,6 +72,9 @@ public:
   
   static const unsigned short SWGBUNKNOWN1_LEN = 24;
   std::vector<char> SWGBUnknown1;
+  
+private:
+  virtual void serializeObject(void);
 };
 
 }

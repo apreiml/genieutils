@@ -94,7 +94,7 @@ public:
 private:
   std::string fileName_;
   
-  std::fstream file_;
+  std::ifstream file_in_;
 };
 
 }

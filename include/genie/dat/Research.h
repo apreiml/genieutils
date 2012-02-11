@@ -34,8 +34,6 @@ public:
   Research();
   virtual ~Research();
   
-  virtual void serializeObject(void);
-  
   /// Size of RequiredTechs vector (4 in aoe/ror and 6 in games >= aok)
   unsigned short getRequiredTechsSize(void );
 
@@ -108,6 +106,8 @@ private:
   
   /// MinGameVersion: SWGB
   unsigned short NameLength2;
+  
+  virtual void serializeObject(void);
 };
 
 }

@@ -36,10 +36,11 @@ public:
   BuildingAnnex();
   virtual ~BuildingAnnex();
   
-  virtual void serializeObject(void);
-  
   short UnitID;
   std::pair <float, float> Misplacement;
+  
+private:
+  virtual void serializeObject(void);
 };
 
 }

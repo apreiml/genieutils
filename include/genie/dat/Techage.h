@@ -33,8 +33,6 @@ public:
   Techage();
   virtual ~Techage();
   
-  virtual void serializeObject(void);
-  
   static short getNameSize(void);
   
   /// Internal name, changing doesn't effect anything.
@@ -45,6 +43,8 @@ public:
 private:
   /// Number of effects
   unsigned short EffectCount;
+  
+  virtual void serializeObject(void);
 };
 
 }

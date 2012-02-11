@@ -32,22 +32,24 @@
 namespace genie
 {
 
+ 
+ 
 //------------------------------------------------------------------------------
-/// Class for parsing aoe palletes.
+/// Class for parsing aoe color palletes.
 //
-class ColorPalette
+class PalFile
 {
 
 public:
   //----------------------------------------------------------------------------
   /// Constructor
   //
-  ColorPalette();
+  PalFile();
   
   //----------------------------------------------------------------------------
   /// Destructor
   //
-  virtual ~ColorPalette();
+  virtual ~PalFile();
    
   //----------------------------------------------------------------------------
   /// Returns a color at given index.
@@ -73,7 +75,7 @@ private:
   uint32_t num_colors_;
 };
 
-typedef boost::shared_ptr<ColorPalette> ColorPalettePtr;
+typedef boost::shared_ptr<PalFile> PalFilePtr;
 
 }
 

@@ -37,8 +37,6 @@ public:
   Bird();
   virtual ~Bird();
   
-  virtual void serializeObject(void);
-  
   short SheepConversion;//FFFF = No, 0000 = Yes
   float SearchRadius;
   float WorkRate;
@@ -52,6 +50,9 @@ public:
   char AnimalMode;
   unsigned short CommandCount;//only in aoe/ror
   std::vector<UnitCommand> Commands;//only in aoe/ror
+  
+private:
+  virtual void serializeObject(void);
 };
 
 }

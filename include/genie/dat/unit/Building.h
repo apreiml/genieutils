@@ -37,8 +37,6 @@ public:
   Building();
   virtual ~Building();
   
-  virtual void serializeObject(void);
-  
   short ConstructionGraphicID;
   short SnowGraphicID; //not in aok/aoe/ror
   /// Enabler for annex units.
@@ -66,6 +64,8 @@ public:
   static const unsigned short UNKNOWN37_SIZE = 6;
   std::vector<char> Unknown37; // 6
   
+private:  
+  virtual void serializeObject(void);
 };
 
 }

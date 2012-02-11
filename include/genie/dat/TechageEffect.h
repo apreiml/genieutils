@@ -35,14 +35,15 @@ public:
   TechageEffect();
   virtual ~TechageEffect();
     
-  virtual void serializeObject(void);
-    
   //  DO NOT ALTER THESE! Unless you test that the game won't crash.
   char Type;
   short A;
   short B;
   short C;
   float D;
+    
+private:
+  virtual void serializeObject(void);
 };
 
 }

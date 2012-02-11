@@ -37,8 +37,6 @@ public:
   Projectile();
   virtual ~Projectile();
   
-  virtual void serializeObject(void);
-  
   char Unknown20; //2 //aoe/ror 1, aok 1, tc 2
   char Unknown20_1;
   unsigned short AttackCount;
@@ -69,6 +67,9 @@ public:
   short DisplayedAttack;
   float DisplayedRange;
   float ReloadTime2;
+  
+private: 
+  virtual void serializeObject(void);
   
 };
 

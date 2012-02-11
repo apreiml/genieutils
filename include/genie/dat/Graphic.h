@@ -37,8 +37,6 @@ public:
   
   Graphic &operator=(const Graphic& other);
   
-  virtual void serializeObject(void);
-  
   /// Returns the size of Name
   short getNameSize(void);
   
@@ -114,6 +112,8 @@ private:
   
   char *CstrName; //char [21]
   char *CstrName2; //char [13]
+  
+  virtual void serializeObject(void);
 };
 
 }

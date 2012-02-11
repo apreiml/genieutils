@@ -32,8 +32,6 @@ public:
   GraphicAttackSound();
   virtual ~GraphicAttackSound();
   
-  virtual void serializeObject(void);
-  
   //TODO: Vector
   short SoundDelay;
   short SoundID;
@@ -41,6 +39,9 @@ public:
   short SoundID2;
   short SoundDelay3;
   short SoundID3;
+
+private:
+  virtual void serializeObject(void);
 };
 
 }

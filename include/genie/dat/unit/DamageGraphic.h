@@ -35,12 +35,13 @@ public:
   DamageGraphic();
   virtual ~DamageGraphic();
   
-  virtual void serializeObject(void);
-  
   short GraphicID;
   char DamagePercent;
   char Unknown1; // 1 in AoE and RoR
   char Unknown2;
+  
+private:
+  virtual void serializeObject(void);
 };
 
 }

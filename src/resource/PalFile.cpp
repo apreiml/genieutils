@@ -17,7 +17,7 @@
 */
 
 
-#include "genie/resource/ColorPalette.h"
+#include "genie/resource/PalFile.h"
 
 #include <iostream>
 
@@ -26,22 +26,22 @@ namespace genie
 
 using std::string;
 
-Logger& ColorPalette::log = Logger::getLogger("genie.ColorPalette");
+Logger& PalFile::log = Logger::getLogger("genie.PalFile");
 
 //------------------------------------------------------------------------------
-ColorPalette::ColorPalette() : num_colors_(0)
+PalFile::PalFile() : num_colors_(0)
 {
   
 }
 
 //------------------------------------------------------------------------------
-ColorPalette::~ColorPalette()
+PalFile::~PalFile()
 {
 
 }
 
 //------------------------------------------------------------------------------
-void ColorPalette::parsePalette(std::istream &istr)
+void PalFile::parsePalette(std::istream &istr)
 {
   string type;
   string smth;
@@ -79,7 +79,7 @@ void ColorPalette::parsePalette(std::istream &istr)
 }
 
 //------------------------------------------------------------------------------
-sf::Color ColorPalette::getColorAt(uint16_t pos)
+sf::Color PalFile::getColorAt(uint16_t pos)
 {
   if (pos < 0 || pos >= num_colors_)
   {

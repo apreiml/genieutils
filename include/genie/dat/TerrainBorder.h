@@ -31,11 +31,12 @@ public:
   TBFrameData();
   virtual ~TBFrameData();
   
-  virtual void serializeObject(void);
-  
   short FrameID;
   short Flag1;
   short Flag2;
+  
+private:
+  virtual void serializeObject(void);
   
 };
   
@@ -49,8 +50,6 @@ public:
   static unsigned int getNameSize();
   
   static unsigned int getUnknown3Size();
-  
-  virtual void serializeObject(void);
   
   short Enabled;
   
@@ -79,6 +78,9 @@ public:
   short Unknown8; // always 0
   short Unknown9;
   short Unknown10;
+  
+private:
+  virtual void serializeObject(void);
 };
 
 }

@@ -17,7 +17,6 @@
 */
 
 #include "genie/file/IFile.h"
-#include <fstream>
 
 namespace genie
 {
@@ -30,6 +29,7 @@ IFile::IFile()
 //------------------------------------------------------------------------------
 IFile::~IFile()
 {
+  file_in_.close();
 }
   
 //------------------------------------------------------------------------------
@@ -58,20 +58,17 @@ void IFile::load(const char *fileName) throw (std::ios_base::failure)
 {
   fileName_ = std::string(fileName);
   
-  //std::ifstream file;
+  file_in_.close(); //TODO: necessary?
   
-
-  file_.open(fileName, std::ios::binary | std::ios::in);
+  file_in_.open(fileName, std::ios::binary | std::ios::in);
   
-  if (file_.fail())
+  if (file_in_.fail())
   {
-    file_.close();
+    file_in_.close();
     throw std::ios_base::failure("Cant read file: \"" + fileName_ + "\"");
   }
   else
-    readObject(file_);
-  
-  //file_.close();
+    readObject(file_in_);
 }
 
 //------------------------------------------------------------------------------

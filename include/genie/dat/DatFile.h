@@ -173,9 +173,6 @@ public:
   char SUnknown7;
   char SUnknown8;
   
-protected:
-  virtual void serializeObject(void);
-  
 private:
   // if true print debug messages
   bool verbose_;
@@ -237,6 +234,8 @@ private:
   /// @param compress if output will be compressed
   //
   void writeFile(std::istream &istr, std::string file_name, bool compress=true);
+  
+  virtual void serializeObject(void);
 };
 
 }

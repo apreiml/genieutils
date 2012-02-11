@@ -32,7 +32,7 @@
 namespace genie
 {
   
-class ColorPalette;
+class PalFile;
 
 //------------------------------------------------------------------------------
 /// Class for reading a frame in a slp file.
@@ -64,7 +64,7 @@ public:
   void serializeHeader(void);
   virtual void serializeObject(void);
   
-  void setColorPalette(ColorPalette *pal) { palette_ = pal; }
+  void setColorPalette(PalFile *pal) { palette_ = pal; }
   
   //----------------------------------------------------------------------------
   /// Loads header data. The headers of frames are stored after the header of 
@@ -139,7 +139,7 @@ private:
   
   int32_t player_color_index_;
   
-  ColorPalette *palette_;
+  PalFile *palette_;
   
   // Element for player_color vector, the vector stores position (x, y) of
   // a player color pixel and the palette index for the color

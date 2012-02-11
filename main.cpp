@@ -12,7 +12,7 @@
 
 int main(int argc, char **argv) {
 
-  genie::ColorPalettePtr pal(new genie::ColorPalette());
+  genie::PalFilePtr pal(new genie::PalFile());
   
   std::fstream file;
   

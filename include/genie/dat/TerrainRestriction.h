@@ -34,8 +34,6 @@ public:
   TerrainRestriction();
   virtual ~TerrainRestriction();
   
-  virtual void serializeObject(void);
-  
   std::vector<float> TerrainAccessible;
   std::vector<TerrainPassGraphic> TerrainPassGraphics;
   
@@ -44,6 +42,7 @@ public:
 private:
   static short Terrain_Count_;
   
+  virtual void serializeObject(void);
 };
 
 }
