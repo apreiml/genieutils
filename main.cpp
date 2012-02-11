@@ -1,5 +1,5 @@
 #include <iostream>
-#include <genie/resource/ColorPalette.h>
+#include <genie/resource/PalFile.h>
 #include <fstream>
 #include <genie/resource/SlpFile.h>
 #include <genie/resource/SlpFrame.h>
@@ -16,10 +16,11 @@ int main(int argc, char **argv) {
   
   std::fstream file;
   
-  file.open("slptest/50500.pal", std::ios::in | std::ios::binary);
+ // file.open("slptest/50500.pal", std::ios::in | std::ios::binary);
   
+  pal->load("slptest/50500.pal");
   
-  pal->parsePalette(file);
+  //pal->parsePalette(file);
   
   
   genie::SlpFile slp;

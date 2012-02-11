@@ -40,41 +40,46 @@ PalFile::~PalFile()
 
 }
 
-//------------------------------------------------------------------------------
-void PalFile::parsePalette(std::istream &istr)
+void PalFile::serializeObject(void)
 {
-  string type;
-  string smth;
-  
-  istr >> type;
-  
-  if (type.find("JASC-PAL") != 0)
+  if (isOperation(OP_READ))
   {
-    log.error("Not a color palette!");
-    //TODO: Exception
-  }
-  
-  istr >> smth;
-  
-  istr >> num_colors_;
-  
-  for (uint32_t i=0; i<num_colors_; i++)
-  {
-    uint32_t color_in;
-    sf::Color color_out;
+    std::istream *istr = getIStream();
+
+    string type;
+    string smth;
     
-    istr >> color_in;
-    color_out.r = color_in;
+    *istr >> type;
     
-    istr >> color_in;
-    color_out.g = color_in;
+    if (type.find("JASC-PAL") != 0)
+    {
+      log.error("Not a color palette!");
+      //TODO: Exception
+      return;
+    }
     
-    istr >> color_in;
-    color_out.b = color_in;
+    *istr >> smth;
     
-    color_out.a = 255;  //transparency off
+    *istr >> num_colors_;
     
-    colors_.push_back(color_out);
+    for (uint32_t i=0; i<num_colors_; i++)
+    {
+      uint32_t color_in;
+      sf::Color color_out;
+      
+      *istr >> color_in;
+      color_out.r = color_in;
+      
+      *istr >> color_in;
+      color_out.g = color_in;
+      
+      *istr >> color_in;
+      color_out.b = color_in;
+      
+      color_out.a = 255;  //transparency off
+      
+      colors_.push_back(color_out);
+    }
   }
 }
 

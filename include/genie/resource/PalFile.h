@@ -28,16 +28,15 @@
 #include <SFML/Graphics/Color.hpp>
 
 #include "genie/util/Logger.h"
+#include "genie/file/IFile.h"
 
 namespace genie
 {
 
- 
- 
 //------------------------------------------------------------------------------
 /// Class for parsing aoe color palletes.
 //
-class PalFile
+class PalFile : public IFile
 {
 
 public:
@@ -59,13 +58,6 @@ public:
   //
   sf::Color getColorAt(uint16_t index);  
   
-  //----------------------------------------------------------------------------
-  /// Parse the palette from an input stream.
-  ///
-  /// @param istr input stream where to parse from
-  //
-  void parsePalette(std::istream &istr);
-  
 private:
   
   static Logger &log;
@@ -73,6 +65,8 @@ private:
   std::vector<sf::Color> colors_;
   
   uint32_t num_colors_;
+  
+  virtual void serializeObject(void);
 };
 
 typedef boost::shared_ptr<PalFile> PalFilePtr;

@@ -20,7 +20,7 @@
 #include "genie/resource/SlpFile.h"
 
 #include "genie/resource/SlpFrame.h"
-#include <genie/resource/ColorPalette.h>
+#include "genie/resource/PalFile.h"
 
 namespace genie
 {
