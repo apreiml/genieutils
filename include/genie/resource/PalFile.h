@@ -56,7 +56,7 @@ public:
   /// @param index index of color in palette
   /// @return color object
   //
-  sf::Color getColorAt(uint16_t index);  
+  sf::Color& operator[](uint16_t index);
   
 private:
   
@@ -65,6 +65,9 @@ private:
   std::vector<sf::Color> colors_;
   
   uint32_t num_colors_;
+  
+  std::string type_;
+  std::string unknown_;
   
   virtual void serializeObject(void);
 };

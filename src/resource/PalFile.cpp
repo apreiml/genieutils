@@ -20,6 +20,7 @@
 #include "genie/resource/PalFile.h"
 
 #include <iostream>
+#include <stdexcept>
 
 namespace genie
 {
@@ -46,19 +47,16 @@ void PalFile::serializeObject(void)
   {
     std::istream *istr = getIStream();
 
-    string type;
-    string smth;
+    *istr >> type_;
     
-    *istr >> type;
-    
-    if (type.find("JASC-PAL") != 0)
+    if (type_.find("JASC-PAL") != 0)
     {
       log.error("Not a color palette!");
       //TODO: Exception
       return;
     }
     
-    *istr >> smth;
+    *istr >> unknown_;
     
     *istr >> num_colors_;
     
@@ -81,19 +79,19 @@ void PalFile::serializeObject(void)
       colors_.push_back(color_out);
     }
   }
+  
 }
 
 //------------------------------------------------------------------------------
-sf::Color PalFile::getColorAt(uint16_t pos)
+sf::Color& PalFile::operator[](uint16_t index)
 {
-  if (pos < 0 || pos >= num_colors_)
+  if (index < 0 || index >= num_colors_)
   {
-    log.warn("getColorAt: index out of range!");
-    
-    return sf::Color();
+    log.warn("PalFile::operator[]: index out of range!");
+    throw std::out_of_range("PalFile: out of range");
   }
   
-  return colors_[pos];
+  return colors_[index];
 }
 
 }

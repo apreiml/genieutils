@@ -86,7 +86,7 @@ void ISerializable::serializeSubObject(ISerializable * const other)
   gameVersion_ = other->gameVersion_;
   serializeObject();
 }
-
+  
 //------------------------------------------------------------------------------
 void ISerializable::setOperation(Operation op)
 {
@@ -103,6 +103,30 @@ ISerializable::Operation ISerializable::getOperation(void ) const
 bool ISerializable::isOperation(Operation op) const
 {
   return (op == operation_);
+}
+
+//------------------------------------------------------------------------------
+void ISerializable::setIStream(std::istream &istr) 
+{ 
+  istr_ = &istr; 
+}
+
+//------------------------------------------------------------------------------
+std::istream * ISerializable::getIStream(void) 
+{ 
+  return istr_; 
+}
+
+//------------------------------------------------------------------------------
+void ISerializable::setOStream(std::ostream &ostr) 
+{ 
+  ostr_ = &ostr; 
+}
+
+//------------------------------------------------------------------------------
+std::ostream * ISerializable::getOStream(void) 
+{ 
+  return ostr_; 
 }
 
 //------------------------------------------------------------------------------

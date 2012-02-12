@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 #include <genie/resource/PalFile.h>
 #include <fstream>
 #include <genie/resource/SlpFile.h>
@@ -11,6 +12,7 @@
 
 
 int main(int argc, char **argv) {
+  
 
   genie::PalFilePtr pal(new genie::PalFile());
   
@@ -19,6 +21,8 @@ int main(int argc, char **argv) {
  // file.open("slptest/50500.pal", std::ios::in | std::ios::binary);
   
   pal->load("slptest/50500.pal");
+  
+  //(*pal)[1000];
   
   //pal->parsePalette(file);
   
