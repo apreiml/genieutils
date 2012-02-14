@@ -43,6 +43,14 @@ public:
   virtual ~ISerializable();
   
   //----------------------------------------------------------------------------
+  /// Set position to start reading the object from stream
+  //
+  void setInitialReadPosition(std::streampos pos);
+  
+  //----------------------------------------------------------------------------
+  std::streampos getInitialReadPosition(void) const;
+  
+  //----------------------------------------------------------------------------
   /// Read object from istream.
   ///
   /// @param istr Input stream to read from
@@ -458,6 +466,8 @@ protected:
 private:
   std::istream *istr_;
   std::ostream *ostr_;
+  
+  std::streampos init_read_pos_;
   
   Operation operation_;
   

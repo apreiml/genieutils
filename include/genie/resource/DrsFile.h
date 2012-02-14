@@ -48,15 +48,13 @@ public:
   //
   virtual ~DrsFile();
     
-  PalFilePtr pal_;
+  //----------------------------------------------------------------------------
+  ///
+  //
+  void setDefaultPalette(PalFilePtr pal);
   
-  SlpFilePtr getSlpFile(uint32_t id)
-  {
-    slp_map_[id]->readObject(*getIStream());
-    
-    return slp_map_[id];
-  }
-  
+  //----------------------------------------------------------------------------
+  SlpFilePtr getSlpFile(uint32_t id);  
   
 private:
   static Logger &log;
@@ -69,8 +67,14 @@ private:
   std::vector<std::string> table_types_;
   std::vector<uint32_t> table_num_of_files_;
   
+  PalFilePtr pal_;
+  
   typedef std::map<uint32_t, SlpFilePtr> SlpMap;
   SlpMap slp_map_;
+  
+  
+  std::string getSlpTableHeader(void) const;
+  std::string getBinaryTableHeader(void) const;
   
    //----------------------------------------------------------------------------
   /// Loads table and resource headers.

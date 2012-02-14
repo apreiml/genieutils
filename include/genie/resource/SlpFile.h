@@ -50,24 +50,18 @@ public:
   
   SlpFile();
   
-  void setStreamPos(std::streampos pos) { pos_ = pos; }
-  
   //----------------------------------------------------------------------------
   /// Destructor
   //
   virtual ~SlpFile();
   
-  virtual void serializeObject(void);
-  
   //----------------------------------------------------------------------------
-  /// Loads the file and its frames. If already loaded this method does nothing.
-  //
-  void loadFile(void);
-  
   void unload(void);
   
+  //----------------------------------------------------------------------------
   bool isLoaded(void) const;
   
+  //----------------------------------------------------------------------------
   void setColorPalette(PalFilePtr palette) { color_palette_ = palette; }
   
   //----------------------------------------------------------------------------
@@ -99,7 +93,7 @@ public:
   /// @param frame frame index
   /// @return SlpFrame
   //
-  SlpFrame* getFrame(uint32_t frame=0);
+  SlpFrame& getFrame(uint32_t frame=0);
   
 private: 
   //SlpFile();
@@ -108,17 +102,25 @@ private:
   
   uint32_t id_;
   uint32_t len_;
-  std::streampos pos_; // position inside the stream (default 0)
   
   uint32_t num_frames_;
   
   PalFilePtr color_palette_;
   
-  typedef std::vector<SlpFrame *> FrameVector;
+  typedef std::vector<SlpFrame> FrameVector;
   FrameVector frames_;
   
   static Logger &log;
   
+  //----------------------------------------------------------------------------
+  virtual void serializeObject(void);
+  
+  //----------------------------------------------------------------------------
+  /// Loads the file and its frames.
+  //
+  void loadFile(void);
+  
+  //----------------------------------------------------------------------------
   void readHeader();
 };
 

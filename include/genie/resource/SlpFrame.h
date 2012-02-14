@@ -62,7 +62,12 @@ public:
   virtual ~SlpFrame();
   
   void serializeHeader(void);
-  virtual void serializeObject(void);
+    
+  //----------------------------------------------------------------------------
+  /// Set slp file position inside the stream. It's necesarry for calculating
+  /// file offsets.
+  //
+  void setSlpFilePos(std::streampos pos);
   
   void setColorPalette(PalFile *pal) { palette_ = pal; }
   
@@ -115,10 +120,10 @@ public:
   /// @return y coordinate of the hotspot
   //
   int32_t getHotspotY() const;
-  
-  
-  std::streampos file_pos_;
+ 
 private:
+  
+  std::streampos slp_file_pos_;
   
   uint32_t cmd_table_offset_;
   uint32_t outline_table_offset_;
@@ -130,8 +135,8 @@ private:
   int32_t hotspot_x_;
   int32_t hotspot_y_;
   
-  int16_t *left_edges_;
-  int16_t *right_edges_;
+  std::vector<int16_t> left_edges_;
+  std::vector<int16_t> right_edges_;
   
   sf::Image *image_;
   sf::Image *outline_;
@@ -151,6 +156,12 @@ private:
   };
   
   std::vector<PlayerColorElement> player_color_mask_;
+  
+  //std::vector<uint8_t> payer_color_mask_;
+  
+  std::vector<uint8_t> img_color_index_array_;
+  
+  virtual void serializeObject(void);
   
   //----------------------------------------------------------------------------
   /// Reads the edges of the frame. An edge int is the number of pixels in 

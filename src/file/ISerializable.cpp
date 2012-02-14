@@ -29,6 +29,7 @@ ISerializable::ISerializable()
 {
   istr_ = 0;
   ostr_ = 0;
+  init_read_pos_ = 0;
   gameVersion_ = GV_None;
 }
 
@@ -36,6 +37,18 @@ ISerializable::ISerializable()
 ISerializable::~ISerializable()
 {
 
+}
+
+//------------------------------------------------------------------------------
+void ISerializable::setInitialReadPosition(std::streampos pos)
+{
+  init_read_pos_ = pos;
+}
+
+//------------------------------------------------------------------------------
+std::streampos ISerializable::getInitialReadPosition(void) const
+{
+  return init_read_pos_;
 }
 
 //------------------------------------------------------------------------------
@@ -48,6 +61,9 @@ void ISerializable::readObject(std::istream &istr)
 
   setOperation(OP_READ);
   istr_ = &istr;
+  
+  istr_->seekg(init_read_pos_);
+  
   serializeObject();
 
 }

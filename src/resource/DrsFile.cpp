@@ -42,9 +42,36 @@ DrsFile::~DrsFile()
 {
 }
 
+//------------------------------------------------------------------------------
+void DrsFile::setDefaultPalette(PalFilePtr pal)
+{
+  pal_ = pal;
+}
+
+//------------------------------------------------------------------------------
+SlpFilePtr DrsFile::getSlpFile(uint32_t id)
+{
+    slp_map_[id]->readObject(*getIStream());
+    
+    return slp_map_[id];
+}
+ 
+//------------------------------------------------------------------------------
 void DrsFile::serializeObject(void)
 {
   loadHeader();
+}
+
+//------------------------------------------------------------------------------
+std::string DrsFile::getSlpTableHeader(void) const
+{
+  return " plsL";
+}
+
+//------------------------------------------------------------------------------
+std::string DrsFile::getBinaryTableHeader(void) const
+{
+  return "anibd";
 }
 
 //------------------------------------------------------------------------------
@@ -80,19 +107,21 @@ void DrsFile::loadHeader()
         uint32_t pos = read<uint32_t>();
         uint32_t len = read<uint32_t>();
                 
-        if (table_types_[i].find(" plsL") == 0)
+        if (table_types_[i].compare(getSlpTableHeader()) == 0)
         {
+          if (pal_.get() == 0)
+            log.error("No default color palette was set!");
+          
           SlpFilePtr slp(new SlpFile());
-          slp->setStreamPos(pos);
+          //slp->setStreamPos(pos);
+          slp->setInitialReadPosition(pos);
           slp->setColorPalette(pal_);
           
           slp_map_[id] = slp;
-//           slpfile *slp = new slpfile(id, pos, len, file_.getiostream());
-//           resource_manager_->addSlpFile(slp);
         }
         else
         {
-          if (table_types_[i].find("anibd") == 0)
+          if (table_types_[i].compare(getBinaryTableHeader()) == 0)
           {
 //             BinaFile *bina = new BinaFile(id, pos, len, file_.getIOStream());
 //             resource_manager_->addBinaFile(bina);

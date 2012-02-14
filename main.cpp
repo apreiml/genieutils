@@ -15,14 +15,19 @@ int main(int argc, char **argv) {
   
 
   genie::PalFilePtr pal(new genie::PalFile());
+  genie::PalFilePtr pal2(new genie::PalFile());
   
   std::fstream file;
   
  // file.open("slptest/50500.pal", std::ios::in | std::ios::binary);
   
   pal->load("slptest/50500.pal");
+  
+  std::cout << "50500_size: " << pal->objectSize() << std::endl;
   pal->saveAs("slptest/test.pal");
   
+  pal2->load("slptest/test2.pal");
+  std::cout << "test2_size: " << pal2->objectSize() << std::endl;
   //(*pal)[1000];
   
   //pal->parsePalette(file);
@@ -33,12 +38,9 @@ int main(int argc, char **argv) {
   
   slp.load("slptest/backgrd1.slp");
   
-  std::cout << "Framecount: " <<  slp.getFrameCount() << std::endl;
-  std::cout << " " <<  slp.getFrame(0) << std::endl;
-    
   genie::DrsFile drs;
   
-  drs.pal_ = pal;
+  drs.setDefaultPalette(pal);
   
   drs.load("slptest/graphics.drs");
   
@@ -47,14 +49,18 @@ int main(int argc, char **argv) {
     // Create the sprite
 
     sf::Texture text;
+    sf::Texture text2;
     
+    text2.LoadFromImage(*drs.getSlpFile(2)->getFrame().getImage());
  
-    text.LoadFromImage(*drs.getSlpFile(2)->getFrame()->getImage());
+    text.LoadFromImage(*drs.getSlpFile(2)->getFrame().getPlayerColorMask(3));
     //text.LoadFromImage(*slp.getFrame()->getImage());
     sf::Sprite Sprite(text);
+    sf::Sprite s2(text2);
 
     // Change its properties
     Sprite.SetPosition(0, 0);
+    s2.SetPosition(100,100);
 
     // Start game loop
     while (App.IsOpen())
@@ -73,6 +79,7 @@ int main(int argc, char **argv) {
 
         // Display sprite in our window
         App.Draw(Sprite);
+        App.Draw(s2);
 
         // Display window contents on screen
         App.Display();

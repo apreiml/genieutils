@@ -37,9 +37,6 @@ namespace genie
                    */
 SlpFrame::SlpFrame()
 {
-  left_edges_   = 0;
-  right_edges_  = 0;
-  
   image_        = 0;
   outline_      = 0;
   
@@ -49,11 +46,17 @@ SlpFrame::SlpFrame()
 //------------------------------------------------------------------------------
 SlpFrame::~SlpFrame()
 {
-  delete [] left_edges_;
-  delete [] right_edges_;
+//   delete [] left_edges_;
+//   delete [] right_edges_;
   
   delete image_;
   delete outline_;
+}
+
+//------------------------------------------------------------------------------
+void SlpFrame::setSlpFilePos(std::streampos pos)
+{
+  slp_file_pos_ = pos;
 }
 
 //------------------------------------------------------------------------------
@@ -132,11 +135,8 @@ void SlpFrame::load(std::istream &istr)
   image_ = new sf::Image();
   outline_ = new sf::Image();
 
-  //player_color_mask_ = new sf::Image();
-  
   image_->Create(width_, height_, sf::Color(0,0,0,0));
   outline_->Create(width_, height_, sf::Color(0,0,0,0));
-  //player_color_mask_->Create(width_, height_);
   
   readEdges();
   
@@ -264,7 +264,7 @@ void SlpFrame::load(std::istream &istr)
         break;
         default:
           std::cerr << "SlpFrame: Unknown cmd at " << std::hex << 
-                  (int)(tellg() - file_pos_)<< ": " << (int) data << std::endl;
+                  (int)(tellg() - slp_file_pos_)<< ": " << (int) data << std::endl;
           break;
       }
       
@@ -276,12 +276,10 @@ void SlpFrame::load(std::istream &istr)
 //------------------------------------------------------------------------------
 void SlpFrame::readEdges()
 {
-  std::streampos cmd_table_pos = file_pos_ + std::streampos(cmd_table_offset_);
+  std::streampos cmd_table_pos = slp_file_pos_ + std::streampos(cmd_table_offset_);
   
-  assert(left_edges_ == 0 && right_edges_ == 0);
-  
-  left_edges_ = new int16_t[height_];
-  right_edges_= new int16_t[height_];
+  left_edges_.resize(height_);
+  right_edges_.resize(height_);
   
   uint32_t row_cnt = 0;
   

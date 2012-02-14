@@ -17,8 +17,8 @@
 */
 
 
-#ifndef GENIE_COLOR_PALETTE_H
-#define GENIE_COLOR_PALETTE_H
+#ifndef GENIE_PALFILE_H
+#define GENIE_PALFILE_H
 
 #include <string>
 #include <vector>
@@ -34,7 +34,7 @@ namespace genie
 {
 
 //------------------------------------------------------------------------------
-/// Class for parsing aoe color palletes.
+/// Class for parsing aoe color palettes.
 //
 class PalFile : public IFile
 {
@@ -63,6 +63,10 @@ public:
   //
   size_t size(void) const;
   
+  //----------------------------------------------------------------------------
+  /// TODO: Somethings wrong...
+  //
+  virtual size_t objectSize(void); 
 private:
   
   static Logger &log;
@@ -80,11 +84,15 @@ private:
   virtual void serializeObject(void);
   
   // TODO: Not implemented yet
-  virtual size_t objectSize(void) { return 0; }
+  
+  //----------------------------------------------------------------------------
+  /// Get number of characters of a number serialized as a string.
+  //
+  size_t numOfChars(uint8_t number);
 };
 
 typedef boost::shared_ptr<PalFile> PalFilePtr;
 
 }
 
-#endif // GENIE_COLOR_PALETTE_H
+#endif // GENIE_PALFILE_H

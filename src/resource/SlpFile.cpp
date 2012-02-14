@@ -21,6 +21,7 @@
 
 #include "genie/resource/SlpFrame.h"
 #include "genie/resource/PalFile.h"
+#include <stdexcept>
 
 namespace genie
 {
@@ -35,22 +36,17 @@ Logger& SlpFile::log = Logger::getLogger("genie.SlpFile");
 SlpFile::SlpFile() : IFile()
 {
   loaded_ = false;
-  pos_ = 0;
 }
 
 //------------------------------------------------------------------------------
 SlpFile::~SlpFile()
 {
-  for (FrameVector::iterator it = frames_.begin(); 
-       it != frames_.end(); it ++)
-  {
-    delete (*it);
-  }
 }
 
+//------------------------------------------------------------------------------
 void SlpFile::serializeObject(void)
 {
-  if (isOperation(OP_READ))
+  if (isOperation(OP_READ) && !loaded_)
   {
     loadFile();
   }
@@ -59,35 +55,23 @@ void SlpFile::serializeObject(void)
 //------------------------------------------------------------------------------
 void SlpFile::loadFile()
 {
-  if (loaded_) 
-    return;
-  
-  //file_.setToPos(); 
-    std::cout << pos_ << std::endl;
-  
-  getIStream()->seekg(pos_);
-  
   readHeader();
   
-  SlpFrame *frame = 0;
+  frames_.resize(num_frames_);
   
+  // Load frame headers
   for (uint32_t i = 0; i < num_frames_; i++)
   {
-    //ColorPalette *palette = ResourceManager::Inst()->getPalette(50500); //50500 = standard palette
+    frames_[i].setColorPalette(color_palette_.get());
+    frames_[i].loadHeader(*getIStream());
     
-    //frame = new SlpFrame(file_.getIOStream(), file_.tellg(), file_.getPos(), palette);
-    frame = new SlpFrame();
-    frame->setColorPalette(color_palette_.get());
-    frame->loadHeader(*getIStream());
-    
-    frame->file_pos_ = pos_;
-    
-    frames_.push_back(frame);
+    frames_[i].setSlpFilePos(getInitialReadPosition());
   }
 
+  // Load frame content
   for (FrameVector::iterator it = frames_.begin(); it != frames_.end(); it ++)
   {
-    (*it)->load(*getIStream());
+    (*it).load(*getIStream());
   }
   
   loaded_ = true;
@@ -98,11 +82,6 @@ void SlpFile::unload(void )
 {
   if (!loaded_)
     log.warn("Trying to unload a not loaded slpfile!");
-  
-  for (FrameVector::iterator it = frames_.begin(); it != frames_.end(); it ++)
-  {
-    delete (*it);
-  }
   
   frames_.clear();
   
@@ -131,21 +110,18 @@ int32_t SlpFile::getId()
 //------------------------------------------------------------------------------
 sf::Image* SlpFile::getImage(uint32_t frame)
 {
-  SlpFrame *slp = getFrame(frame);
+  SlpFrame slp = getFrame(frame);
   
-  if (slp)
-    return slp->getImage();
-  
-  return 0;
+  return slp.getImage();
 }
 
 //------------------------------------------------------------------------------
-SlpFrame* SlpFile::getFrame(uint32_t frame)
+SlpFrame& SlpFile::getFrame(uint32_t frame)
 {
   if (frame >= frames_.size())
   {
-    log.warn("Trying to get frame [%u] from index out of range!", frame);
-    return 0;
+    log.error("Trying to get frame [%u] from index out of range!", frame);
+    throw std::out_of_range("getFrame()");
   }
   
   return frames_[frame];

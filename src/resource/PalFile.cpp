@@ -121,8 +121,11 @@ void PalFile::serializeObject(void)
     
     std::string CR_LF = "\r\n"; // windows line ending
     
-    *ostr << getHeader() << CR_LF; //TODO: empty?
+    *ostr << getHeader() << CR_LF;
     *ostr << getHeader2() << CR_LF;
+    
+    if (colors_.size() > 256)
+      log.error("Too much colors (>256)");
     
     *ostr << colors_.size() << CR_LF;
     
@@ -133,7 +136,46 @@ void PalFile::serializeObject(void)
       *ostr << (int)colors_[i].b << CR_LF;
     }
   }
+}
+
+//------------------------------------------------------------------------------
+size_t PalFile::numOfChars(uint8_t number)
+{
+  if (number < 10)
+    return 1;
   
+  if (number < 100)
+    return 2;
+  
+  return 3;
+}
+
+//------------------------------------------------------------------------------
+size_t PalFile::objectSize(void)
+{
+  int CL_LF_SIZE = 2;
+  
+  size_t size = 0;
+  
+  size += getHeader().size() + CL_LF_SIZE;
+  size += getHeader2().size() + CL_LF_SIZE;
+  
+  if (colors_.size() > 256)
+    log.error("Too much colors (>256)");
+  
+  size += numOfChars(colors_.size()) + CL_LF_SIZE;
+  
+  for (uint32_t i=0; i < colors_.size(); i++)
+  {
+    size += numOfChars(colors_[i].r);
+    size += numOfChars(colors_[i].g);
+    size += numOfChars(colors_[i].b);
+    
+    size += 2; // spaces
+    size += CL_LF_SIZE;
+  }
+  
+  return size;
 }
 
 
