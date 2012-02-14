@@ -58,6 +58,11 @@ public:
   //
   sf::Color& operator[](uint16_t index);
   
+  //----------------------------------------------------------------------------
+  ///
+  //
+  size_t size(void) const;
+  
 private:
   
   static Logger &log;
@@ -69,7 +74,13 @@ private:
   std::string type_;
   std::string unknown_;
   
+  std::string getHeader() const; 
+  std::string getHeader2() const; //TODO Unknown
+  
   virtual void serializeObject(void);
+  
+  // TODO: Not implemented yet
+  virtual size_t objectSize(void) { return 0; }
 };
 
 typedef boost::shared_ptr<PalFile> PalFilePtr;

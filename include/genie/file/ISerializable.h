@@ -59,7 +59,7 @@ public:
   //----------------------------------------------------------------------------
   /// Returns size in bytes.
   //
-  size_t size(void);
+  virtual size_t objectSize(void);
   
   //----------------------------------------------------------------------------
   /// Serialize this object as a subobject of another one.
@@ -231,7 +231,7 @@ protected:
     data.serializeSubObject(this);
     
     if (isOperation(OP_CALC_SIZE))
-      size_ += data.size();
+      size_ += data.objectSize();
   }
   
   //----------------------------------------------------------------------------
@@ -328,7 +328,7 @@ protected:
         data->serializeSubObject(this);
         
         if (isOperation(OP_CALC_SIZE))
-          size_ += data->size();
+          size_ += data->objectSize();
       }
     }
     else
@@ -400,7 +400,7 @@ protected:
           data->serializeSubObject(this);
           
           if (isOperation(OP_CALC_SIZE))
-            size_ += data->size();
+            size_ += data->objectSize();
         }
       }
     }

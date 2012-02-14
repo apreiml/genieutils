@@ -41,58 +41,101 @@ PalFile::~PalFile()
 
 }
 
+//------------------------------------------------------------------------------
+sf::Color& PalFile::operator[](uint16_t index)
+{
+  /*
+  if (index < 0 || index >= num_colors_)
+  {
+    log.warn("PalFile::operator[]: index out of range!");
+    throw std::out_of_range("PalFile: out of range");
+  }
+  */
+  return colors_[index];
+}
+
+//------------------------------------------------------------------------------
+size_t PalFile::size(void) const
+{
+  return colors_.size();
+}
+
+//------------------------------------------------------------------------------
+std::string PalFile::getHeader(void) const
+{
+  return "JASC-PAL";
+}
+
+//------------------------------------------------------------------------------
+std::string PalFile::getHeader2(void) const
+{
+  return "0100";
+}
+
+//------------------------------------------------------------------------------
 void PalFile::serializeObject(void)
 {
   if (isOperation(OP_READ))
   {
     std::istream *istr = getIStream();
 
-    *istr >> type_;
+    std::string header;
     
-    if (type_.find("JASC-PAL") != 0)
+    *istr >> header;
+    
+    if (header.compare(getHeader()) != 0)
     {
       log.error("Not a color palette!");
       //TODO: Exception
       return;
     }
     
-    *istr >> unknown_;
+    *istr >> header;
+    
+    if (header.compare(getHeader2()) != 0)
+      log.warn("Different header2 in PalFile");
     
     *istr >> num_colors_;
+    
+    colors_.resize(num_colors_);
     
     for (uint32_t i=0; i<num_colors_; i++)
     {
       uint32_t color_in;
-      sf::Color color_out;
       
       *istr >> color_in;
-      color_out.r = color_in;
+      colors_[i].r = color_in;
       
       *istr >> color_in;
-      color_out.g = color_in;
+      colors_[i].g = color_in;
       
       *istr >> color_in;
-      color_out.b = color_in;
+      colors_[i].b = color_in;
       
-      color_out.a = 255;  //transparency off
-      
-      colors_.push_back(color_out);
+      colors_[i].a = 255;  //transparency off
+    }
+  }
+  else
+  {
+    std::ostream *ostr = getOStream();
+    
+    std::string CR_LF = "\r\n"; // windows line ending
+    
+    *ostr << getHeader() << CR_LF; //TODO: empty?
+    *ostr << getHeader2() << CR_LF;
+    
+    *ostr << colors_.size() << CR_LF;
+    
+    for (uint32_t i=0; i< colors_.size(); i++)
+    {
+      *ostr << (int)colors_[i].r << " ";
+      *ostr << (int)colors_[i].g << " ";
+      *ostr << (int)colors_[i].b << CR_LF;
     }
   }
   
 }
 
-//------------------------------------------------------------------------------
-sf::Color& PalFile::operator[](uint16_t index)
-{
-  if (index < 0 || index >= num_colors_)
-  {
-    log.warn("PalFile::operator[]: index out of range!");
-    throw std::out_of_range("PalFile: out of range");
-  }
-  
-  return colors_[index];
-}
 
 }
 

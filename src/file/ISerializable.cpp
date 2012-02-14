@@ -67,7 +67,7 @@ void ISerializable::writeObject(std::ostream &ostr)
 }
 
 //------------------------------------------------------------------------------
-size_t ISerializable::size(void) 
+size_t ISerializable::objectSize(void) 
 {
   size_ = 0;
   

@@ -21,6 +21,7 @@ int main(int argc, char **argv) {
  // file.open("slptest/50500.pal", std::ios::in | std::ios::binary);
   
   pal->load("slptest/50500.pal");
+  pal->saveAs("slptest/test.pal");
   
   //(*pal)[1000];
   
