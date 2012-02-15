@@ -25,6 +25,7 @@
 #include <assert.h>
 
 #include "genie/resource/PalFile.h"
+#include <genie/resource/Color.h>
 
 
 namespace genie
@@ -80,7 +81,7 @@ sf::Image* SlpFrame::getPlayerColorMask(uint8_t player) const
   for (std::vector<PlayerColorElement>::const_iterator 
        it = player_color_mask_.begin(); it != player_color_mask_.end(); it++)
   {
-    cmask->SetPixel(it->x, it->y, (*palette_)[it->index + ((player + 1) * 16)]);
+    cmask->SetPixel(it->x, it->y, (*palette_)[it->index + ((player + 1) * 16)].toSfColor());
   }
   
   return cmask; //TODO auto pointer (but doesn't work, maybe problem with
@@ -302,7 +303,7 @@ void SlpFrame::readPixelsToImage(sf::Image *image, uint32_t row, uint32_t &col,
   {
     uint8_t color_index = read<uint8_t>();
     
-    image->SetPixel(col, row, (*palette_)[color_index]);
+    image->SetPixel(col, row, (*palette_)[color_index].toSfColor());
     
     if (player_col)
     {
@@ -325,7 +326,7 @@ void SlpFrame::setPixelsToColor(sf::Image *image, uint32_t row, uint32_t &col,
   
   while (col < to_pos)
   {
-    image->SetPixel(col, row, (*palette_)[color_index]);
+    image->SetPixel(col, row, (*palette_)[color_index].toSfColor());
     
     //if (player_col)
     //  player_color_mask_->SetPixel(col, row, color);

@@ -75,6 +75,7 @@ set(RESOURCE_SRC
     src/resource/SlpFile.cpp
     src/resource/SlpFrame.cpp
     src/resource/DrsFile.cpp
+    src/resource/Color.cpp
     )
 
 set(UTIL_SRC

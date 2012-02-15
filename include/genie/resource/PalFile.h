@@ -25,13 +25,13 @@
 #include <stdint.h>
 #include <boost/shared_ptr.hpp>
 
-#include <SFML/Graphics/Color.hpp>
-
-#include "genie/util/Logger.h"
 #include "genie/file/IFile.h"
 
 namespace genie
 {
+  
+class Logger;
+class Color;
 
 //------------------------------------------------------------------------------
 /// Class for parsing aoe color palettes.
@@ -56,7 +56,7 @@ public:
   /// @param index index of color in palette
   /// @return color object
   //
-  sf::Color& operator[](uint16_t index);
+  Color& operator[](uint16_t index);
   
   //----------------------------------------------------------------------------
   ///
@@ -71,7 +71,7 @@ private:
   
   static Logger &log;
   
-  std::vector<sf::Color> colors_;
+  std::vector<Color> colors_;
   
   uint32_t num_colors_;
   

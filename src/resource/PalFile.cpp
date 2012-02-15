@@ -22,6 +22,9 @@
 #include <iostream>
 #include <stdexcept>
 
+#include "genie/util/Logger.h"
+#include "genie/resource/Color.h"
+
 namespace genie
 {
 
@@ -42,7 +45,7 @@ PalFile::~PalFile()
 }
 
 //------------------------------------------------------------------------------
-sf::Color& PalFile::operator[](uint16_t index)
+Color& PalFile::operator[](uint16_t index)
 {
   /*
   if (index < 0 || index >= num_colors_)
