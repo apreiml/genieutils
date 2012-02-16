@@ -24,12 +24,13 @@
 #include <map>
 #include <stdint.h>
 
-#include "genie/util/Logger.h"
 #include "genie/file/IFile.h"
 #include "SlpFile.h"
 
 namespace genie
 {
+  
+class Logger;
 
 //------------------------------------------------------------------------------
 /// Base class for .drs files

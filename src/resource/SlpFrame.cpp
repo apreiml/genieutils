@@ -24,8 +24,7 @@
 //Debug
 #include <assert.h>
 
-#include "genie/resource/PalFile.h"
-#include <genie/resource/Color.h>
+#include "genie/resource/Color.h"
 
 
 namespace genie
@@ -37,21 +36,18 @@ namespace genie
                    : file_(iostr, pos), file_pos_(file_pos), palette_(palette)
                    */
 SlpFrame::SlpFrame()
-{
-  image_        = 0;
-  outline_      = 0;
+{ 
+  image_pixel_indexes_ = 0;
   
   player_color_index_ = -1;
+  
+  transparent_index_ = 255;
 }
 
 //------------------------------------------------------------------------------
 SlpFrame::~SlpFrame()
 {
-//   delete [] left_edges_;
-//   delete [] right_edges_;
-  
-  delete image_;
-  delete outline_;
+  delete image_pixel_indexes_;
 }
 
 //------------------------------------------------------------------------------
@@ -61,18 +57,42 @@ void SlpFrame::setSlpFilePos(std::streampos pos)
 }
 
 //------------------------------------------------------------------------------
-sf::Image* SlpFrame::getImage() const
+void SlpFrame::setColorPalette(PalFilePtr palette)
 {
-  return image_;
+  palette_ = palette;
+}
+
+//----------------------------------------------------------------------------
+uint8_t SlpFrame::getTransparentPixelIndex(void) const
+{
+  return transparent_index_;
+}
+
+uint32_t SlpFrame::getWidth(void) const
+{
+  return width_;
+}
+
+uint32_t SlpFrame::getHeight(void) const
+{
+  return height_;
+}
+
+//----------------------------------------------------------------------------
+const uint8_t* SlpFrame::getPixelIndexes(void) const
+{
+  return image_pixel_indexes_;
 }
 
 //------------------------------------------------------------------------------
-sf::Image* SlpFrame::getOutline() const
+/*sf::Image* SlpFrame::getOutline() const
 {
   return outline_;
 }
+*/
 
 //------------------------------------------------------------------------------
+/*
 sf::Image* SlpFrame::getPlayerColorMask(uint8_t player) const
 {
   sf::Image *cmask = new sf::Image();
@@ -87,6 +107,7 @@ sf::Image* SlpFrame::getPlayerColorMask(uint8_t player) const
   return cmask; //TODO auto pointer (but doesn't work, maybe problem with
                 // images copy constructor, try again in sfml2.0
 }
+*/
 
 //------------------------------------------------------------------------------
 int32_t SlpFrame::getHotspotX() const
@@ -120,8 +141,9 @@ void SlpFrame::loadHeader(std::istream &istr)
   palette_offset_       = read<uint32_t>();
   properties_           = read<uint32_t>();
   
-  width_     = read<int32_t>();
-  height_    = read<int32_t>();
+  width_     = read<uint32_t>();
+  height_    = read<uint32_t>();
+  
   hotspot_x_ = read<int32_t>();
   hotspot_y_ = read<int32_t>();
 }
@@ -129,27 +151,22 @@ void SlpFrame::loadHeader(std::istream &istr)
 //------------------------------------------------------------------------------
 void SlpFrame::load(std::istream &istr)
 {
-  assert(!image_); //TODO: Error check not implemented
-  
   setIStream(istr);
   
-  image_ = new sf::Image();
-  outline_ = new sf::Image();
-
-  image_->Create(width_, height_, sf::Color(0,0,0,0));
-  outline_->Create(width_, height_, sf::Color(0,0,0,0));
+  image_pixel_indexes_ = new uint8_t[width_ * height_];
+  std::fill_n(image_pixel_indexes_, width_ * height_, transparent_index_);
   
   readEdges();
   
   // Skipping command offsets. They are not needed now but
   // they can be used for checking file integrity.
-  for (int32_t i=0; i < height_; i++)
+  for (uint32_t i=0; i < height_; i++)
   {
     read<uint32_t>();
   }
   
   // Each row has it's commands, 0x0F signals the end of a rows commands.
-  for (int32_t row = 0; row < height_; row++)
+  for (uint32_t row = 0; row < height_; row++)
   {
     //std::cout << row << ": " << std::hex << (int)(tellg() - file_pos_) << std::endl;
     uint8_t data = 0;
@@ -182,7 +199,7 @@ void SlpFrame::load(std::istream &istr)
         case 8:
         case 0xC:
           pix_cnt = data >> 2;
-          readPixelsToImage(image_, row, pix_pos, pix_cnt);
+          readPixelsToImage(row, pix_pos, pix_cnt);
           break;
         
         case 1: // lesser skip (making pixels transparent)
@@ -196,7 +213,7 @@ void SlpFrame::load(std::istream &istr)
         case 2: // greater block copy
           pix_cnt = ((data & 0xF0) << 4) + read<uint8_t>();
           
-          readPixelsToImage(image_, row, pix_pos, pix_cnt);
+          readPixelsToImage(row, pix_pos, pix_cnt);
           break;
           
         case 3: // greater skip
@@ -208,7 +225,7 @@ void SlpFrame::load(std::istream &istr)
           pix_cnt = getPixelCountFromData(data);
  
           // TODO: player color
-          readPixelsToImage(image_, row, pix_pos, pix_cnt, true);
+          readPixelsToImage(row, pix_pos, pix_cnt, true);
           
           break;
           
@@ -216,7 +233,7 @@ void SlpFrame::load(std::istream &istr)
           pix_cnt = getPixelCountFromData(data);
           
           color_index = read<uint8_t>();
-          setPixelsToColor(image_, row, pix_pos, pix_cnt, 
+          setPixelsToColor(row, pix_pos, pix_cnt, 
                            color_index);
         break;
         
@@ -225,7 +242,7 @@ void SlpFrame::load(std::istream &istr)
           
           // TODO: file_.readuint8_t() | player_color
           color_index = read<uint8_t>();
-          setPixelsToColor(image_, row, pix_pos, pix_cnt, 
+          setPixelsToColor(row, pix_pos, pix_cnt, 
                            color_index, true);
         break;
         
@@ -295,7 +312,7 @@ void SlpFrame::readEdges()
 }
 
 //------------------------------------------------------------------------------
-void SlpFrame::readPixelsToImage(sf::Image *image, uint32_t row, uint32_t &col, 
+void SlpFrame::readPixelsToImage(uint32_t row, uint32_t &col, 
                                  uint32_t count, bool player_col)
 {
   uint32_t to_pos = col + count;
@@ -303,7 +320,10 @@ void SlpFrame::readPixelsToImage(sf::Image *image, uint32_t row, uint32_t &col,
   {
     uint8_t color_index = read<uint8_t>();
     
-    image->SetPixel(col, row, (*palette_)[color_index].toSfColor());
+    image_pixel_indexes_[row * width_ + col] = color_index;
+    
+    if (color_index == transparent_index_)
+      std::cout << "Color index == transparent index" << std::endl;
     
     if (player_col)
     {
@@ -318,7 +338,7 @@ void SlpFrame::readPixelsToImage(sf::Image *image, uint32_t row, uint32_t &col,
 }
 
 //------------------------------------------------------------------------------
-void SlpFrame::setPixelsToColor(sf::Image *image, uint32_t row, uint32_t &col, 
+void SlpFrame::setPixelsToColor(uint32_t row, uint32_t &col, 
                                 uint32_t count, uint8_t color_index, 
                                 bool player_col)
 {
@@ -326,7 +346,10 @@ void SlpFrame::setPixelsToColor(sf::Image *image, uint32_t row, uint32_t &col,
   
   while (col < to_pos)
   {
-    image->SetPixel(col, row, (*palette_)[color_index].toSfColor());
+    image_pixel_indexes_[row * width_ + col] = color_index;
+    
+    if (color_index == transparent_index_)
+      std::cout << "Color index == transparent index" << std::endl;
     
     //if (player_col)
     //  player_color_mask_->SetPixel(col, row, color);

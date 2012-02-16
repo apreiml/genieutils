@@ -27,8 +27,6 @@
 #include "genie/util/Logger.h"
 #include "PalFile.h"
 
-#include <SFML/Graphics/Image.hpp>
-
 namespace genie
 {
 
@@ -62,7 +60,7 @@ public:
   bool isLoaded(void) const;
   
   //----------------------------------------------------------------------------
-  void setColorPalette(PalFilePtr palette) { color_palette_ = palette; }
+  void setColorPalette(PalFilePtr palette);
   
   //----------------------------------------------------------------------------
   /// Return number of frames stored in the file. Available after load.
@@ -77,15 +75,6 @@ public:
   /// @return id
   //
   int32_t getId();
-  
-  //----------------------------------------------------------------------------
-  /// Returns pointer to the image at given frame or 0 if no image is at frame.
-  /// The image has not to be deleted!
-  ///
-  /// @param frame frame number, default = 0
-  /// @return image object or 0
-  //
-  sf::Image* getImage(uint32_t frame=0);
   
   //----------------------------------------------------------------------------
   /// Returns the slp frame at given frame index.

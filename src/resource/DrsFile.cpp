@@ -21,6 +21,8 @@
 
 #include <string>
 
+#include "genie/util/Logger.h"
+
 //#include <file/BinaFile.h>
 
 namespace genie

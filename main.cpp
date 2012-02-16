@@ -9,10 +9,40 @@
 #include <SFML/Window/Event.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include "genie/resource/DrsFile.h"
+#include "genie/resource/SlpFile.h"
+#include "genie/resource/Color.h"
+
+sf::Image createSfImage(uint32_t width, uint32_t height, const uint8_t* pixels, 
+                        genie::PalFilePtr palette, uint8_t transparent_pixel)
+{
+  sf::Image img;
+  
+  img.Create(width, height, sf::Color::Transparent);
+  
+  for (uint32_t row=0; row < width; row++)
+    for (uint32_t col=0; col < height; col++)
+    {
+      uint8_t c_index = pixels[row * width + col];
+      
+      if (c_index != transparent_pixel)
+      {
+        genie::Color g_color = (*palette)[c_index];
+        img.SetPixel(col, row, sf::Color(g_color.r, g_color.g, g_color.b));
+      }           
+    }
+  
+  return img;
+}
+
+sf::Image createSfImage(genie::SlpFrame &frame, genie::PalFilePtr palette)
+{
+  return createSfImage(frame.getWidth(), frame.getHeight(), 
+                       frame.getPixelIndexes(), palette, 
+                       frame.getTransparentPixelIndex());
+}
 
 
 int main(int argc, char **argv) {
-  
 
   genie::PalFilePtr pal(new genie::PalFile());
   genie::PalFilePtr pal2(new genie::PalFile());
@@ -51,9 +81,12 @@ int main(int argc, char **argv) {
     sf::Texture text;
     sf::Texture text2;
     
-    text2.LoadFromImage(*drs.getSlpFile(2)->getFrame().getImage());
+    text2.LoadFromImage(createSfImage(drs.getSlpFile(2)->getFrame(), pal));
  
-    text.LoadFromImage(*drs.getSlpFile(2)->getFrame().getPlayerColorMask(3));
+    genie::SlpFilePtr slpf = drs.getSlpFile(2);
+    //text.LoadFromImage(*drs.getSlpFile(2)->getFrame().getPlayerColorMask(3));
+    
+    text.LoadFromImage(createSfImage(slpf->getFrame(1), pal));
     //text.LoadFromImage(*slp.getFrame()->getImage());
     sf::Sprite Sprite(text);
     sf::Sprite s2(text2);

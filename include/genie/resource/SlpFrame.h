@@ -23,17 +23,15 @@
 #include "genie/file/ISerializable.h"
 
 #include <istream>
-#include <SFML/Graphics/Color.hpp>
-#include <SFML/Graphics/Image.hpp>
 #include <vector>
 #include <stdint.h>
+
+#include "PalFile.h"
 
 
 namespace genie
 {
   
-class PalFile;
-
 //------------------------------------------------------------------------------
 /// Class for reading a frame in a slp file.
 /// TODO: Check file corruption
@@ -69,7 +67,8 @@ public:
   //
   void setSlpFilePos(std::streampos pos);
   
-  void setColorPalette(PalFile *pal) { palette_ = pal; }
+  //----------------------------------------------------------------------------
+  void setColorPalette(PalFilePtr pal);
   
   //----------------------------------------------------------------------------
   /// Loads header data. The headers of frames are stored after the header of 
@@ -83,12 +82,15 @@ public:
   //
   void load(std::istream &istr);
   
+  uint32_t getWidth(void) const;
+  uint32_t getHeight(void) const;
+  
+  uint8_t getTransparentPixelIndex(void) const;
+  
   //----------------------------------------------------------------------------
-  /// Returns the image created by loading the frame.
-  ///
-  /// @return loaded image
+  /// Returns a pixel array containing the indexes of a color in a palette.
   //
-  sf::Image* getImage() const;
+  const uint8_t* getPixelIndexes(void) const;
   
   //----------------------------------------------------------------------------
   /// Returns the outline created by loading the frame.
@@ -97,7 +99,7 @@ public:
   ///
   /// @return loaded outline
   //
-  sf::Image* getOutline() const;
+  // TODO
   
   //----------------------------------------------------------------------------
   /// Returns the mask colored with color of given players index.
@@ -105,13 +107,13 @@ public:
   /// @param player index
   /// @return player color mask
   //
-  sf::Image* getPlayerColorMask(uint8_t player) const; //TODO auto_ptr
+  // getPlayerColorMask(uint8_t player) const; //TODO
   
   //----------------------------------------------------------------------------
   /// Get the hotspot of the frame. The Hotspot is the center of the image.
   ///
   /// @return x coordinate of the hotspot
-  // TODO: Hotspot as vector
+  // 
   int32_t getHotspotX() const;
   
   //----------------------------------------------------------------------------
@@ -124,27 +126,27 @@ public:
 private:
   
   std::streampos slp_file_pos_;
-  
+ 
   uint32_t cmd_table_offset_;
   uint32_t outline_table_offset_;
   uint32_t palette_offset_;
   uint32_t properties_;
   
-  int32_t width_;
-  int32_t height_;
+  uint32_t width_;
+  uint32_t height_;
   int32_t hotspot_x_;
   int32_t hotspot_y_;
   
   std::vector<int16_t> left_edges_;
   std::vector<int16_t> right_edges_;
   
-  sf::Image *image_;
-  sf::Image *outline_;
-  //sf::Image *player_color_mask_;
+ 
+  uint8_t transparent_index_;
+  uint8_t *image_pixel_indexes_;
   
-  int32_t player_color_index_;
+  uint8_t player_color_index_;
   
-  PalFile *palette_;
+  PalFilePtr palette_;
   
   // Element for player_color vector, the vector stores position (x, y) of
   // a player color pixel and the palette index for the color
@@ -173,32 +175,29 @@ private:
   void readEdges();
   
   //----------------------------------------------------------------------------
-  /// Reads pixel indeces from file and sets the pixels according to the
+  /// Reads pixel indexes from file and sets the pixels according to the
   /// colors from the palette.
   /// It is assumed that the stream pointer is at the start of the pixel array.
   ///
-  /// @param image target to set pixel
   /// @param row row to set pixels at
   /// @param col column to set pixels from
   /// @param count how many pixels should be read
   /// @param player_col if true, pixel will be written to player color image
   //
-  void readPixelsToImage(sf::Image *image, uint32_t row, uint32_t &col, 
-                         uint32_t count, bool player_col = false);
+  void readPixelsToImage(uint32_t row, uint32_t &col, uint32_t count, 
+                         bool player_col = false);
   
   //----------------------------------------------------------------------------
   /// Sets the next count of pixels to given color without reading from stream.
   ///
-  /// @param image target to set pixel
   /// @param row row to set pixels at
   /// @param col column to set pixels from
   /// @param count how many pixels should be set
   /// @param color color to set
   /// @param player_col if true, pixel will be written to player color image
   //
-  void setPixelsToColor(sf::Image *image, uint32_t row, uint32_t &col, 
-                        uint32_t count, uint8_t color_index, 
-                        bool player_col = false);
+  void setPixelsToColor(uint32_t row, uint32_t &col, uint32_t count, 
+                        uint8_t color_index, bool player_col = false);
   
   //----------------------------------------------------------------------------
   /// This method returns either the count stored in command byte or (if not 

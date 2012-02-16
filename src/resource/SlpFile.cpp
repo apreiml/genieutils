@@ -19,9 +19,10 @@
 
 #include "genie/resource/SlpFile.h"
 
+#include <stdexcept>
+
 #include "genie/resource/SlpFrame.h"
 #include "genie/resource/PalFile.h"
-#include <stdexcept>
 
 namespace genie
 {
@@ -62,7 +63,7 @@ void SlpFile::loadFile()
   // Load frame headers
   for (uint32_t i = 0; i < num_frames_; i++)
   {
-    frames_[i].setColorPalette(color_palette_.get());
+    frames_[i].setColorPalette(color_palette_);
     frames_[i].loadHeader(*getIStream());
     
     frames_[i].setSlpFilePos(getInitialReadPosition());
@@ -94,6 +95,11 @@ bool SlpFile::isLoaded(void ) const
   return loaded_;
 }
 
+//------------------------------------------------------------------------------
+void SlpFile::setColorPalette(PalFilePtr pal)
+{
+  color_palette_ = pal;
+}
 
 //------------------------------------------------------------------------------
 uint32_t SlpFile::getFrameCount()
@@ -105,14 +111,6 @@ uint32_t SlpFile::getFrameCount()
 int32_t SlpFile::getId()
 {
   return id_;
-}
-
-//------------------------------------------------------------------------------
-sf::Image* SlpFile::getImage(uint32_t frame)
-{
-  SlpFrame slp = getFrame(frame);
-  
-  return slp.getImage();
 }
 
 //------------------------------------------------------------------------------
