@@ -106,7 +106,6 @@ void DrsFile::loadHeader()
         if (table_types_[i].compare(getSlpTableHeader()) == 0)
         {
           SlpFilePtr slp(new SlpFile());
-          //slp->setStreamPos(pos);
           slp->setInitialReadPosition(pos);
           
           slp_map_[id] = slp;
