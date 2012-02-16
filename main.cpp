@@ -64,13 +64,10 @@ int main(int argc, char **argv) {
   
   
   genie::SlpFile slp;
-  slp.setColorPalette(pal);
   
   slp.load("slptest/backgrd1.slp");
   
   genie::DrsFile drs;
-  
-  drs.setDefaultPalette(pal);
   
   drs.load("slptest/graphics.drs");
   

@@ -30,10 +30,6 @@ namespace genie
 Logger& SlpFile::log = Logger::getLogger("genie.SlpFile");
 
 //------------------------------------------------------------------------------
-/*SlpFile::SlpFile(uint32_t id, uint32_t pos, uint32_t len, 
-                 std::iostream* iostr) : file_(iostr, pos), loaded_(false), 
-                 id_(id), len_(len)
-                 */
 SlpFile::SlpFile() : IFile()
 {
   loaded_ = false;
@@ -63,9 +59,7 @@ void SlpFile::loadFile()
   // Load frame headers
   for (uint32_t i = 0; i < num_frames_; i++)
   {
-    frames_[i].setColorPalette(color_palette_);
     frames_[i].loadHeader(*getIStream());
-    
     frames_[i].setSlpFilePos(getInitialReadPosition());
   }
 
@@ -93,12 +87,6 @@ void SlpFile::unload(void )
 bool SlpFile::isLoaded(void ) const
 {
   return loaded_;
-}
-
-//------------------------------------------------------------------------------
-void SlpFile::setColorPalette(PalFilePtr pal)
-{
-  color_palette_ = pal;
 }
 
 //------------------------------------------------------------------------------

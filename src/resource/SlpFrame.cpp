@@ -56,12 +56,6 @@ void SlpFrame::setSlpFilePos(std::streampos pos)
   slp_file_pos_ = pos;
 }
 
-//------------------------------------------------------------------------------
-void SlpFrame::setColorPalette(PalFilePtr palette)
-{
-  palette_ = palette;
-}
-
 //----------------------------------------------------------------------------
 uint8_t SlpFrame::getTransparentPixelIndex(void) const
 {

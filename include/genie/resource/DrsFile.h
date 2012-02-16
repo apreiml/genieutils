@@ -34,13 +34,13 @@ class Logger;
 
 //------------------------------------------------------------------------------
 /// Base class for .drs files
+//
 class DrsFile : public IFile
 {
 
 public:
   //----------------------------------------------------------------------------
   /// Default Constructor.
-  ///
   //
   DrsFile();
   
@@ -49,11 +49,6 @@ public:
   //
   virtual ~DrsFile();
     
-  //----------------------------------------------------------------------------
-  ///
-  //
-  void setDefaultPalette(PalFilePtr pal);
-  
   //----------------------------------------------------------------------------
   SlpFilePtr getSlpFile(uint32_t id);  
   
@@ -67,8 +62,6 @@ private:
   
   std::vector<std::string> table_types_;
   std::vector<uint32_t> table_num_of_files_;
-  
-  PalFilePtr pal_;
   
   typedef std::map<uint32_t, SlpFilePtr> SlpMap;
   SlpMap slp_map_;

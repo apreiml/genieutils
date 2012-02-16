@@ -38,14 +38,7 @@ class SlpFile : public IFile
 public:
   //----------------------------------------------------------------------------
   /// Constructor
-  ///
-  /// @param id resources' id
-  /// @param len 
-  /// @param istr input/output stream
-  /// @param pos start position of this file in stream
   //
-  //SlpFile(uint32_t id, uint32_t pos, uint32_t len, std::iostream *iostr);
-  
   SlpFile();
   
   //----------------------------------------------------------------------------
@@ -58,9 +51,6 @@ public:
   
   //----------------------------------------------------------------------------
   bool isLoaded(void) const;
-  
-  //----------------------------------------------------------------------------
-  void setColorPalette(PalFilePtr palette);
   
   //----------------------------------------------------------------------------
   /// Return number of frames stored in the file. Available after load.
@@ -93,8 +83,6 @@ private:
   uint32_t len_;
   
   uint32_t num_frames_;
-  
-  PalFilePtr color_palette_;
   
   typedef std::vector<SlpFrame> FrameVector;
   FrameVector frames_;

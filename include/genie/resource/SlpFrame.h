@@ -33,7 +33,7 @@ namespace genie
 {
   
 //------------------------------------------------------------------------------
-/// Class for reading a frame in a slp file.
+/// Class for reading a frame of a slp file.
 /// TODO: Check file corruption
 /// TODO: One (or more??) mask for player color and outline (and shadow?)
 //
@@ -44,14 +44,6 @@ public:
   //----------------------------------------------------------------------------
   /// Constructor
   ///
-  /// @param istr stream to read from
-  /// @param pos position to start reading from
-  /// @param file_pos position pointing at the beginning of the slp file.
-  /// @param palette color palette to choose colors from
-  //
-  //SlpFrame(std::iostream *iostr, std::streampos pos, std::streampos file_pos, 
-  //         ColorPalette *palette);
-  
   SlpFrame();
   
   //----------------------------------------------------------------------------
@@ -66,9 +58,6 @@ public:
   /// file offsets.
   //
   void setSlpFilePos(std::streampos pos);
-  
-  //----------------------------------------------------------------------------
-  void setColorPalette(PalFilePtr pal);
   
   //----------------------------------------------------------------------------
   /// Loads header data. The headers of frames are stored after the header of 
@@ -145,8 +134,6 @@ private:
   uint8_t *image_pixel_indexes_;
   
   uint8_t player_color_index_;
-  
-  PalFilePtr palette_;
   
   // Element for player_color vector, the vector stores position (x, y) of
   // a player color pixel and the palette index for the color

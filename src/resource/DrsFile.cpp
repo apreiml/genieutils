@@ -45,12 +45,6 @@ DrsFile::~DrsFile()
 }
 
 //------------------------------------------------------------------------------
-void DrsFile::setDefaultPalette(PalFilePtr pal)
-{
-  pal_ = pal;
-}
-
-//------------------------------------------------------------------------------
 SlpFilePtr DrsFile::getSlpFile(uint32_t id)
 {
     slp_map_[id]->readObject(*getIStream());
@@ -107,17 +101,13 @@ void DrsFile::loadHeader()
       {
         uint32_t id = read<uint32_t>();
         uint32_t pos = read<uint32_t>();
-        uint32_t len = read<uint32_t>();
+        /*uint32_t len =*/ read<uint32_t>();
                 
         if (table_types_[i].compare(getSlpTableHeader()) == 0)
         {
-          if (pal_.get() == 0)
-            log.error("No default color palette was set!");
-          
           SlpFilePtr slp(new SlpFile());
           //slp->setStreamPos(pos);
           slp->setInitialReadPosition(pos);
-          slp->setColorPalette(pal_);
           
           slp_map_[id] = slp;
         }
