@@ -1,3 +1,9 @@
+# Available settings:
+#
+# GUTILS_TOOLS:BOOL     if true to enable compilation of gutils tools
+# GUTILS_TEST:BOOL      if true some debug/test classes will be compiled
+#
+
 cmake_minimum_required(VERSION 2.8)
 
 set(Genieutils_LIBRARY genieutils)
@@ -7,17 +13,27 @@ project(genieutils)
 find_package(ZLIB REQUIRED)
 #find_package(Boost 1.42 COMPONENTS iostreams program_options REQUIRED)
 find_package(Boost 1.42 COMPONENTS iostreams program_options unit_test_framework REQUIRED)
-find_package(SFML COMPONENTS SYSTEM WINDOW GRAPHICS REQUIRED)
+
+if (GUTILS_TEST)
+  find_package(SFML COMPONENTS SYSTEM WINDOW GRAPHICS REQUIRED)
+endif (GUTILS_TEST)
 
 set(Boost_USE_STATIC_LIBS        ON)
 set(Boost_USE_MULTITHREADED      ON)
 set(Boost_USE_STATIC_RUNTIME    OFF)
 
-include_directories(
-    include/
-    ${Boost_INCLUDE_DIRS}
-    ${SFML_INCLUDE_DIR}
-    )
+if (GUTILS_TEST)
+  include_directories(
+      include/
+      ${Boost_INCLUDE_DIRS}
+      ${SFML_INCLUDE_DIR}
+      )
+else (GUTILS_TEST)
+  include_directories(
+      include/
+      ${Boost_INCLUDE_DIRS}
+      )
+endif (GUTILS_TEST)
 
 add_definitions(-Wall)
 
@@ -109,22 +125,26 @@ target_link_libraries(${Genieutils_LIBRARY} ${ZLIB_LIBRARIES} ${Boost_LIBRARIES}
 #------------------------------------------------------------------------------#
 # Dev tools:
 #------------------------------------------------------------------------------#
-#if (GU_TOOLS)
-  # tools
 
  # test doesn't build :(
  # add_executable(test ${TEST_SRC})
  # target_link_libraries(test ${Genieutils_LIBRARY} ${Boost_LIBRARIES} ) #${ZLIB_LIBRARIES} ${Boost_LIBRARIES} ${Genieutils_LIBRARY})
 
+if (GUTILS_TOOLS)
   add_executable(datextract ${EXTRACT_SRC})
   target_link_libraries(datextract ${ZLIB_LIBRARIES} ${Boost_LIBRARIES} ${Genieutils_LIBRARY})
 
   add_executable(bincomp ${BINCOMP_SRC})
+endif (GUTILS_TOOLS)
 
+#------------------------------------------------------------------------------#
+# Debug/Test:
+#------------------------------------------------------------------------------#
+if (GUTILS_TEST)
   add_executable(main main.cpp)
   target_link_libraries(main ${Genieutils_LIBRARY}
                       ${SFML_WINDOW_LIBRARY}
                       ${SFML_SYSTEM_LIBRARY}
                       ${SFML_GRAPHICS_LIBRARY}
   )
-#endif (GDAT_TOOLS)
+endif(GUTILS_TEST)
