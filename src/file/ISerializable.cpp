@@ -54,11 +54,6 @@ std::streampos ISerializable::getInitialReadPosition(void) const
 //------------------------------------------------------------------------------
 void ISerializable::readObject(std::istream &istr)
 {
-  if (getGameVersion() == genie::GV_None)
-  {
-    std::cout << "Info: (Reading) Game version not set!" << std::endl;
-  }
-
   setOperation(OP_READ);
   istr_ = &istr;
   
@@ -71,11 +66,6 @@ void ISerializable::readObject(std::istream &istr)
 //------------------------------------------------------------------------------
 void ISerializable::writeObject(std::ostream &ostr)
 {
-  if (getGameVersion() == genie::GV_None)
-  {
-    std::cout << "Info: (Writing) Game version not set!" << std::endl;
-  }
-
   setOperation(OP_WRITE);
   ostr_ = &ostr;
   serializeObject();
@@ -103,6 +93,23 @@ void ISerializable::serializeSubObject(ISerializable * const other)
   serializeObject();
 }
   
+//------------------------------------------------------------------------------
+void ISerializable::setGameVersion(GameVersion gv)
+{
+  gameVersion_ = gv;
+}
+
+//------------------------------------------------------------------------------
+GameVersion ISerializable::getGameVersion(void ) const
+{
+  if (gameVersion_ == GV_None)
+  {
+    std::cerr << "Warning: Game version not set!" << std::endl;
+  }
+
+  return gameVersion_;
+}
+
 //------------------------------------------------------------------------------
 void ISerializable::setOperation(Operation op)
 {
@@ -145,17 +152,6 @@ std::ostream * ISerializable::getOStream(void)
   return ostr_; 
 }
 
-//------------------------------------------------------------------------------
-void ISerializable::setGameVersion(GameVersion gv)
-{
-  gameVersion_ = gv;
-}
-
-//------------------------------------------------------------------------------
-GameVersion ISerializable::getGameVersion(void )
-{
-  return gameVersion_;
-}
 
 //------------------------------------------------------------------------------
 size_t ISerializable::strnlen(const char *str, size_t max_size)

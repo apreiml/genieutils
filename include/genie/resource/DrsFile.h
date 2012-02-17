@@ -26,6 +26,7 @@
 
 #include "genie/file/IFile.h"
 #include "SlpFile.h"
+#include "BinaFile.h"
 
 namespace genie
 {
@@ -52,6 +53,9 @@ public:
   //----------------------------------------------------------------------------
   SlpFilePtr getSlpFile(uint32_t id);  
   
+  //----------------------------------------------------------------------------
+  PalFilePtr getPalFile(uint32_t id);
+  
 private:
   static Logger &log;
   
@@ -66,6 +70,10 @@ private:
   typedef std::map<uint32_t, SlpFilePtr> SlpMap;
   SlpMap slp_map_;
   
+  typedef std::map<uint32_t, BinaFilePtr> BinaMap;
+  BinaMap bina_map_;
+  
+  unsigned int getCopyRightHeaderSize(void) const;
   
   std::string getSlpTableHeader(void) const;
   std::string getBinaryTableHeader(void) const;

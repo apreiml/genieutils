@@ -22,6 +22,7 @@
 #include <string>
 
 #include "genie/util/Logger.h"
+#include "genie/file/ISerializable.h"
 
 //#include <file/BinaFile.h>
 
@@ -51,6 +52,14 @@ SlpFilePtr DrsFile::getSlpFile(uint32_t id)
     
     return slp_map_[id];
 }
+
+//------------------------------------------------------------------------------
+PalFilePtr DrsFile::getPalFile(uint32_t id)
+{
+  PalFilePtr pal = bina_map_[id]->readPalFile(getIStream());
+  
+  return pal;
+}
  
 //------------------------------------------------------------------------------
 void DrsFile::serializeObject(void)
@@ -59,15 +68,24 @@ void DrsFile::serializeObject(void)
 }
 
 //------------------------------------------------------------------------------
+unsigned int DrsFile::getCopyRightHeaderSize(void) const
+{
+  if (getGameVersion() >= GV_SWGB)
+    return 0x3C;
+  else
+    return 0x28;
+}
+
+//------------------------------------------------------------------------------
 std::string DrsFile::getSlpTableHeader(void) const
 {
-  return " plsL";
+  return " pls";
 }
 
 //------------------------------------------------------------------------------
 std::string DrsFile::getBinaryTableHeader(void) const
 {
-  return "anibd";
+  return "anib";
 }
 
 //------------------------------------------------------------------------------
@@ -77,7 +95,7 @@ void DrsFile::loadHeader()
     log.warn("Trying to load header again!"); 
   else
   {
-    string copy_right = readString(40);
+    string copy_right = readString(getCopyRightHeaderSize());
     
     string version = readString(4);
     
@@ -90,7 +108,8 @@ void DrsFile::loadHeader()
     // Load table data
     for (uint32_t i = 0; i < num_of_tables_; i++)
     {
-      table_types_.push_back(readString(8));
+      table_types_.push_back(readString(4));
+      read<uint32_t>(); // TODO: Unknown
       table_num_of_files_.push_back(read<uint32_t>());
     }
    
@@ -110,13 +129,12 @@ void DrsFile::loadHeader()
           
           slp_map_[id] = slp;
         }
-        else
+        else if (table_types_[i].compare(getBinaryTableHeader()) == 0)
         {
-          if (table_types_[i].compare(getBinaryTableHeader()) == 0)
-          {
-//             BinaFile *bina = new BinaFile(id, pos, len, file_.getIOStream());
-//             resource_manager_->addBinaFile(bina);
-          }
+          BinaFilePtr bina(new BinaFile());
+          bina->setInitialReadPosition(pos);
+          
+          bina_map_[id] = bina;
         }
         // else other TODO: Sounds
         

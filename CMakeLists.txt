@@ -92,6 +92,7 @@ set(RESOURCE_SRC
     src/resource/SlpFrame.cpp
     src/resource/DrsFile.cpp
     src/resource/Color.cpp
+    src/resource/BinaFile.cpp
     )
 
 set(UTIL_SRC

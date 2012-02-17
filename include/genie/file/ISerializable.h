@@ -82,7 +82,7 @@ public:
   void setGameVersion(GameVersion gv);
   
   //----------------------------------------------------------------------------
-  GameVersion getGameVersion(void);
+  GameVersion getGameVersion(void) const;
 protected:
   
   enum Operation

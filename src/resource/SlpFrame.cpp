@@ -31,10 +31,6 @@ namespace genie
 {
 
 //------------------------------------------------------------------------------
-/*SlpFrame::SlpFrame(std::iostream* iostr, std::streampos pos, 
-                   std::streampos file_pos, ColorPalette *palette) 
-                   : file_(iostr, pos), file_pos_(file_pos), palette_(palette)
-                   */
 SlpFrame::SlpFrame()
 { 
   image_pixel_indexes_ = 0;
