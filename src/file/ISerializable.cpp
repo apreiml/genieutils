@@ -103,11 +103,7 @@ void ISerializable::setGameVersion(GameVersion gv)
 GameVersion ISerializable::getGameVersion(void ) const
 {
   if (gameVersion_ == GV_None)
-  {
     std::cerr << "Warning: Game version not set!" << std::endl;
-    std::string *x = 0;
-    x->compare("asdf");
-  }
 
   return gameVersion_;
 }
