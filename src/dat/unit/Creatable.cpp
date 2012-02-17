@@ -26,8 +26,7 @@ namespace genie
 namespace unit
 {
 
-Creatable::Creatable() : ResourceCosts(getResourceCostsSize()),
-                         Unknown27(UNKNOWN27_SIZE),
+Creatable::Creatable() : Unknown27(UNKNOWN27_SIZE),
                          AttackMissileDuplicationSpawning(AMDBUNKNOWN_SIZE)
 {
   TrainTime = 0;

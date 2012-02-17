@@ -23,12 +23,9 @@
 namespace genie
 {
 
-Terrain::Terrain() : Colours(getColorSize()),
-                     Unknown7(UNKNOWN7_LEN), Unknown8(UNKNOWN8_LEN), 
+//------------------------------------------------------------------------------
+Terrain::Terrain() : Unknown7(UNKNOWN7_LEN), Unknown8(UNKNOWN8_LEN), 
                      Unknown9(UNKNOWN9_LEN), 
-                     Unknown10(getUnknown10Size()), 
-                     TerrainUnitID(getTerrainUnitSize()), 
-                     TerrainUnitDensity(getTerrainUnitSize()), 
                      Unknown11(UNKNOWN11_LEN),
                      SWGBUnknown1(SWGBUNKNOWN1_LEN)
 {
@@ -49,10 +46,12 @@ Terrain::Terrain() : Colours(getColorSize()),
   TerrainDimensions.first = TerrainDimensions.second = -1;
 }
 
+//------------------------------------------------------------------------------
 Terrain::~Terrain()
 {
 }
 
+//------------------------------------------------------------------------------
 short Terrain::getNameSize()
 {
   if (getGameVersion() >= genie::GV_SWGB)
@@ -61,16 +60,19 @@ short Terrain::getNameSize()
     return 13;
 }
 
+//------------------------------------------------------------------------------
 short Terrain::getColorSize()
 {
   return 3;
 }
 
+//------------------------------------------------------------------------------
 short Terrain::getTerrainUnitSize()
 {
   return 30;
 }
 
+//------------------------------------------------------------------------------
 short Terrain::getUnknown10Size(void)
 {
   if (getGameVersion() >= genie::GV_TC)
@@ -79,6 +81,7 @@ short Terrain::getUnknown10Size(void)
     return 64;
 }
   
+//------------------------------------------------------------------------------
 void Terrain::serializeObject(void )
 { 
   serialize<short>(Unknown1);

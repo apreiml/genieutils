@@ -61,7 +61,8 @@ void TechTree::serializeObject(void )
   serializeSub<ResearchConnection>(ResearchConnections, total_research_count_);
 }
 
-TechTreeAge::TechTreeAge() : Zeroes(getZeroesSize())
+//------------------------------------------------------------------------------
+TechTreeAge::TechTreeAge()
 {
   Unknown1 = 0;
   ID = 0;
@@ -70,10 +71,12 @@ TechTreeAge::TechTreeAge() : Zeroes(getZeroesSize())
   Unknown4 = 0;
 }
 
+//------------------------------------------------------------------------------
 TechTreeAge::~TechTreeAge()
 {
 }
 
+//------------------------------------------------------------------------------
 unsigned short TechTreeAge::getZeroesSize() 
 {
   if (getGameVersion() >= genie::GV_AoK)
@@ -88,6 +91,7 @@ unsigned short TechTreeAge::getZeroesSize()
 }
 
 
+//------------------------------------------------------------------------------
 void TechTreeAge::serializeObject(void )
 {
   serialize<long>(Unknown1);
@@ -109,7 +113,8 @@ void TechTreeAge::serializeObject(void )
   serialize<short>(Zeroes, getZeroesSize());
 } 
 
-BuildingConnection::BuildingConnection() : Unknown2a(getUnknown2aSize()), Unknown2b(getUnknown2bSize()), Unknown3(getUnknown3Size())
+//------------------------------------------------------------------------------
+BuildingConnection::BuildingConnection()
 {
   ID = 0;
   Unknown1 = 2;
@@ -123,10 +128,12 @@ BuildingConnection::BuildingConnection() : Unknown2a(getUnknown2aSize()), Unknow
   EnablingResearch = -1;
 }
 
+//------------------------------------------------------------------------------
 BuildingConnection::~BuildingConnection()
 {
 }
 
+//------------------------------------------------------------------------------
 unsigned int BuildingConnection::getUnknown2aSize()
 {
   if (getGameVersion() >= genie::GV_SWGB)
@@ -135,6 +142,7 @@ unsigned int BuildingConnection::getUnknown2aSize()
     return 8;  
 }
 
+//------------------------------------------------------------------------------
 unsigned int BuildingConnection::getUnknown2bSize()
 {
   if (getGameVersion() >= genie::GV_SWGB)
@@ -143,6 +151,7 @@ unsigned int BuildingConnection::getUnknown2bSize()
     return 7;  
 }
 
+//------------------------------------------------------------------------------
 void BuildingConnection::serializeObject(void)
 {
   serialize<long>(ID);
@@ -175,7 +184,8 @@ void BuildingConnection::serializeObject(void)
   serialize<long>(EnablingResearch); 
 }
 
-UnitConnection::UnitConnection() : Unknown2a(getUnknown2aSize()), Unknown2b(getUnknown2bSize())
+//------------------------------------------------------------------------------
+UnitConnection::UnitConnection() 
 {
   ID = 0;
   Unknown1 = 2;
@@ -193,10 +203,12 @@ UnitConnection::UnitConnection() : Unknown2a(getUnknown2aSize()), Unknown2b(getU
   EnablingResearch = -1;
 }
 
+//------------------------------------------------------------------------------
 UnitConnection::~UnitConnection()
 {
 }
 
+//------------------------------------------------------------------------------
 unsigned int UnitConnection::getUnknown2aSize()
 {
   if (getGameVersion() >= genie::GV_SWGB)
@@ -205,6 +217,7 @@ unsigned int UnitConnection::getUnknown2aSize()
     return 8;
 }
 
+//------------------------------------------------------------------------------
 unsigned int UnitConnection::getUnknown2bSize()
 {
   if (getGameVersion() >= genie::GV_SWGB)
@@ -213,6 +226,7 @@ unsigned int UnitConnection::getUnknown2bSize()
     return 7;
 }
 
+//------------------------------------------------------------------------------
 void UnitConnection::serializeObject(void)
 {
   serialize<long>(ID);
@@ -242,7 +256,8 @@ void UnitConnection::serializeObject(void)
   serialize<long>(EnablingResearch);  
 }
 
-ResearchConnection::ResearchConnection() : Unknown2a(getUnknown2aSize()), Unknown2b(getUnknown2bSize())
+//------------------------------------------------------------------------------
+ResearchConnection::ResearchConnection()
 {
   ID = 0;
   Unknown1 = 2;
@@ -256,10 +271,12 @@ ResearchConnection::ResearchConnection() : Unknown2a(getUnknown2aSize()), Unknow
   Unknown9 = 0;
 }
 
+//------------------------------------------------------------------------------
 ResearchConnection::~ResearchConnection()
 {
 }
 
+//------------------------------------------------------------------------------
 unsigned int ResearchConnection::getUnknown2aSize()
 {
   if (getGameVersion() >= genie::GV_SWGB)
@@ -268,6 +285,7 @@ unsigned int ResearchConnection::getUnknown2aSize()
     return 9;
 }
 
+//------------------------------------------------------------------------------
 unsigned int ResearchConnection::getUnknown2bSize()
 {
   if (getGameVersion() >= genie::GV_SWGB)
@@ -276,6 +294,7 @@ unsigned int ResearchConnection::getUnknown2bSize()
     return 8;
 }
 
+//------------------------------------------------------------------------------
 void ResearchConnection::serializeObject(void)
 {
   serialize<long>(ID);

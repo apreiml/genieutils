@@ -27,22 +27,24 @@ namespace genie
   
 short TerrainRestriction::Terrain_Count_ = 0;
 
-TerrainRestriction::TerrainRestriction() : TerrainAccessible(Terrain_Count_),
-                                           TerrainPassGraphics(Terrain_Count_)
+//------------------------------------------------------------------------------
+TerrainRestriction::TerrainRestriction() 
 {
 }
 
+//------------------------------------------------------------------------------
 TerrainRestriction::~TerrainRestriction()
 {
 
 }
 
+//------------------------------------------------------------------------------
 void TerrainRestriction::setTerrainCount(short int Terrain_Count)
 {
   Terrain_Count_ = Terrain_Count;
 }
 
-
+//------------------------------------------------------------------------------
 void TerrainRestriction::serializeObject(void)
 {
   serialize<float>(TerrainAccessible, Terrain_Count_);

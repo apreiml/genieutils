@@ -22,8 +22,9 @@
 
 namespace genie
 {
-
-UnitCommand::UnitCommand() : Graphics(getGraphicsSize(), -1)
+  
+//------------------------------------------------------------------------------
+UnitCommand::UnitCommand()
 {
   One = 0;
   ID = -1;
@@ -50,15 +51,18 @@ UnitCommand::UnitCommand() : Graphics(getGraphicsSize(), -1)
   Unknown14 = 9;
 }
 
+//------------------------------------------------------------------------------
 UnitCommand::~UnitCommand()
 {
 }
 
+//------------------------------------------------------------------------------
 short UnitCommand::getGraphicsSize(void)
 {
   return 6;
 }
 
+//------------------------------------------------------------------------------
 void UnitCommand::serializeObject(void )
 {
   serialize<short>(One);

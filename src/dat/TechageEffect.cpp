@@ -23,6 +23,7 @@
 namespace genie
 {
 
+//------------------------------------------------------------------------------
 TechageEffect::TechageEffect()
 {
   Type = -1;
@@ -32,11 +33,13 @@ TechageEffect::TechageEffect()
   D = 0;
 }
 
+//------------------------------------------------------------------------------
 TechageEffect::~TechageEffect()
 {
 
 }
 
+//------------------------------------------------------------------------------
 void TechageEffect::serializeObject(void )
 {
   serialize<char>(Type);

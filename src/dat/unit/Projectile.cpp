@@ -26,7 +26,7 @@ namespace genie
 namespace unit
 {
 
-Projectile::Projectile() : GraphicDisplacement(getGraphicDisplacementSize())
+Projectile::Projectile()
 {
   Unknown20 = 0;
   Unknown20_1 = 0;

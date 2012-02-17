@@ -28,7 +28,7 @@
 #include "genie/Types.h"
 #include "genie/file/ISerializable.h"
 
-#include "TerrainRestriction.h"
+// #include "TerrainRestriction.h"
 #include "PlayerColour.h"
 #include "Sound.h"
 #include "Graphic.h"
@@ -49,6 +49,8 @@ struct zlib_params;
 
 namespace genie
 {
+  
+class TerrainRestriction;
 
 class DatFile : public ISerializable
 {

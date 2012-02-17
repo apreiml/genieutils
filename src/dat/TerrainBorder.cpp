@@ -23,24 +23,29 @@
 namespace genie
 {
 
+//------------------------------------------------------------------------------
 TerrainBorder::TerrainBorder() : Colors(3)
 {
 }
 
+//------------------------------------------------------------------------------
 TerrainBorder::~TerrainBorder()
 {
 }
 
+//------------------------------------------------------------------------------
 unsigned int TerrainBorder::getNameSize()
 {
   return 13;
 }
 
+//------------------------------------------------------------------------------
 unsigned int TerrainBorder::getUnknown3Size()
 {
   return 1410;
 }
 
+//------------------------------------------------------------------------------
 void TerrainBorder::serializeObject(void )
 { 
   //serialize<short>(Unknown1);
@@ -71,16 +76,19 @@ void TerrainBorder::serializeObject(void )
 }
 
 
+//------------------------------------------------------------------------------
 TBFrameData::TBFrameData()
 {
   
 }
 
+//------------------------------------------------------------------------------
 TBFrameData::~TBFrameData()
 {
   
 }
 
+//------------------------------------------------------------------------------
 void TBFrameData::serializeObject(void )
 {
   serialize<short>(FrameID);

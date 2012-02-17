@@ -26,6 +26,7 @@
 namespace genie
 {
 
+//------------------------------------------------------------------------------
 TerrainPassGraphic::TerrainPassGraphic() 
 {
   Buildable = 0;
@@ -34,10 +35,12 @@ TerrainPassGraphic::TerrainPassGraphic()
   ReplicationAmount = 0;
 }
 
+//------------------------------------------------------------------------------
 TerrainPassGraphic::~TerrainPassGraphic()
 {
 }
 
+//------------------------------------------------------------------------------
 void TerrainPassGraphic::serializeObject()
 {
   serialize<long>(Buildable);

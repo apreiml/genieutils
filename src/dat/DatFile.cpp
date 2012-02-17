@@ -31,6 +31,7 @@
 #include <boost/iostreams/copy.hpp>
 
 #include "genie/Types.h"
+#include "genie/dat/TerrainRestriction.h"
 
 namespace genie
 {
