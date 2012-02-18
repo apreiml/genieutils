@@ -51,9 +51,19 @@ public:
   virtual ~DrsFile();
     
   //----------------------------------------------------------------------------
+  /// Get a shared pointer to a slp file.
+  ///
+  /// @param id resource id
+  /// @return slp file pointer or "empty" shared pointer if not found
+  //
   SlpFilePtr getSlpFile(uint32_t id);  
   
   //----------------------------------------------------------------------------
+  /// Get a shared pointer to a color palette file.
+  ///
+  /// @param id resource id
+  /// @return bina file pointer or "empty" shared pointer if not found
+  //
   PalFilePtr getPalFile(uint32_t id);
   
 private:

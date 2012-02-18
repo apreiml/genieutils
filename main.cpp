@@ -44,6 +44,7 @@ sf::Image createSfImage(genie::SlpFrame &frame, genie::PalFilePtr palette)
 
 int main(int argc, char **argv) {
 
+  genie::Logger::setLogLevel(genie::Logger::L_INFO);
   genie::DrsFile interfac;
   
   interfac.setGameVersion(genie::GV_AoK);
@@ -70,6 +71,7 @@ int main(int argc, char **argv) {
   sf::Texture text;
     
   genie::SlpFilePtr slpf = drs.getSlpFile(slp_id);
+  drs.getSlpFile(0);
     
   text.LoadFromImage(createSfImage(slpf->getFrame(0), pal));
   

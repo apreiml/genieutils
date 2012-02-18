@@ -79,6 +79,7 @@ void SlpFile::unload(void )
     log.warn("Trying to unload a not loaded slpfile!");
   
   frames_.clear();
+  num_frames_ = 0;
   
   loaded_ = false;
 }
@@ -96,10 +97,10 @@ uint32_t SlpFile::getFrameCount()
 }
 
 //------------------------------------------------------------------------------
-int32_t SlpFile::getId()
-{
-  return id_;
-}
+// int32_t SlpFile::getId()
+// {
+//   return id_;
+// }
 
 //------------------------------------------------------------------------------
 SlpFrame& SlpFile::getFrame(uint32_t frame)

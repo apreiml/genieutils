@@ -111,10 +111,10 @@ int32_t SlpFrame::getHotspotY() const
   return hotspot_y_;
 }
 
-void SlpFrame::serializeHeader(void)
-{
-
-}
+// void SlpFrame::serializeHeader(void)
+// {
+// 
+// }
 
 void SlpFrame::serializeObject(void)
 {

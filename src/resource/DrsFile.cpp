@@ -48,17 +48,34 @@ DrsFile::~DrsFile()
 //------------------------------------------------------------------------------
 SlpFilePtr DrsFile::getSlpFile(uint32_t id)
 {
-    slp_map_[id]->readObject(*getIStream());
-    
-    return slp_map_[id];
+  SlpMap::iterator i = slp_map_.find(id);
+  
+  if (i != slp_map_.end())
+  {
+    i->second->readObject(*getIStream());   
+    return i->second;
+  }
+  else
+  {
+    log.warn("No slp file with id [%d] found!", id);
+    return SlpFilePtr();
+  }
 }
 
 //------------------------------------------------------------------------------
 PalFilePtr DrsFile::getPalFile(uint32_t id)
 {
-  PalFilePtr pal = bina_map_[id]->readPalFile(getIStream());
+  BinaMap::iterator i = bina_map_.find(id);
   
-  return pal;
+  if (i != bina_map_.end())
+  {
+    return i->second->readPalFile(getIStream());
+  }
+  else
+  {
+    log.warn("No bina file with id [%d] found!", id);
+    return PalFilePtr();
+  }
 }
  
 //------------------------------------------------------------------------------

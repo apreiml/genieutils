@@ -32,6 +32,11 @@ namespace genie
 
 class SlpFrame;
 
+//------------------------------------------------------------------------------
+/// A slp file stores one or several images encoded using simple commands.
+/// The image is stored as 8 bits per pixel, that means only the index of a
+/// color in a palette is saved.
+//
 class SlpFile : public IFile
 {
 
@@ -47,9 +52,13 @@ public:
   virtual ~SlpFile();
   
   //----------------------------------------------------------------------------
+  /// Frees all content of a slp file.
+  //
   void unload(void);
   
   //----------------------------------------------------------------------------
+  /// Check whether the files content is loaded or not.
+  //
   bool isLoaded(void) const;
   
   //----------------------------------------------------------------------------
@@ -64,7 +73,7 @@ public:
   ///
   /// @return id
   //
-  int32_t getId();
+//   int32_t getId();
   
   //----------------------------------------------------------------------------
   /// Returns the slp frame at given frame index.
@@ -75,7 +84,6 @@ public:
   SlpFrame& getFrame(uint32_t frame=0);
   
 private: 
-  //SlpFile();
   
   bool loaded_;
   

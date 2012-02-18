@@ -33,7 +33,10 @@ namespace genie
 {
   
 //------------------------------------------------------------------------------
-/// Class for reading a frame of a slp file.
+/// Class for reading a frame of a slp file. Once loaded the image can be
+/// obtained as a pixel array. A pixel is stored as the index of a color
+/// in a palette.
+///
 /// TODO: Check file corruption
 /// TODO: One (or more??) mask for player color and outline (and shadow?)
 //
@@ -51,7 +54,7 @@ public:
   //
   virtual ~SlpFrame();
   
-  void serializeHeader(void);
+//   void serializeHeader(void);
     
   //----------------------------------------------------------------------------
   /// Set slp file position inside the stream. It's necesarry for calculating
@@ -71,13 +74,26 @@ public:
   //
   void load(std::istream &istr);
   
+  //----------------------------------------------------------------------------
+  /// Get images width.
+  //
   uint32_t getWidth(void) const;
+  
+  //----------------------------------------------------------------------------
+  /// Get images height.
+  //
   uint32_t getHeight(void) const;
   
+  
+  //----------------------------------------------------------------------------
+  /// Get index of the color that should be transparent.
+  //
   uint8_t getTransparentPixelIndex(void) const;
   
   //----------------------------------------------------------------------------
   /// Returns a pixel array containing the indexes of a color in a palette.
+  ///
+  /// @return pixel array size of (width * height)
   //
   const uint8_t* getPixelIndexes(void) const;
   
@@ -99,14 +115,16 @@ public:
   // getPlayerColorMask(uint8_t player) const; //TODO
   
   //----------------------------------------------------------------------------
-  /// Get the hotspot of the frame. The Hotspot is the center of the image.
+  /// Get the hotspot of the frame. The Hotspot is the isometric center of 
+  /// the object presented by this frame.
   ///
   /// @return x coordinate of the hotspot
   // 
   int32_t getHotspotX() const;
   
   //----------------------------------------------------------------------------
-  /// Get the hotspot of the frame. The Hotspot is the center of the image.
+  /// Get the hotspot of the frame. The Hotspot is the isometric center of 
+  /// the object presented by this frame.
   ///
   /// @return y coordinate of the hotspot
   //

@@ -59,7 +59,9 @@ public:
   Color& operator[](uint16_t index);
   
   //----------------------------------------------------------------------------
+  /// Number of colors stored in this palette.
   ///
+  /// @return size
   //
   size_t size(void) const;
   
