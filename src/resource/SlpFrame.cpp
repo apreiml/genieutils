@@ -44,6 +44,7 @@ SlpFrame::SlpFrame()
 SlpFrame::~SlpFrame()
 {
   delete image_pixel_indexes_;
+  image_pixel_indexes_ = 0;
 }
 
 //------------------------------------------------------------------------------

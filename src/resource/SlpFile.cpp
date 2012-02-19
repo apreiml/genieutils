@@ -59,14 +59,15 @@ void SlpFile::loadFile()
   // Load frame headers
   for (uint32_t i = 0; i < num_frames_; i++)
   {
-    frames_[i].loadHeader(*getIStream());
-    frames_[i].setSlpFilePos(getInitialReadPosition());
+    frames_[i] = SlpFramePtr(new SlpFrame());
+    frames_[i]->loadHeader(*getIStream());
+    frames_[i]->setSlpFilePos(getInitialReadPosition());
   }
 
   // Load frame content
   for (FrameVector::iterator it = frames_.begin(); it != frames_.end(); it ++)
   {
-    (*it).load(*getIStream());
+    (*it)->load(*getIStream());
   }
   
   loaded_ = true;
@@ -103,7 +104,7 @@ uint32_t SlpFile::getFrameCount()
 // }
 
 //------------------------------------------------------------------------------
-SlpFrame& SlpFile::getFrame(uint32_t frame)
+SlpFramePtr SlpFile::getFrame(uint32_t frame)
 {
   if (frame >= frames_.size())
   {

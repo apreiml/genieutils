@@ -26,11 +26,10 @@
 #include "genie/file/IFile.h"
 #include "genie/util/Logger.h"
 #include "PalFile.h"
+#include "SlpFrame.h"
 
 namespace genie
 {
-
-class SlpFrame;
 
 //------------------------------------------------------------------------------
 /// A slp file stores one or several images encoded using simple commands.
@@ -81,7 +80,7 @@ public:
   /// @param frame frame index
   /// @return SlpFrame
   //
-  SlpFrame& getFrame(uint32_t frame=0);
+  SlpFramePtr getFrame(uint32_t frame=0);
   
 private: 
   
@@ -92,7 +91,7 @@ private:
   
   uint32_t num_frames_;
   
-  typedef std::vector<SlpFrame> FrameVector;
+  typedef std::vector<SlpFramePtr> FrameVector;
   FrameVector frames_;
   
   static Logger &log;

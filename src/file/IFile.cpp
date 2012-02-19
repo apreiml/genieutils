@@ -48,7 +48,7 @@ const char *IFile::getFileName(void) const
 void IFile::load() throw (std::ios_base::failure)
 {
   if (fileName_.empty())
-    throw std::ios_base::failure("File name not set");
+    throw std::ios_base::failure("Load: File name not set");
   
   load(fileName_.c_str());
 }
@@ -75,7 +75,7 @@ void IFile::load(const char *fileName) throw (std::ios_base::failure)
 void IFile::save(void ) throw (std::ios_base::failure)
 {
   if (fileName_.empty())
-    throw std::ios_base::failure("File name not set");
+    throw std::ios_base::failure("Save: File name not set");
   
   saveAs(fileName_.c_str());
 }

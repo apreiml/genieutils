@@ -16,8 +16,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef TYPES_H
-#define TYPES_H
+#ifndef GENIE_TYPES_H
+#define GENIE_TYPES_H
 
 namespace genie
 {
@@ -35,4 +35,4 @@ enum GameVersion
 
 }
 
-#endif //TYPES_H
+#endif //GENIE_TYPES_H

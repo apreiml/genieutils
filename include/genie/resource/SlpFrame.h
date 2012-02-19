@@ -213,6 +213,8 @@ private:
   uint8_t getPixelCountFromData(uint8_t data);
 };
 
+typedef boost::shared_ptr<SlpFrame> SlpFramePtr;
+
 }
 
 #endif // GENIE_SLPFRAME_H
