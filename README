@@ -1,0 +1,11 @@
+genieutils
+==========
+
+Genieutils consists of a library and some tools to work with certain data and 
+resource files of genie engine games.
+
+Features
+--------
+
+* reading/writing of empires*.dat and genie*.dat files
+* reading of drs, slp and pal files

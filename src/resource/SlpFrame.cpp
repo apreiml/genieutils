@@ -172,10 +172,6 @@ void SlpFrame::load(std::istream &istr)
       if (data == 0x0F)
         break;
       
-      /*
-       * Command description and code snippets borrowed from  Bryce Schroeders 
-       * SLPLib (bryce@lanset.com). 
-       */
       uint8_t cmd = data & 0xF;
       
       uint32_t pix_cnt = 0;
