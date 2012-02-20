@@ -11,6 +11,10 @@
 #include "genie/resource/DrsFile.h"
 #include "genie/resource/SlpFile.h"
 #include "genie/resource/Color.h"
+#include <genie/script/ScnFile.h>
+#include <genie/file/Compressor.h>
+#include <boost/iostreams/copy.hpp>
+#include <boost/smart_ptr.hpp>
 
 sf::Image createSfImage(uint32_t width, uint32_t height, const uint8_t* pixels, 
                         genie::PalFilePtr palette, uint8_t transparent_pixel)
@@ -42,9 +46,8 @@ sf::Image createSfImage(genie::SlpFramePtr frame, genie::PalFilePtr palette)
 }
 
 
-int main(int argc, char **argv) {
-
-  genie::Logger::setLogLevel(genie::Logger::L_INFO);
+void testDrs()
+{
   genie::DrsFile interfac;
   
   interfac.setGameVersion(genie::GV_AoK);
@@ -107,6 +110,43 @@ int main(int argc, char **argv) {
       // Display window contents on screen
       App.Display();
   }
+}
 
+void testScn()
+{
+  genie::ScnFile scn;
+  
+  scn.load("small_crater_lake.scx");
+//   scn.extractRaw("small_crater_lake.scx", "raw.scx");
+  
+}
+
+int main(int argc, char **argv) {
+
+  genie::Logger::setLogLevel(genie::Logger::L_INFO);
+  
+//   testDrs();
+  
+  testScn();
+  /*
+  std::ifstream ifs;
+  std::ofstream ofs;
+  
+  ifs.open("tmp/empires2.dat", std::ios::binary);
+  ofs.open("q.dat", std::ios::binary);
+ 
+  genie::Compressor c;
+  
+  boost::shared_ptr<std::istream> unc = c.startDecompression(&ifs);
+  
+  boost::iostreams::copy((*unc), ofs);
+  
+  c.stopDecompression();
+  
+//   delete unc;
+  
+  ifs.close();
+  ofs.close();
+   */
   return 0;
 }

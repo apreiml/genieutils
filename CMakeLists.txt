@@ -43,7 +43,7 @@ add_definitions(-Wall)
 set(FILE_SRC
     src/file/ISerializable.cpp
     src/file/IFile.cpp
-    src/file/ICompressedFile.cpp
+    src/file/Compressor.cpp
     )
 
 set(LANG_SRC
@@ -95,6 +95,10 @@ set(RESOURCE_SRC
     src/resource/BinaFile.cpp
     )
 
+set(SCRIPT_SRC
+    src/script/ScnFile.cpp
+    )
+
 set(UTIL_SRC
     src/util/Logger.cpp
     )
@@ -117,7 +121,7 @@ set(BINCOMP_SRC src/tools/bincompare/bincomp.cpp
 #------------------------------------------------------------------------------#
 
 add_library(${Genieutils_LIBRARY} ${FILE_SRC} ${LANG_SRC} ${DAT_SRC} 
-                                  ${RESOURCE_SRC} ${UTIL_SRC})
+                                  ${RESOURCE_SRC} ${UTIL_SRC} ${SCRIPT_SRC})
 target_link_libraries(${Genieutils_LIBRARY} ${ZLIB_LIBRARIES} ${Boost_LIBRARIES})
 
 #add_executable(main main.cpp)

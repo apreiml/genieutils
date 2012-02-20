@@ -31,7 +31,18 @@
 #include <boost/iostreams/copy.hpp>
 
 #include "genie/Types.h"
+
 #include "genie/dat/TerrainRestriction.h"
+#include "genie/dat/PlayerColour.h"
+#include "genie/dat/Sound.h"
+#include "genie/dat/Graphic.h"
+#include "genie/dat/Terrain.h"
+#include "genie/dat/Techage.h"
+#include "genie/dat/UnitHeader.h"
+#include "genie/dat/Civ.h"
+#include "genie/dat/Research.h"
+#include "genie/dat/TerrainBorder.h"
+#include "genie/dat/UnitLine.h"
 
 namespace genie
 {

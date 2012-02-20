@@ -27,18 +27,6 @@
 
 #include "genie/Types.h"
 #include "genie/file/ISerializable.h"
-
-// #include "TerrainRestriction.h"
-#include "PlayerColour.h"
-#include "Sound.h"
-#include "Graphic.h"
-#include "Terrain.h"
-#include "Techage.h"
-#include "UnitHeader.h"
-#include "Civ.h"
-#include "Research.h"
-#include "TerrainBorder.h"
-#include "UnitLine.h"
 #include "TechTree.h"
 
 namespace boost {
@@ -51,6 +39,16 @@ namespace genie
 {
   
 class TerrainRestriction;
+class PlayerColour;
+class Sound;
+class Graphic;
+class Terrain;
+class Techage;
+class UnitHeader;
+class Civ;
+class Research;
+class TerrainBorder;
+class UnitLine;
 
 class DatFile : public ISerializable
 {
