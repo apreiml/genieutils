@@ -33,10 +33,15 @@ struct zlib_params;
 namespace genie
 {
   
+//------------------------------------------------------------------------------
+/// Utility to compress and decompress streams handled in ISerializeable 
+/// objects.
+//
 class Compressor : public boost::noncopyable
 {
 public:
   //----------------------------------------------------------------------------
+  /// Object that calls Compressors methods needs to register itself here.
   /// 
   /// @param obj object that calls compressors methods
   //
@@ -45,8 +50,10 @@ public:
   //----------------------------------------------------------------------------
   virtual ~Compressor();
   
+  //----------------------------------------------------------------------------
   void beginCompression(void);
   
+  //----------------------------------------------------------------------------
   void endCompression(void);
   
 private:
@@ -55,6 +62,9 @@ private:
   
   std::istream *istream_;
   boost::shared_ptr<std::istream> uncompressedIstream_;
+  
+  std::ostream *ostream_;
+  boost::shared_ptr<std::iostream> bufferedStream_;
   
   //----------------------------------------------------------------------------
   /// Get zlib parameters necessary for (de)compressing genie archives.
@@ -69,17 +79,15 @@ private:
   void startDecompression(void);
   
   //----------------------------------------------------------------------------
-  /// Closes decompressed stream. Returns compressed istream given at start.
-  ///
-  /// @return input stream given at startDecompression
+  /// Closes decompressed stream.
   //
   void stopDecompression(void);
   
   //----------------------------------------------------------------------------
-  std::iostream *startCompression(std::ostream *ostr);
+  void startCompression(void);
   
   //----------------------------------------------------------------------------
-  std::ostream *stopCompression(std::istream *ostr);
+  void stopCompression(void);
   
 };
 

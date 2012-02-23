@@ -122,6 +122,35 @@ void testScn()
   
   std::cout << "Original filename: " << scn.originalFileName << std::endl;
   
+  scn.saveAs("xxxx.scx");
+  
+  genie::ScnFile scn2;
+  scn2.load("xxxx.scx");
+  
+  
+  std::cout << "Original filename: " << scn2.originalFileName << std::endl;
+  
+}
+
+size_t xxstrnlen(const char *str, size_t maxLen)
+{
+//   const char *ptr = 0;
+  
+//   for (ptr = str; *ptr != '\0' && maxLen-- != 0; ++ptr);
+  
+//   return (ptr - str);
+
+  size_t len = 0;
+  
+  for (unsigned int i=0; i < maxLen; i++)
+  {
+    if (str[i] == '\0')
+      return len;
+    
+    len ++;
+  }
+  
+  return len;
 }
 
 int main(int argc, char **argv) {
@@ -131,6 +160,14 @@ int main(int argc, char **argv) {
 //   testDrs();
   
   testScn();
+  
+  
+//   char x[1];
+//   
+//   x[0] = 'c';
+//   
+//   std::cout << xxstrnlen(x, 1) << std::endl;
+  
   /*
   std::ifstream ifs;
   std::ofstream ofs;

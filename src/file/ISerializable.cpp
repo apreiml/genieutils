@@ -152,13 +152,19 @@ std::ostream * ISerializable::getOStream(void)
 
 
 //------------------------------------------------------------------------------
-size_t ISerializable::strnlen(const char *str, size_t max_size)
-{
-  const char *ptr = 0;
+size_t ISerializable::strnlen(const char *str, size_t maxLen)
+{  
+  size_t len = 0;
   
-  for (ptr = str; *ptr != '\0' && max_size-- != 0; ++ptr);
+  for (unsigned int i=0; i < maxLen; i++)
+  {
+    if (str[i] == '\0')
+      return len;
+    
+    len ++;
+  }
   
-  return (ptr - str);
+  return maxLen;
 }
 
 //------------------------------------------------------------------------------
