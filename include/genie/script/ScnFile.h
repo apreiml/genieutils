@@ -26,6 +26,7 @@
 
 namespace genie
 {
+class ScnPlayerData1;
 
 //------------------------------------------------------------------------------
 /// Class to read and write scenario files (.scn and .scx). The version of the
@@ -46,6 +47,7 @@ public:
   
   int32_t unknown1;
   
+  /// Timestamp of last save
   uint32_t lastSaveTime;
   
   std::string scenarioInstructions;
@@ -59,12 +61,29 @@ public:
   /// aokts description: "Next unit ID to place" ??
   uint32_t unknown3; 
   
+  /// 16
+  std::vector<std::string> playerNames;
+  
+  /// GameVersion >= AoK, 16
+  std::vector<uint32_t> playerNamesStringTable;
+  
+  /// 16
+  std::vector<ScnPlayerData1> playerData1;
+  
+  /// usually 1
+  uint32_t unknown4;
+  
+  char unknown5;
+  
+  /// always -1 ?
+  float unknown6;
+  
+  std::string originalFileName;
+  
 private:
   std::string version_;
   
   uint32_t headerLength_; //starting after this
-  
-  uint32_t scenarioInstructionsLength_;
   
   float version2_;
   
@@ -74,6 +93,27 @@ private:
   
   void serializeVersion(void);
   void serializeVersion2(void);
+};
+
+class ScnPlayerData1 : public ISerializable
+{
+public:
+  ScnPlayerData1();
+  virtual ~ScnPlayerData1();
+  
+  /// boolean
+  uint32_t active; 
+  
+  /// boolean
+  uint32_t human;
+  
+  uint32_t civilizationId;
+  
+  /// constant = 4 ??
+  uint32_t unknown1;
+  
+private:
+  virtual void serializeObject(void);
 };
   
 }

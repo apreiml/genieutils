@@ -83,6 +83,12 @@ public:
   
   //----------------------------------------------------------------------------
   GameVersion getGameVersion(void) const;
+  
+  //----------------------------------------------------------------------------
+  /// Needs access to get and set stream methods for (de)compressing.
+  //
+  friend class Compressor;
+  
 protected:
   
   enum Operation
@@ -210,6 +216,22 @@ protected:
   void write(T *data, size_t len)
   {
     ostr_->write(reinterpret_cast<char *>(data), sizeof(T) * len);
+  }
+  
+  //----------------------------------------------------------------------------
+  /// Serializes a string with preceeding size. Template argument is the data
+  /// type of the size.
+  ///
+  /// @param str string to serialize
+  /// @param cString if enabled, string ends with a \0 (default)
+  //
+  template <typename T>
+  void serializeSizedString(std::string &str, bool cString = true)
+  {
+    T size;
+    
+    serializeSize<T>(size, str, cString);
+    serialize<std::string>(str, size);
   }
   
   //----------------------------------------------------------------------------
@@ -372,14 +394,14 @@ protected:
   /// @param c_str true if cstring (ending with \0).
   /// 
   template <typename T>
-  void serializeSize(T &data, std::string str, bool c_str=true)
+  void serializeSize(T &data, std::string str, bool cString=true)
   {
     // calculate new size
     if (isOperation(OP_WRITE))
     {
       size_t size = str.size();
       
-      if (c_str && size != 0)
+      if (cString && size != 0)
         size++;   //counting \0
         
       data = size;

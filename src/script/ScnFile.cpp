@@ -25,7 +25,7 @@ namespace genie
 {
   
 //------------------------------------------------------------------------------
-ScnFile::ScnFile() : IFile()
+ScnFile::ScnFile() : IFile(), compressor_(this)
 {
 }
   
@@ -36,6 +36,7 @@ ScnFile::~ScnFile()
 
 void ScnFile::extractRaw(const char *from, const char *to)
 {
+  /*
   std::ifstream ifs;
   std::ofstream ofs;
   
@@ -65,6 +66,7 @@ void ScnFile::extractRaw(const char *from, const char *to)
   
   ifs.close();
   ofs.close();
+  */
   
 }
 
@@ -77,24 +79,46 @@ void ScnFile::serializeObject(void)
   serialize<int32_t>(unknown1);
   serialize<uint32_t>(lastSaveTime);
   
-  serializeSize<uint32_t>(scenarioInstructionsLength_, scenarioInstructions);
-  serialize<std::string>(scenarioInstructions, scenarioInstructionsLength_);
+  serializeSizedString<uint32_t>(scenarioInstructions);
   
   serialize<uint32_t>(unknown2);
   serialize<uint32_t>(playerCount);
   
-  // start compression
-  boost::shared_ptr<std::istream> decomp_istr =
-    compressor_.startDecompression(getIStream());
-    
-  setIStream(*decomp_istr.get());
-  //
+  compressor_.beginCompression();
  
+  // Compressed header:
+  
   serialize<uint32_t>(unknown3);
   serializeVersion2();
   
-  // end compression
-  setIStream(*compressor_.stopDecompression());
+  if (isOperation(OP_READ))
+  {
+    playerNames.resize(16);
+    for (uint8_t i=0; i<16; i++)
+      playerNames[i] = readString(256);
+  }
+  else
+    for (uint8_t i=0; i<16; i++)
+      writeString(playerNames[i], 256);
+  
+  if (getGameVersion() >= genie::GV_AoK)
+    serialize<uint32_t>(playerNamesStringTable, 16);
+  
+  
+  serializeSub<ScnPlayerData1>(playerData1, 16);
+  
+  
+  serialize<uint32_t>(unknown4);
+  
+  serialize<char>(unknown5); //TODO
+  
+  serialize<float>(unknown6);
+  
+  serializeSizedString<uint16_t>(originalFileName);
+  
+  // Messages and cinematics
+  
+  compressor_.endCompression();
 }
 
 //------------------------------------------------------------------------------
@@ -159,8 +183,6 @@ void ScnFile::serializeVersion2(void)
   
   serialize<float>(version2_);
   
-  std::cout << version2_ << std::endl;
-  
   if (isOperation(OP_READ))
   {
     if (fabs(version2_ - 1.18) < 0.01)
@@ -172,6 +194,23 @@ void ScnFile::serializeVersion2(void)
     else
       setGameVersion(genie::GV_AoE);
   } 
+}
+
+
+ScnPlayerData1::ScnPlayerData1()
+{
+}
+
+ScnPlayerData1::~ScnPlayerData1()
+{
+}
+
+void ScnPlayerData1::serializeObject(void)
+{
+  serialize<uint32_t>(active);
+  serialize<uint32_t>(human);
+  serialize<uint32_t>(civilizationId);
+  serialize<uint32_t>(unknown1);
 }
 
 }

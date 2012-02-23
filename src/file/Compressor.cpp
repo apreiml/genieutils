@@ -35,8 +35,9 @@ namespace genie
 typedef boost::interprocess::basic_vectorstream< std::vector<char> > v_stream;
 
 //------------------------------------------------------------------------------
-Compressor::Compressor()
+Compressor::Compressor(ISerializable *obj)
 {
+  obj_ = obj;
   istream_ = 0;
 }
 
@@ -44,12 +45,67 @@ Compressor::Compressor()
 Compressor::~Compressor()
 {
 }
+
+//------------------------------------------------------------------------------
+void Compressor::beginCompression(void)
+{
+  switch(obj_->getOperation())
+  {
+    case ISerializable::OP_READ:
+      
+      istream_ = obj_->getIStream();
+      
+      startDecompression();
+      
+      obj_->setIStream(*uncompressedIstream_);
+      
+      break;
+      
+    default:
+      break;
+    
+  }
+}
   
 //------------------------------------------------------------------------------
-shared_ptr<std::istream> Compressor::startDecompression(std::istream *istr)
+void Compressor::endCompression(void)
 {
-  istream_ = istr;
+  switch(obj_->getOperation())
+  {
+    case ISerializable::OP_READ:
+      
+      obj_->setIStream(*istream_);
+      
+      stopDecompression();
+      
+      break;
+      
+    default:
+      break;
+    
+  }
+}
+
+//------------------------------------------------------------------------------
+boost::iostreams::zlib_params Compressor::getZlibParams(void ) const
+{  
+  zlib_params params;
   
+  // important
+  params.window_bits = -15;
+  
+  // default
+  params.level = -1;
+  params.method = zlib::deflated;
+  params.mem_level = 9;
+  params.strategy = zlib::default_strategy;
+  
+  return params;
+}
+  
+//------------------------------------------------------------------------------
+void Compressor::startDecompression(void)
+{
   try
   {
     filtering_istreambuf in;
@@ -57,7 +113,7 @@ shared_ptr<std::istream> Compressor::startDecompression(std::istream *istr)
     // register decompressor
     in.push(zlib_decompressor(getZlibParams()));
     
-    in.push(*istr);
+    in.push(*istream_);
         
     // extract file to buffer
     std::vector<char> file_buf;
@@ -66,7 +122,6 @@ shared_ptr<std::istream> Compressor::startDecompression(std::istream *istr)
     copy(in, b_ins);
     
     uncompressedIstream_ = shared_ptr<std::istream>(new v_stream(file_buf)); 
-    return uncompressedIstream_;
   }
   catch ( const zlib_error &z_err)
   {
@@ -75,21 +130,17 @@ shared_ptr<std::istream> Compressor::startDecompression(std::istream *istr)
               <<  z_err.error() << std::endl;
     throw z_err;
   }
-  
-  return shared_ptr<std::istream>();
 }
 
 //------------------------------------------------------------------------------
-std::istream *Compressor::stopDecompression(void)
+void Compressor::stopDecompression(void)
 {
   uncompressedIstream_.reset();
   
-  std::istream *ret_istr = istream_;
   istream_ = 0;
-  
-  return ret_istr;
 }
 
+//------------------------------------------------------------------------------
 std::iostream *Compressor::startCompression(std::ostream *ostr)
 {
   std::vector<char> file_buf;
@@ -98,6 +149,7 @@ std::iostream *Compressor::startCompression(std::ostream *ostr)
   return new v_stream(file_buf);
 }
 
+//------------------------------------------------------------------------------
 std::ostream *Compressor::stopCompression(std::istream *istr)
 {/*
   try
@@ -117,23 +169,6 @@ std::ostream *Compressor::stopCompression(std::istream *istr)
               <<  z_err.error() << std::endl;
     throw z_err;
   }*/
-}
-
-//------------------------------------------------------------------------------
-boost::iostreams::zlib_params Compressor::getZlibParams(void ) const
-{  
-  zlib_params params;
-  
-  // important
-  params.window_bits = -15;
-  
-  // default
-  params.level = -1;
-  params.method = zlib::deflated;
-  params.mem_level = 9;
-  params.strategy = zlib::default_strategy;
-  
-  return params;
 }
   
 }

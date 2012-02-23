@@ -22,6 +22,7 @@
 #include <boost/noncopyable.hpp>
 #include <boost/smart_ptr.hpp>
 #include <iostream>
+#include "ISerializable.h"
 
 namespace boost {
 namespace iostreams {
@@ -36,33 +37,22 @@ class Compressor : public boost::noncopyable
 {
 public:
   //----------------------------------------------------------------------------
-  Compressor();
+  /// 
+  /// @param obj object that calls compressors methods
+  //
+  Compressor(ISerializable *obj);
   
   //----------------------------------------------------------------------------
   virtual ~Compressor();
   
-  //----------------------------------------------------------------------------
-  /// Decompresses istream and returns buffered data.
-  ///
-  /// @param istr input stream to decompress
-  /// @return decompressed input stream
-  //
-  boost::shared_ptr<std::istream> startDecompression(std::istream *istr);
+  void beginCompression(void);
   
-  //----------------------------------------------------------------------------
-  /// Closes decompressed stream. Returns compressed istream given at start.
-  ///
-  /// @return input stream given at startDecompression
-  //
-  std::istream *stopDecompression(void);
-  
-  //----------------------------------------------------------------------------
-  std::iostream *startCompression(std::ostream *ostr);
-  
-  //----------------------------------------------------------------------------
-  std::ostream *stopCompression(std::istream *ostr);
+  void endCompression(void);
   
 private:
+  
+  ISerializable *obj_; 
+  
   std::istream *istream_;
   boost::shared_ptr<std::istream> uncompressedIstream_;
   
@@ -72,6 +62,25 @@ private:
   /// @return struct with set parameters
   //
   boost::iostreams::zlib_params getZlibParams(void) const;
+  
+  //----------------------------------------------------------------------------
+  /// Decompresses istream and sets uncompressedIstream_.
+  //
+  void startDecompression(void);
+  
+  //----------------------------------------------------------------------------
+  /// Closes decompressed stream. Returns compressed istream given at start.
+  ///
+  /// @return input stream given at startDecompression
+  //
+  void stopDecompression(void);
+  
+  //----------------------------------------------------------------------------
+  std::iostream *startCompression(std::ostream *ostr);
+  
+  //----------------------------------------------------------------------------
+  std::ostream *stopCompression(std::istream *ostr);
+  
 };
 
 }
