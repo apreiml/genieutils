@@ -116,9 +116,10 @@ void testScn()
 {
   genie::ScnFile scn;
   
+//   scn.extractRaw("small_crater_lake.scx", "raw.scx");
+   
   scn.load("small_crater_lake.scx");
 //   scn.load("test2.scx");
-//   scn.extractRaw("small_crater_lake.scx", "raw.scx");
   
   std::cout << "Original filename: " << scn.originalFileName << std::endl;
   

@@ -34,6 +34,10 @@ namespace genie
   
 typedef boost::interprocess::basic_vectorstream< std::vector<char> > v_stream;
 
+Compressor::Compressor()
+{
+}
+
 //------------------------------------------------------------------------------
 Compressor::Compressor(ISerializable *obj)
 {
@@ -52,10 +56,16 @@ void Compressor::beginCompression(void)
   switch(obj_->getOperation())
   {
     case ISerializable::OP_READ:
+      istream_ = obj_->getIStream();
+      
       startDecompression();
+      
+      obj_->setIStream(*uncompressedIstream_);
       break;
     
     case ISerializable::OP_WRITE:
+      obj_->setIStream(*istream_);
+      
       startCompression();
       break;
     
@@ -85,6 +95,18 @@ void Compressor::endCompression(void)
 }
 
 //------------------------------------------------------------------------------
+void Compressor::decompress(std::istream &source, std::ostream &sink)
+{
+  Compressor cmp;
+  
+  cmp.istream_ = &source;
+  
+  cmp.startDecompression();
+  
+  copy(*cmp.uncompressedIstream_, sink);
+}
+
+//------------------------------------------------------------------------------
 boost::iostreams::zlib_params Compressor::getZlibParams(void ) const
 {  
   zlib_params params;
@@ -103,9 +125,7 @@ boost::iostreams::zlib_params Compressor::getZlibParams(void ) const
   
 //------------------------------------------------------------------------------
 void Compressor::startDecompression(void)
-{
-  istream_ = obj_->getIStream();
-  
+{ 
   try
   {
     filtering_istreambuf in;
@@ -122,8 +142,6 @@ void Compressor::startDecompression(void)
     copy(in, b_ins);
     
     uncompressedIstream_ = shared_ptr<std::istream>(new v_stream(file_buf)); 
-    
-    obj_->setIStream(*uncompressedIstream_);
   }
   catch ( const zlib_error &z_err)
   {
@@ -137,7 +155,6 @@ void Compressor::startDecompression(void)
 //------------------------------------------------------------------------------
 void Compressor::stopDecompression(void)
 {
-  obj_->setIStream(*istream_);
   istream_ = 0;
   
   uncompressedIstream_.reset();

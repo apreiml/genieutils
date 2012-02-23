@@ -56,6 +56,9 @@ public:
   //----------------------------------------------------------------------------
   void endCompression(void);
   
+  //----------------------------------------------------------------------------
+  static void decompress(std::istream &source, std::ostream &sink);
+  
 private:
   
   ISerializable *obj_; 
@@ -65,6 +68,8 @@ private:
   
   std::ostream *ostream_;
   boost::shared_ptr<std::iostream> bufferedStream_;
+  
+  Compressor();
   
   //----------------------------------------------------------------------------
   /// Get zlib parameters necessary for (de)compressing genie archives.
