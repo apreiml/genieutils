@@ -90,11 +90,16 @@ public:
   //
   virtual void saveAs(const char *fileName) throw (std::ios_base::failure);
   
+protected:
+  
+  virtual void unload(void);
   
 private:
   std::string fileName_;
   
-  std::ifstream file_in_;
+  std::ifstream fileIn_;
+  
+  bool loaded_;
 };
 
 }

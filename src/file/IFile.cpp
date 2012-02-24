@@ -24,12 +24,13 @@ namespace genie
 //------------------------------------------------------------------------------
 IFile::IFile()
 {
+  loaded_ = false;
 }
 
 //------------------------------------------------------------------------------
 IFile::~IFile()
 {
-  file_in_.close();
+  fileIn_.close();
 }
   
 //------------------------------------------------------------------------------
@@ -56,19 +57,28 @@ void IFile::load() throw (std::ios_base::failure)
 //------------------------------------------------------------------------------
 void IFile::load(const char *fileName) throw (std::ios_base::failure)
 {
+  if (loaded_)
+  {
+    unload();
+    loaded_ = false;
+  }
+  
   fileName_ = std::string(fileName);
   
-  file_in_.close(); //TODO: necessary?
+  fileIn_.close(); //TODO: necessary?
   
-  file_in_.open(fileName, std::ios::binary | std::ios::in);
+  fileIn_.open(fileName, std::ios::binary | std::ios::in);
   
-  if (file_in_.fail())
+  if (fileIn_.fail())
   {
-    file_in_.close();
+    fileIn_.close();
     throw std::ios_base::failure("Cant read file: \"" + fileName_ + "\"");
   }
   else
-    readObject(file_in_);
+  {
+    readObject(fileIn_);
+    loaded_ = true;
+  }
 }
 
 //------------------------------------------------------------------------------
@@ -97,6 +107,12 @@ void IFile::saveAs(const char *fileName) throw (std::ios_base::failure)
     writeObject(file);
   
   file.close();
+}
+
+
+//------------------------------------------------------------------------------
+void IFile::unload(void)
+{
 }
   
 }

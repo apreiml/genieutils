@@ -26,7 +26,8 @@
 #include <auto_ptr.h>
 
 #include "genie/Types.h"
-#include "genie/file/ISerializable.h"
+#include "genie/file/IFile.h"
+#include "genie/file/Compressor.h"
 #include "TechTree.h"
 
 namespace boost {
@@ -50,7 +51,7 @@ class Research;
 class TerrainBorder;
 class UnitLine;
 
-class DatFile : public ISerializable
+class DatFile : public IFile
 {
 
 public:
@@ -58,62 +59,17 @@ public:
   /// Standard constructor
   //
   DatFile();
-  
-  //----------------------------------------------------------------------------
-  /// Loads the file in constructor
-  ///
-  /// @param file_name name of the dat file to load
-  /// @param gv
-  /// @param raw if true, file will be loaded form an uncompressed file
-  //
-  DatFile(std::string file_name, GameVersion gv, bool raw=false);
-  
+    
   //----------------------------------------------------------------------------
   /// Destructor
   //
   virtual ~DatFile();
   
   //----------------------------------------------------------------------------
-  /// Set the name of the data file to operate on.
-  ///
-  /// @param file_name file name
+  /// Uncompress dat file.
   //
-  void setFileName(std::string file_name);
-  
-  //----------------------------------------------------------------------------
-  /// Returns name of current file.
-  //
-  std::string getFileName(void) const;
-    
-  //----------------------------------------------------------------------------
-  /// Loads the data from a file.
-  ///
-  /// @param file_name if empty or not set, file_name set with setFileName
-  ///                  will be used.
-  /// @param raw if true load data from a uncompressed file
-  //
-  void load(std::string file_name="", bool raw=false);
-  
-  //----------------------------------------------------------------------------
-  /// Saves the data to a file.
-  ///
-  /// @param file_name if empty or not set, file_name set with setFileName
-  ///                  will be used.
-  /// @param raw if true data is saved uncompressed
-  //
-  void save(std::string file_name="", bool raw=false);
-  
-  //----------------------------------------------------------------------------
-  /// Uncompress and directly store data to a file.
-  //
-  void extractRaw(std::string to_file_name);
-  void extractRaw(std::string in_file, std::string out_file);
-  
-  //----------------------------------------------------------------------------
-  /// Reads a raw file in and stores it compressed
-  //
-  void compress(std::string in_file, std::string out_file);
-  
+  void extractRaw(const char *inFile, const char *outFile);
+   
   //----------------------------------------------------------------------------
   /// Debug information will be printed to stdout if activated.
   ///
@@ -180,8 +136,9 @@ private:
   std::string file_name_;
   std::fstream *file_;
   
-  
   char *file_version_;
+  
+  Compressor compressor_;
   
   unsigned short terrain_restriction_count_;
   unsigned short terrain_count_;
@@ -204,37 +161,8 @@ private:
   //----------------------------------------------------------------------------
   /// Clears all data.
   //
-  void unload(void);
-    
-  //----------------------------------------------------------------------------
-  /// Get zlib parameters necessary for (de)compressing genie archives.
-  ///
-  /// @return struct with set parameters
-  //
-  boost::iostreams::zlib_params getZlibParams(void) const;
-  
-  //----------------------------------------------------------------------------
-  /// Opens an istream of the file to read from and copies it to a buffer.
-  ///
-  /// @param file_name 
-  /// @param compressed if true it will be uncompressed on opening
-  //
-  std::auto_ptr<std::istream> openFile(std::string file_name, bool compressed=true);
-  
-  //----------------------------------------------------------------------------
-  ///
-  //
-  std::auto_ptr<std::iostream> createBufferStream(void);
-  
-  //----------------------------------------------------------------------------
-  /// Writes from stream to file.
-  ///
-  /// @param istr stream to read data from
-  /// @param file_name file to write data to
-  /// @param compress if output will be compressed
-  //
-  void writeFile(std::istream &istr, std::string file_name, bool compress=true);
-  
+  virtual void unload(void);
+      
   virtual void serializeObject(void);
 };
 

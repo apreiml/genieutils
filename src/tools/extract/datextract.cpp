@@ -32,7 +32,7 @@ int main(int argc, char **argv)
     
     desc.add_options()
       ("help,h", "show help")
-      ("raw-in", "input file is uncompressed")
+//       ("raw-in", "input file is uncompressed")
       ("raw-out", "output file will not be compressed")
       ("geniedat", "load file with geniedat")
       ("game,g", po::value<std::string>(), 
@@ -54,8 +54,8 @@ int main(int argc, char **argv)
         !(vm.count("input-file") && vm.count("output-file")))
     {
       std::cout << "Usage: " << argv[0] 
-              << " [OPTION]... --geniedat [--raw-in][--raw-out] -g GAMETYPE INPUT-FILE OUTPUT-FILE\n" 
-              << " [OPTION]... --raw-in INPUT-FILE OUTPUT-FILE\n" 
+              << " [OPTION]... --geniedat -g GAMETYPE INPUT-FILE OUTPUT-FILE\n" 
+//               << " [OPTION]... --raw-in INPUT-FILE OUTPUT-FILE\n" 
               << " [OPTION]... --raw-out INPUT-FILE OUTPUT-FILE\n" 
               << std::endl;
       
@@ -70,7 +70,12 @@ int main(int argc, char **argv)
     if (vm.count("verbose"))
       file.setVerboseMode(true);
     
-    if (vm.count("geniedat"))
+    if (vm.count("raw-out"))
+    {
+      file.extractRaw(vm["input-file"].as< std::string >().c_str(), 
+                      vm["output-file"].as< std::string >().c_str());
+    }
+    else if (vm.count("geniedat"))
     {
       if (vm["game"].as< std::string >() == "aoe")
         file.setGameVersion(genie::GV_AoE);
@@ -93,21 +98,10 @@ int main(int argc, char **argv)
         return 0;
       }
 
-      file.load(vm["input-file"].as< std::string >(), vm.count("raw-in"));
+      file.load(vm["input-file"].as< std::string >().c_str());
       
-      file.save(vm["output-file"].as< std::string >(), vm.count("raw-out"));
-    }
-    else
-    {
-      if (vm.count("raw-in"))
-        file.compress(vm["input-file"].as< std::string >(), 
-                      vm["output-file"].as< std::string >());
-      else if (vm.count("raw-out"))
-        file.extractRaw(vm["input-file"].as< std::string >(), 
-                      vm["output-file"].as< std::string >());
-        
-    }
-    
+      file.saveAs(vm["output-file"].as< std::string >().c_str()); 
+    }    
     
   }
   catch (boost::exception_detail::clone_impl<

@@ -53,7 +53,7 @@ typedef boost::interprocess::basic_vectorstream< std::vector<char> > v_stream;
 DatFile::DatFile() : GraphicsRendering(0), ZeroSpace(0), RenderingPlusSomething(0), 
                UnknownPreTechTree(0),
                Unknown2(0), verbose_(false), file_name_(""), file_(0), 
-               file_version_(0)
+               file_version_(0), compressor_(this)
                
 {
   SUnknown2 = -1;
@@ -65,138 +65,24 @@ DatFile::DatFile() : GraphicsRendering(0), ZeroSpace(0), RenderingPlusSomething(
 }
 
 //------------------------------------------------------------------------------
-DatFile::DatFile(std::string file_name, GameVersion gv, bool raw) : 
-           GraphicsRendering(0), ZeroSpace(0), RenderingPlusSomething(0), 
-           UnknownPreTechTree(0),
-           Unknown2(0), verbose_(false), file_name_(""), file_(0), 
-           file_version_(0)
-{
-  SUnknown2 = -1;
-  SUnknown3 = -1;
-  SUnknown4 = -1;
-  SUnknown5 = -1;
-  SUnknown7 = -1;
-  SUnknown8 = -1;
-  
-  setGameVersion(gv);
-  
-  try
-  {
-    load(file_name, raw);
-  }
-  catch (...)
-  {
-    unload();
-    throw;
-  }
-}
-
-
-//------------------------------------------------------------------------------
 DatFile::~DatFile()
 { 
   unload();
 }
 
 //------------------------------------------------------------------------------
-void DatFile::setFileName(std::string file_name)
+void DatFile::extractRaw(const char *inFile, const char *outFile)
 {
-  file_name_ = file_name;
-}
-
-//------------------------------------------------------------------------------
-std::string DatFile::getFileName(void ) const
-{
-  return file_name_;
-}
-
-
-//------------------------------------------------------------------------------
-void DatFile::load(std::string file_name, bool raw)
-{
-  unload();
+  std::ifstream ifs;
+  std::ofstream ofs;
   
-  std::auto_ptr<std::istream> istr;
+  ifs.open(inFile, std::ios::binary);
+  ofs.open(outFile, std::ios::binary);
   
-  if (file_name.empty())
-  {
-    if (file_name_.empty())
-      throw std::istream::failure("Can't load file: No filename set!");
-    else
-      file_name = file_name_;
-  }
-    
-  try 
-  {
-    istr = openFile(file_name, !raw);
-    
-    readObject(*istr);
-  }
-  catch (...)
-  {
-    unload();
-    throw;
-  }
-}
-
-//------------------------------------------------------------------------------
-void DatFile::save(std::string file_name, bool raw)
-{
-  std::auto_ptr<std::iostream> buf_stream;
+  Compressor::decompress(ifs, ofs);
   
-  if (file_name.empty())
-  {
-    if (file_name_.empty())
-      throw std::istream::failure("Can't save file: No filename set!");
-    else
-      file_name = file_name_;
-  }
-  
-  try
-  {
-    buf_stream = createBufferStream();
-        
-    writeObject(*buf_stream);
-    
-    writeFile(*buf_stream, file_name, !raw);
-    
-  }
-  catch (...)
-  {
-    throw;
-  }
-  
-}
-
-//------------------------------------------------------------------------------
-void DatFile::extractRaw(std::string to_file_name)
-{
-  unload();
-  
-  std::auto_ptr<std::istream> istr = openFile(file_name_, true);
-  
-  std::ofstream file(to_file_name.c_str(), std::ofstream::binary);
-  
-  boost::iostreams::copy(*istr, file);
-  
-  file.close();
-}
-
-//------------------------------------------------------------------------------
-void DatFile::extractRaw(std::string in_file, std::string out_file)
-{
-  setFileName(in_file);
-  extractRaw(out_file);
-}
-
-//------------------------------------------------------------------------------
-void DatFile::compress(std::string in_file, std::string out_file)
-{
-  unload();
-  
-  std::ifstream file_in(in_file.c_str(), std::ifstream::binary);
- 
-  writeFile(file_in, out_file, true);
+  ifs.close();
+  ofs.close();
 }
 
 //------------------------------------------------------------------------------
@@ -208,6 +94,8 @@ void DatFile::setVerboseMode(bool verbose)
 //------------------------------------------------------------------------------
 void DatFile::serializeObject(void )
 {
+  compressor_.beginCompression();
+  
   serialize<char>(&file_version_, FILE_VERSION_LEN);
   
   if (getGameVersion() >= genie::GV_SWGB)
@@ -385,6 +273,8 @@ void DatFile::serializeObject(void )
   
   if (verbose_)
     std::cout << "to 0x" <<std::hex << tellg() << std::dec << ")" << std::endl;  
+  
+  compressor_.endCompression();
 }
 
 //------------------------------------------------------------------------------
@@ -421,100 +311,6 @@ void DatFile::unload()
   ZeroSpace = 0;
   RenderingPlusSomething = 0;
   Unknown2 = 0;
-}
-
-//------------------------------------------------------------------------------
-boost::iostreams::zlib_params DatFile::getZlibParams(void ) const
-{  
-  namespace io = boost::iostreams;
-  
-  io::zlib_params params;
-  
-  // important
-  params.window_bits = -15;
-  
-  // default
-  params.level = -1;
-  params.method = io::zlib::deflated;
-  params.mem_level = 9;
-  params.strategy = io::zlib::default_strategy;
-  
-  return params;
-}
-
-//------------------------------------------------------------------------------
-std::auto_ptr<std::istream> DatFile::openFile(std::string file_name, bool compressed)
-{
-  namespace io = boost::iostreams;
-  
-  try
-  {
-    io::filtering_istreambuf in;
-    
-    io::file_source file(file_name, std::fstream::binary);
-    
-    if (!file.is_open())
-      throw std::istream::failure("Can't read file: " + file_name);
-    
-    // register decompressor
-    if (compressed)
-      in.push(io::zlib_decompressor(getZlibParams()));
-    
-    in.push(file);
-        
-    // extract file to buffer
-    std::vector<char> file_buf;
-    io::back_insert_device< std::vector<char> > b_ins(file_buf); 
-    
-    io::copy(in, b_ins);
-    
-    return std::auto_ptr<std::istream>(new v_stream(file_buf)); 
-  }
-  catch ( const io::zlib_error &z_err)
-  {
-    std::cerr << "Zlib decompression failed with error code: "
-              <<  z_err.error() << std::endl;
-    throw z_err;
-  }
-  
-  return std::auto_ptr<std::istream>(0);
-}
-
-//------------------------------------------------------------------------------
-std::auto_ptr<std::iostream> DatFile::createBufferStream(void)
-{
-  std::vector<char> file_buf;
-  
-  return std::auto_ptr<std::iostream> (new v_stream(file_buf));
-}
-
-void DatFile::writeFile(std::istream &istr, std::string file_name, bool compress)
-{
-  namespace io = boost::iostreams;
-  
-  try
-  {
-    io::filtering_ostreambuf out;
-    
-    io::file_sink file(file_name, std::fstream::binary); 
-    
-    if (!file.is_open())
-      throw std::ostream::failure("Can't open file for writing: " + file_name);
-    
-    if (compress)
-      out.push(io::zlib_compressor(getZlibParams()));
-    
-    out.push(file);
-    
-    io::copy (istr, out);
-    
-  }
-  catch (const io::zlib_error &z_err)
-  {
-    std::cerr << "Zlib compression failed with error code: "
-              <<  z_err.error() << std::endl;
-    throw z_err;
-  }
 }
 
 }
