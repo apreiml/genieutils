@@ -92,6 +92,10 @@ public:
   
 protected:
   
+  //----------------------------------------------------------------------------
+  /// The unload method will be called before loading an object, but only
+  /// if the object was already loaded once.
+  //
   virtual void unload(void);
   
 private:

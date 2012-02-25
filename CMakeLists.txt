@@ -97,6 +97,7 @@ set(RESOURCE_SRC
 
 set(SCRIPT_SRC
     src/script/ScnFile.cpp
+    src/script/scn/ScnResource.cpp
     )
 
 set(UTIL_SRC

@@ -118,6 +118,8 @@ void ScnFile::serializeObject(void)
   
   // Messages and cinematics
   
+  serialize<ISerializable>(resource);
+  
   compressor_.endCompression();
 }
 

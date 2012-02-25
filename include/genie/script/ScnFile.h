@@ -24,8 +24,11 @@
 #include "genie/file/IFile.h"
 #include "genie/file/Compressor.h"
 
+#include "scn/ScnResource.h"
+
 namespace genie
 {
+  
 class ScnPlayerData1;
 
 //------------------------------------------------------------------------------
@@ -79,6 +82,8 @@ public:
   float unknown6;
   
   std::string originalFileName;
+  
+  ScnResource resource;
   
 private:
   std::string version_;

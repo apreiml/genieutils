@@ -117,41 +117,26 @@ void testScn()
   genie::ScnFile scn;
   
 //   scn.extractRaw("small_crater_lake.scx", "raw.scx");
+  scn.extractRaw("test2.scx", "raw.scx");
    
-  scn.load("small_crater_lake.scx");
-//   scn.load("test2.scx");
+//   scn.load("small_crater_lake.scx");
+  scn.load("test2.scx");
   
   std::cout << "Original filename: " << scn.originalFileName << std::endl;
   
-  scn.saveAs("xxxx.scx");
+  std::cout << scn.scenarioInstructions << std::endl;
+  std::cout << scn.resource.instructions << std::endl;
+  std::cout << scn.resource.scouts << std::endl;
+  std::cout << scn.resource.bitmapIncluded << std::endl;
   
-  genie::ScnFile scn2;
-  scn2.load("xxxx.scx");
+//   scn.saveAs("xxxx.scx");
+  
+//   genie::ScnFile scn2;
+//   scn2.load("xxxx.scx");
   
   
-  std::cout << "Original filename: " << scn2.originalFileName << std::endl;
+//   std::cout << "Original filename: " << scn2.originalFileName << std::endl;
   
-}
-
-size_t xxstrnlen(const char *str, size_t maxLen)
-{
-//   const char *ptr = 0;
-  
-//   for (ptr = str; *ptr != '\0' && maxLen-- != 0; ++ptr);
-  
-//   return (ptr - str);
-
-  size_t len = 0;
-  
-  for (unsigned int i=0; i < maxLen; i++)
-  {
-    if (str[i] == '\0')
-      return len;
-    
-    len ++;
-  }
-  
-  return len;
 }
 
 int main(int argc, char **argv) {
@@ -161,13 +146,6 @@ int main(int argc, char **argv) {
 //   testDrs();
   
   testScn();
-  
-  
-//   char x[1];
-//   
-//   x[0] = 'c';
-//   
-//   std::cout << xxstrnlen(x, 1) << std::endl;
   
   /*
   std::ifstream ifs;
