@@ -18,6 +18,8 @@
 
 #include "genie/script/ScnFile.h"
 
+#include "genie/script/scn/ScnPlayerData.h"
+
 #include <math.h>
 #include <boost/iostreams/copy.hpp>
 
@@ -50,7 +52,6 @@ void ScnFile::extractRaw(const char *from, const char *to)
   
   ifs.read(reinterpret_cast<char *>(&headerLen), 4);
   ofs.write(reinterpret_cast<char *>(&headerLen), 4);
-  std::cout << headerLen << std::endl;
   
   char header[headerLen];
   
@@ -84,8 +85,12 @@ void ScnFile::serializeObject(void)
   serialize<uint32_t>(unknown2);
   serialize<uint32_t>(playerCount);
   
+  std::cout << "Start compression: " << tellg() << std::endl;
+  
   compressor_.beginCompression();
  
+  std::cout << "Start compression: " << tellg() << std::endl;
+  
   // Compressed header:
   
   serialize<uint32_t>(unknown3);
@@ -196,23 +201,6 @@ void ScnFile::serializeVersion2(void)
     else
       setGameVersion(genie::GV_AoE);
   } 
-}
-
-
-ScnPlayerData1::ScnPlayerData1()
-{
-}
-
-ScnPlayerData1::~ScnPlayerData1()
-{
-}
-
-void ScnPlayerData1::serializeObject(void)
-{
-  serialize<uint32_t>(active);
-  serialize<uint32_t>(human);
-  serialize<uint32_t>(civilizationId);
-  serialize<uint32_t>(unknown1);
 }
 
 }

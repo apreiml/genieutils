@@ -99,27 +99,6 @@ private:
   void serializeVersion(void);
   void serializeVersion2(void);
 };
-
-class ScnPlayerData1 : public ISerializable
-{
-public:
-  ScnPlayerData1();
-  virtual ~ScnPlayerData1();
-  
-  /// boolean
-  uint32_t active; 
-  
-  /// boolean
-  uint32_t human;
-  
-  uint32_t civilizationId;
-  
-  /// constant = 4 ??
-  uint32_t unknown1;
-  
-private:
-  virtual void serializeObject(void);
-};
   
 }
 

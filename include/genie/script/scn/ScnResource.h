@@ -80,14 +80,20 @@ public:
   
   uint32_t bitmapWidth;
   
-  int32_t bitmapHeigth;
+  uint32_t bitmapHeigth;
   
   /// -1 if there's a bitmap, 1 otherwise
   int16_t unknown1;
   
+  uint16_t bitmapByteSize;
+  
+  char* bitmap;
+    
   
 private:
   virtual void serializeObject(void);
+  
+  void serializeBitmap(void);
   
 };
   

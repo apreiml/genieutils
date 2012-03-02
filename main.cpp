@@ -77,8 +77,11 @@ void testDrs()
   genie::SlpFilePtr slpf = drs.getSlpFile(slp_id);
   drs.getSlpFile(slp_id);
     
+  sf::Image img;
+  img.LoadFromFile("image_part.bmp");
+  
   text.LoadFromImage(createSfImage(slpf->getFrame(1), pal));
-  text2.LoadFromImage(createSfImage(slpf->getFrame(1), pal));
+  text2.LoadFromImage(img);
   
   
   sf::Sprite Sprite(text);
@@ -124,10 +127,22 @@ void testScn()
   
   std::cout << "Original filename: " << scn.originalFileName << std::endl;
   
-  std::cout << scn.scenarioInstructions << std::endl;
-  std::cout << scn.resource.instructions << std::endl;
-  std::cout << scn.resource.scouts << std::endl;
-  std::cout << scn.resource.bitmapIncluded << std::endl;
+//   std::cout << scn.scenarioInstructions << std::endl;
+//   std::cout << scn.resource.instructions << std::endl;
+//   std::cout << scn.resource.scouts << std::endl;
+//   std::cout << scn.resource.bitmapIncluded << std::endl;
+  std::cout << "Bitmap byte size: " << scn.resource.bitmapByteSize << std::endl;
+  
+  sf::Image img;
+  
+  /*
+  std::ofstream ofs;
+  ofs.open("qqq", std::ios::binary);
+  
+  ofs.write(scn.resource.bitmap, scn.resource.bitmapByteSize);
+  ofs.close();
+  */
+  
   
 //   scn.saveAs("xxxx.scx");
   
