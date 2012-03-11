@@ -26,6 +26,9 @@
 namespace genie
 {
   
+class AiFile;
+class Resources;
+  
 class ScnPlayerData1 : public ISerializable
 {
 public:
@@ -53,13 +56,68 @@ public:
   ScnPlayerData2();
   virtual ~ScnPlayerData2();
   
+  /// 32
+  std::vector<std::string> unknownStrings;
   
+  /// 16
+  std::vector<std::string> aiNames;
+  
+  std::vector<AiFile> aiFiles;
+  
+  /// 0 = custom, 1 = standard, 2 = none. TODO: enum?
+  std::vector<uint8_t> aiTypes;
+  
+  std::vector<Resources> resources;
+  
+private:
+  uint32_t separator_;
+  
+  virtual void serializeObject(void);
+  
+};
+  
+class AiFile : public ISerializable
+{
+public:
+  AiFile();
+  virtual ~AiFile();
+  
+  /// Always 0
+  uint32_t unknown1;
+  
+  /// Always 0
+  uint32_t unknown2;
+  
+  /// .per text 
+  std::string perFile;
   
 private:
   virtual void serializeObject(void);
   
 };
+
+class Resources : public ISerializable
+{
+public:
+  Resources();
+  virtual ~Resources();
   
+  uint32_t gold;
+  uint32_t wood;
+  uint32_t food;
+  uint32_t stone;
+  
+  /// ?
+  uint32_t oreX; 
+  
+  /// always 0
+  uint32_t padding;
+  
+private:
+  virtual void serializeObject(void);
+};
+
+
 }
 
 #endif // GENIE_SCN_PLAYER_DATA_H

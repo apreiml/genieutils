@@ -234,6 +234,20 @@ protected:
     serialize<std::string>(str, size);
   }
   
+  template <typename T>
+  void serializeSizedStrings(std::vector<std::string> &vec, size_t size, 
+                             bool cString = true)
+  {
+    if (isOperation(OP_READ))
+    {
+      vec.resize(size);
+    }
+    
+    for (size_t i=0; i<size; i++)
+      serializeSizedString<T>(vec[i], cString);
+    
+  }
+  
   //----------------------------------------------------------------------------
   /// Serialize method for basic data types. 
   /// Reads or writes data dependent on set operation.

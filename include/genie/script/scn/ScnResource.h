@@ -26,6 +26,7 @@
 namespace genie
 {
   
+// TODO: right name?
 class ScnResource : public ISerializable
 {
 public:

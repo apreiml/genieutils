@@ -160,7 +160,7 @@ Length | MinVer | Description
 32str16|        | Unknown strings (2 per player?)
 16str16|        | AI names, one per player
 16*var |        | AI files, see sub-struct below
-u8     |        | AI type, 0 = custom, 1 = standard, 2 = none. Thanks iberico.
+16*u8  |        | AI type, 0 = custom, 1 = standard, 2 = none. Thanks iberico.
 u32    |        | Separator, 0xFFFFFF9D
 16*24  |        | Resources, see sub-struct below
 

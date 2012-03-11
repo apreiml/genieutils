@@ -119,11 +119,13 @@ void testScn()
 {
   genie::ScnFile scn;
   
-//   scn.extractRaw("small_crater_lake.scx", "raw.scx");
-  scn.extractRaw("test2.scx", "raw.scx");
+  scn.extractRaw("testmap_small_random.scx", "raw.scx");
+//   scn.extractRaw("test2.scx", "raw.scx");
+//   scn.extractRaw("Gwyndlegard - Multiplayer Edition 1,0.scx", "raw.scx");
    
-//   scn.load("small_crater_lake.scx");
-  scn.load("test2.scx");
+  scn.load("Nomadic Asia by Wolfy.scx");
+//   scn.load("testmap_small_random.scx");
+//   scn.load("Gwyndlegard - Multiplayer Edition 1,0.scx");
   
   std::cout << "Original filename: " << scn.originalFileName << std::endl;
   
@@ -134,6 +136,11 @@ void testScn()
   std::cout << "Bitmap byte size: " << scn.resource.bitmapByteSize << std::endl;
   
   sf::Image img;
+  
+  std::cout << "AI Name 0: " << scn.playerData2.aiNames[0] << std::endl;
+  std::cout << "AI Name 15: " << scn.playerData2.aiNames[15] << std::endl;
+  
+  std::cout << scn.map.width << "x" << scn.map.height << std::endl;
   
   /*
   std::ofstream ofs;

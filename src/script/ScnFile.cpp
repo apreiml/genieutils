@@ -72,6 +72,12 @@ void ScnFile::extractRaw(const char *from, const char *to)
 }
 
 //------------------------------------------------------------------------------
+uint32_t ScnFile::getSeparator(void)
+{
+  return 0xFFFFFF9D;
+}
+
+//------------------------------------------------------------------------------
 void ScnFile::serializeObject(void)
 {
   serializeVersion();
@@ -124,6 +130,35 @@ void ScnFile::serializeObject(void)
   // Messages and cinematics
   
   serialize<ISerializable>(resource);
+  
+  serialize<ISerializable>(playerData2);
+  
+  uint32_t *victoryConditions = 0; // TODO diplomacy
+  
+  serialize<uint32_t>(&victoryConditions, 11);
+  
+  delete [] victoryConditions;
+  
+  char *diplomacy = 0;
+  
+  serialize<char>(&diplomacy, 12608);
+  
+  delete [] diplomacy;
+  
+  char *disables = 0;
+  
+  serialize<char>(&disables, 5388);
+  
+  delete [] disables;
+  
+  read<uint32_t>();
+  
+  uint32_t separator = 0;
+  
+  serialize<uint32_t>(separator);
+  std::cout << "sep: " << std::hex << separator << std::endl;
+  
+  serialize<ISerializable>(map);
   
   compressor_.endCompression();
 }
