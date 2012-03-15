@@ -19,7 +19,6 @@
 
 #include "genie/resource/SlpFrame.h"
 
-#include <SFML/Graphics/Image.hpp>
 #include <iostream>
 //Debug
 #include <assert.h>
