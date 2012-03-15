@@ -48,10 +48,6 @@ public:
   
   virtual ~Color();
   
-  
-  // Temporary method
-  sf::Color toSfColor(void) const;
-  
   uint8_t r; /// Red
   uint8_t g; /// Green
   uint8_t b; /// Blue
