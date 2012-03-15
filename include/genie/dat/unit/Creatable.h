@@ -48,7 +48,7 @@ public:
   char Unknown26;//not in aoe/ror
   
   static const short UNKNOWN27_SIZE = 3;
-  std::vector<short> Unknown27; //3 //not in aoe/ror
+  std::vector<int16_t> Unknown27; //3 //not in aoe/ror
   char Unknown28;//not in aoe/ror
   char MissileGraphicDelay;//not in aoe/ror
   char HeroMode;//not in aoe/ror
@@ -60,8 +60,8 @@ public:
   /// The area from which projectiles spawn. Size and randomness.
   std::vector<float> AttackMissileDuplicationSpawning; //3 //not in aoe/ror
   
-  long AttackMissileDuplicationUnit;//not in aoe/ror
-  long AttackMissileDuplicationGraphic;//not in aoe/ror
+  int32_t AttackMissileDuplicationUnit;//not in aoe/ror
+  int32_t AttackMissileDuplicationGraphic;//not in aoe/ror
   
   //TODO: 
   /*

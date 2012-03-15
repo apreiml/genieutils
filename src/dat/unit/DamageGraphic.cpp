@@ -41,7 +41,7 @@ DamageGraphic::~DamageGraphic()
 
 void DamageGraphic::serializeObject(void )
 {
-  serialize<short>(GraphicID);
+  serialize<int16_t>(GraphicID);
   serialize<char>(DamagePercent);
   serialize<char>(Unknown1);
   serialize<char>(Unknown2);

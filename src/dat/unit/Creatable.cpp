@@ -59,27 +59,27 @@ short Creatable::getResourceCostsSize()
 void Creatable::serializeObject(void )
 {
   serializeSub<ResourceCost>(ResourceCosts, getResourceCostsSize());
-  serialize<short>(TrainTime);
-  serialize<short>(TrainLocationID);
+  serialize<int16_t>(TrainTime);
+  serialize<int16_t>(TrainLocationID);
   serialize<char>(ButtonID);
   
   if (getGameVersion() >= genie::GV_AoK)
   {
     serialize<char>(Unknown26);
-    serialize<short>(Unknown27, UNKNOWN27_SIZE);
+    serialize<int16_t>(Unknown27, UNKNOWN27_SIZE);
     serialize<char>(Unknown28);
     serialize<char>(MissileGraphicDelay);
     serialize<char>(HeroMode);
-    serialize<short>(GarrisonGraphic);
+    serialize<int16_t>(GarrisonGraphic);
     serialize<float>(AttackMissileDuplicationAmount1);
     serialize<char>(AttackMissileDuplicationAmount2);
     serialize<float>(AttackMissileDuplicationSpawning, AMDBUNKNOWN_SIZE);
-    serialize<long>(AttackMissileDuplicationUnit);
-    serialize<long>(AttackMissileDuplicationGraphic);
+    serialize<int32_t>(AttackMissileDuplicationUnit);
+    serialize<int32_t>(AttackMissileDuplicationGraphic);
     serialize<char>(Unknown29);
   }
   
-  serialize<short>(DisplayedPierceArmour);
+  serialize<int16_t>(DisplayedPierceArmour);
 }
 
 }

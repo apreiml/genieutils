@@ -65,20 +65,20 @@ void Projectile::serializeObject(void )
   if (getGameVersion() >= genie::GV_TC)
     serialize<char>(Unknown20_1);
   
-  serializeSize<unsigned short>(AttackCount, Attacks.size());
+  serializeSize<uint16_t>(AttackCount, Attacks.size());
   serializeSub<unit::AttackOrArmor>(Attacks, AttackCount);
   
-  serializeSize<unsigned short>(ArmourCount, Armours.size());
+  serializeSize<uint16_t>(ArmourCount, Armours.size());
   serializeSub<unit::AttackOrArmor>(Armours, ArmourCount);
   
-  serialize<short>(Unknown21);
+  serialize<int16_t>(Unknown21);
   serialize<float>(MaxRange);
   serialize<float>(BlastRadius);
   serialize<float>(ReloadTime1);
-  serialize<short>(ProjectileUnitID);
-  serialize<short>(AccuracyPercent);
+  serialize<int16_t>(ProjectileUnitID);
+  serialize<int16_t>(AccuracyPercent);
   serialize<char>(TowerMode);
-  serialize<short>(Delay); //TODO: missle graphic delay
+  serialize<int16_t>(Delay); //TODO: missle graphic delay
   serialize<float>(GraphicDisplacement, getGraphicDisplacementSize());
   serialize<char>(Unknown23); //TODO: AoE/RoR blast level
   serialize<float>(MinRange);
@@ -86,9 +86,9 @@ void Projectile::serializeObject(void )
   if (getGameVersion() >= genie::GV_AoK)
     serialize<float>(GarrisonRecoveryRate);
   
-  serialize<short>(AttackGraphic);
-  serialize<short>(DisplayedMeleeArmour);
-  serialize<short>(DisplayedAttack);
+  serialize<int16_t>(AttackGraphic);
+  serialize<int16_t>(DisplayedMeleeArmour);
+  serialize<int16_t>(DisplayedAttack);
   serialize<float>(DisplayedRange);
   serialize<float>(ReloadTime2);
 }

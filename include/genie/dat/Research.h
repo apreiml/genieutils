@@ -35,14 +35,14 @@ public:
   virtual ~Research();
   
   /// Size of RequiredTechs vector (4 in aoe/ror and 6 in games >= aok)
-  unsigned short getRequiredTechsSize(void );
+  uint16_t getRequiredTechsSize(void );
 
   /// IDs of researches that are required for this tech to appear.
   /// The size of the array is 4 in aoe/ror and 6 at games >= aok
-  std::vector<short> RequiredTechs;
+  std::vector<int16_t> RequiredTechs;
    
   /// Size of ResourceCosts vector (3)
-  unsigned short getResourceCostsSize(void );
+  uint16_t getResourceCostsSize(void );
   
   typedef ResourceUsage<short, short, char> ResearchResourceCost;
   
@@ -64,10 +64,10 @@ public:
   short ResearchLocation; 
   
   /// Index of the name in language.dll
-  unsigned short LanguageDllName;
+  uint16_t LanguageDllName;
   
   /// Index of the description in language.dll
-  unsigned short LanguageDllDescription;
+  uint16_t LanguageDllDescription;
   
   /// Number of seconds it takes to research
   short ResearchTime;
@@ -85,14 +85,14 @@ public:
   char ButtonID;
   
   /// Size of Pointers vector (3)
-  static unsigned short getPointersSize();
+  static uint16_t getPointersSize();
   
   /// TODO
   /// These numbers point to something (unknown). The first number 
   /// is 100,000 plus the Language FIle ID for the name/description. The 
   /// second number is 149,000 plus the Language File ID for the 
   /// description/help. The third number has been -1 in every technology so far.
-  std::vector<long> Pointers;
+  std::vector<int32_t> Pointers;
   
   /// Internal name
   std::string Name;
@@ -102,10 +102,10 @@ public:
   std::string Name2;
   
 private:
-  unsigned short NameLength;
+  uint16_t NameLength;
   
   /// MinGameVersion: SWGB
-  unsigned short NameLength2;
+  uint16_t NameLength2;
   
   virtual void serializeObject(void);
 };

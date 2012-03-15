@@ -121,7 +121,7 @@ short Graphic::getName2Size()
     return NAME_LEN_SWGB;
 }
 
-unsigned short Graphic::getCoordinatesSize()
+uint16_t Graphic::getCoordinatesSize()
 {
   return 4;
 }
@@ -154,7 +154,7 @@ void Graphic::serializeObject(void )
     Name2 = std::string(CstrName2);
   }
 
-  serialize<long>(SLP);
+  serialize<int32_t>(SLP);
   serialize<char>(Unknown1);
   serialize<char>(Unknown2); /// TODO: priority?
   serialize<char>(Layer);
@@ -162,21 +162,21 @@ void Graphic::serializeObject(void )
   serialize<char>(Unknown4);
   serialize<char>(Replay);
   
-  serialize<short>(Coordinates, 4);
+  serialize<int16_t>(Coordinates, 4);
   
-  serializeSize<unsigned short>(DeltaCount, Deltas.size());
-  serialize<short>(SoundID);
+  serializeSize<uint16_t>(DeltaCount, Deltas.size());
+  serialize<int16_t>(SoundID);
   serialize<char>(AttackSoundUsed);
-  serialize<unsigned short>(FrameCount);
-  serialize<unsigned short>(AngleCount);
+  serialize<uint16_t>(FrameCount);
+  serialize<uint16_t>(AngleCount);
   serialize<float>(Unknown13);
   serialize<float>(FrameRate);
   serialize<float>(ReplayDelay);
   serialize<char>(SequenceType);
-  serialize<short>(ID);
+  serialize<int16_t>(ID);
   
   if (getGameVersion() >= genie::GV_AoK)
-    serialize<short>(Type);
+    serialize<int16_t>(Type);
   else
   {
     char tmp = Type;

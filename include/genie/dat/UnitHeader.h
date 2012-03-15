@@ -37,7 +37,7 @@ public:
   std::vector<UnitCommand> Commands;
   
 private:
-  unsigned short CommandCount;
+  uint16_t CommandCount;
   
   virtual void serializeObject(void);
 };

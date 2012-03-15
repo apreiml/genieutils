@@ -42,14 +42,14 @@ GraphicDelta::~GraphicDelta()
 
 void GraphicDelta::serializeObject(void )
 {
-  serialize<short>(GraphicID);
-  serialize<short>(Unknown1);
-  serialize<short>(Unknown2);
-  serialize<short>(Unknown3);
-  serialize<short>(DirectionX);
-  serialize<short>(DirectionY);
-  serialize<short>(Unknown4);
-  serialize<short>(Unknown5);
+  serialize<int16_t>(GraphicID);
+  serialize<int16_t>(Unknown1);
+  serialize<int16_t>(Unknown2);
+  serialize<int16_t>(Unknown3);
+  serialize<int16_t>(DirectionX);
+  serialize<int16_t>(DirectionY);
+  serialize<int16_t>(Unknown4);
+  serialize<int16_t>(Unknown5);
 }
 
 }

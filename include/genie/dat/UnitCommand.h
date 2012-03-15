@@ -57,7 +57,7 @@ public:
   char Unknown14;
   
   static short getGraphicsSize(void);
-  std::vector<short> Graphics;
+  std::vector<int16_t> Graphics;
   
 private:
   virtual void serializeObject(void);

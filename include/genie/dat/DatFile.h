@@ -81,24 +81,24 @@ public:
   // File data
   static const short FILE_VERSION_LEN = 8;
  
-  std::vector<long> TerrainRestrictionPointers1;
-  std::vector<long> TerrainRestrictionPointers2;
+  std::vector<int32_t> TerrainRestrictionPointers1;
+  std::vector<int32_t> TerrainRestrictionPointers2;
   std::vector<TerrainRestriction> TerrainRestrictions;
   
   std::vector<PlayerColour> PlayerColours;
   
   std::vector<Sound> Sounds;
   
-  std::vector<long> GraphicPointers;
+  std::vector<int32_t> GraphicPointers;
   std::vector<Graphic> Graphics;
         
-  static const unsigned short TERRAIN_HEADER_SIZE = 138;
+  static const uint16_t TERRAIN_HEADER_SIZE = 138;
   char *GraphicsRendering;
   std::vector<Terrain> Terrains;
   
   std::vector<TerrainBorder> TerrainBorders;
   
-  long *ZeroSpace;
+  int32_t *ZeroSpace;
   char *RenderingPlusSomething;
   
   std::vector<Techage> Techages;
@@ -114,17 +114,17 @@ public:
 
   genie::TechTree TechTree;
   
-  std::vector<long> UnknownPreTechTree;
+  std::vector<int32_t> UnknownPreTechTree;
    
   /// TC runs fine without this empty data
   char *Unknown2;
   
    //SWGB Unknowns:
   /// Seems to be the CivCount
-  long SUnknown2;
-  long SUnknown3;
-  long SUnknown4;
-  long SUnknown5;
+  int32_t SUnknown2;
+  int32_t SUnknown3;
+  int32_t SUnknown4;
+  int32_t SUnknown5;
   
   char SUnknown7;
   char SUnknown8;
@@ -140,20 +140,20 @@ private:
   
   Compressor compressor_;
   
-  unsigned short terrain_restriction_count_;
-  unsigned short terrain_count_;
-  unsigned short terrain_count2_;
+  uint16_t terrain_restriction_count_;
+  uint16_t terrain_count_;
+  uint16_t terrain_count2_;
   
-  unsigned short player_color_count_;
-  unsigned short sound_count_;
-  unsigned short graphic_count_;
-  unsigned long techage_count_;
-  unsigned long unit_count_;
-  unsigned short civ_countSW_;
-  unsigned short civ_count_;
-  unsigned short research_count_;
+  uint16_t player_color_count_;
+  uint16_t sound_count_;
+  uint16_t graphic_count_;
+  uint32_t techage_count_;
+  uint32_t unit_count_;
+  uint16_t civ_countSW_;
+  uint16_t civ_count_;
+  uint16_t research_count_;
   
-  unsigned short unit_line_count_;
+  uint16_t unit_line_count_;
   
   DatFile(const DatFile &other);
   DatFile &operator=(const DatFile &other);

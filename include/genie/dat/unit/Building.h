@@ -49,7 +49,7 @@ public:
   short ResearchID;
   char Unknown33;
   
-  static const unsigned short BUILDING_ANNEXES_CNT = 4;
+  static const uint16_t BUILDING_ANNEXES_CNT = 4;
   
   std::vector<unit::BuildingAnnex> Annexes; // 4
   short HeadUnit;
@@ -58,10 +58,10 @@ public:
   short ConstructionSound;
   char GarrisonType;
   float GarrisonHealRate;
-  long Unknown35;
+  int32_t Unknown35;
   short Unknown36;
   
-  static const unsigned short UNKNOWN37_SIZE = 6;
+  static const uint16_t UNKNOWN37_SIZE = 6;
   std::vector<char> Unknown37; // 6
   
 private:  

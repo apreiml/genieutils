@@ -21,7 +21,7 @@ sf::Image createSfImage(uint32_t width, uint32_t height, const uint8_t* pixels,
 {
   sf::Image img;
   
-  img.Create(width, height, sf::Color::Transparent);
+  img.create(width, height, sf::Color::Transparent);
   
   for (uint32_t row=0; row < height; row++)
     for (uint32_t col=0; col < width; col++)
@@ -31,7 +31,7 @@ sf::Image createSfImage(uint32_t width, uint32_t height, const uint8_t* pixels,
       if (c_index != transparent_pixel)
       {
         genie::Color g_color = (*palette)[c_index];
-        img.SetPixel(col, row, sf::Color(g_color.r, g_color.g, g_color.b));
+        img.setPixel(col, row, sf::Color(g_color.r, g_color.g, g_color.b));
       }           
     }
     
@@ -78,40 +78,40 @@ void testDrs()
   drs.getSlpFile(slp_id);
     
   sf::Image img;
-  img.LoadFromFile("image_part.bmp");
+  img.loadFromFile("image_part.bmp");
   
-  text.LoadFromImage(createSfImage(slpf->getFrame(1), pal));
-  text2.LoadFromImage(img);
+  text.loadFromImage(createSfImage(slpf->getFrame(1), pal));
+  text2.loadFromImage(img);
   
   
   sf::Sprite Sprite(text);
   sf::Sprite Sprite2(text2);
 
-  Sprite.SetPosition(0, 0);
-  Sprite2.SetPosition(100,50);
+  Sprite.setPosition(0, 0);
+  Sprite2.setPosition(100,50);
 
   // Start game loop
-  while (App.IsOpen())
+  while (App.isOpen())
   {
       // Process events
       sf::Event Event;
-      while (App.PollEvent(Event))
+      while (App.pollEvent(Event))
       {
           // Close window : exit
-          if (Event.Type == sf::Event::Closed)
-              App.Close();
+          if (Event.type == sf::Event::Closed)
+              App.close();
           
       }
 
       // Clear screen
-      App.Clear();
+      App.clear();
 
       // Display sprite in our window
-      App.Draw(Sprite);
-      App.Draw(Sprite2);
+      App.draw(Sprite);
+      App.draw(Sprite2);
 
       // Display window contents on screen
-      App.Display();
+      App.display();
   }
 }
 
@@ -119,11 +119,13 @@ void testScn()
 {
   genie::ScnFile scn;
   
-//   scn.extractRaw("small_crater_lake.scx", "raw.scx");
-  scn.extractRaw("test2.scx", "raw.scx");
+  scn.extractRaw("testmap_small_random.scx", "raw.scx");
+//   scn.extractRaw("test2.scx", "raw.scx");
+//   scn.extractRaw("Gwyndlegard - Multiplayer Edition 1,0.scx", "raw.scx");
    
-//   scn.load("small_crater_lake.scx");
-  scn.load("test2.scx");
+  scn.load("Nomadic Asia by Wolfy.scx");
+//   scn.load("testmap_small_random.scx");
+//   scn.load("Gwyndlegard - Multiplayer Edition 1,0.scx");
   
   std::cout << "Original filename: " << scn.originalFileName << std::endl;
   
@@ -134,6 +136,11 @@ void testScn()
   std::cout << "Bitmap byte size: " << scn.resource.bitmapByteSize << std::endl;
   
   sf::Image img;
+  
+  //std::cout << "AI Name 0: " << scn.playerData2.aiNames[0] << std::endl;
+  //std::cout << "AI Name 15: " << scn.playerData2.aiNames[15] << std::endl;
+  
+  //std::cout << scn.map.width << "x" << scn.map.height << std::endl;
   
   /*
   std::ofstream ofs;

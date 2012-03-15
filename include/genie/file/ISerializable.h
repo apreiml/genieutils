@@ -25,6 +25,7 @@
 #include "genie/Types.h"
 #include <vector>
 #include <string.h>
+#include <stdint.h>
 
 namespace genie
 {
@@ -328,7 +329,7 @@ protected:
       case OP_READ:
         vec.resize(size);
         
-        for (unsigned int i=0; i < size; i++)
+        for (size_t i=0; i < size; i++)
           vec[i] = read<T>();
         
         break;
@@ -365,7 +366,7 @@ protected:
     {      
       vec.resize(size);
       
-      for (unsigned int i=0; i < size; i++)
+      for (size_t i=0; i < size; i++)
       {
         ISerializable *cast_obj = dynamic_cast<ISerializable *>(&vec[i]);
         cast_obj->serializeSubObject(this);
@@ -417,11 +418,11 @@ protected:
   //
   template <typename T>
   void serializeSubWithPointers(std::vector<T> &vec, size_t size, 
-                                std::vector<long> &pointers)
+                                std::vector<int32_t> &pointers)
   {
     if (isOperation(OP_WRITE) || isOperation(OP_CALC_SIZE))
     {
-      for (unsigned int i=0; i < size; i++)
+      for (size_t i=0; i < size; i++)
       {
         if (pointers[i] != 0)
         {
@@ -438,7 +439,7 @@ protected:
     {
       vec.resize(size);
       
-      for (unsigned int i=0; i < size; i++)
+      for (size_t i=0; i < size; i++)
       {        
         T *obj = &vec[i]; 
         

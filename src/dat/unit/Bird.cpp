@@ -45,18 +45,18 @@ Bird::~Bird()
 }
 void Bird::serializeObject(void )
 {
-  serialize<short>(SheepConversion);
+  serialize<int16_t>(SheepConversion);
   serialize<float>(SearchRadius);
   serialize<float>(WorkRate);
-  serialize<short>(DropSite);
+  serialize<int16_t>(DropSite);
   serialize<char>(VillagerMode);
-  serialize<short>(MoveSound);
-  serialize<short>(StopSound);
+  serialize<int16_t>(MoveSound);
+  serialize<int16_t>(StopSound);
   serialize<char>(AnimalMode); //TODO: AoE/RoR: animal_mode
   
   if (getGameVersion() <= genie::GV_RoR)
   {
-    serializeSize<unsigned short>(CommandCount, Commands.size());
+    serializeSize<uint16_t>(CommandCount, Commands.size());
     serializeSub<UnitCommand>(Commands, CommandCount);
   }
 }

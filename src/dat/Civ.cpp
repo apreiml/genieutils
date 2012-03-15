@@ -38,7 +38,7 @@ Civ::~Civ()
 {
 }
 
-short Civ::getNameSize(void)
+uint16_t Civ::getNameSize(void)
 {
   return 20;
 }
@@ -47,24 +47,24 @@ void Civ::serializeObject(void )
 {
   serialize<char>(One); //TODO: enabled flag
   serialize<std::string>(Name, getNameSize());
-  serializeSize<unsigned short>(ResourceCount, Resources.size());
-  serialize<short>(TechTreeID);
+  serializeSize<uint16_t>(ResourceCount, Resources.size());
+  serialize<int16_t>(TechTreeID);
   
   if (getGameVersion() >= genie::GV_AoK)
-    serialize<short>(TeamBonusID);
+    serialize<int16_t>(TeamBonusID);
   
   if (getGameVersion() >= genie::GV_SWGB)
   {
     serialize<std::string>(Name2, getNameSize());
-    serialize<short>(SUnknown1, 4);
+    serialize<int16_t>(SUnknown1, 4);
   }
   
   serialize<float>(Resources, ResourceCount);
   
   serialize<char>(GraphicSet);
   
-  serializeSize<unsigned short>(UnitCount, UnitPointers.size());
-  serialize<long>(UnitPointers, UnitCount);
+  serializeSize<uint16_t>(UnitCount, UnitPointers.size());
+  serialize<int32_t>(UnitPointers, UnitCount);
   serializeSubWithPointers<Unit>(Units, UnitCount, UnitPointers);
 }
 

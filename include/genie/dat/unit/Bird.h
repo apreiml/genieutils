@@ -48,7 +48,7 @@ public:
   short StopSound;
   /// Some animals have this.
   char AnimalMode;
-  unsigned short CommandCount;//only in aoe/ror
+  uint16_t CommandCount;//only in aoe/ror
   std::vector<UnitCommand> Commands;//only in aoe/ror
   
 private:

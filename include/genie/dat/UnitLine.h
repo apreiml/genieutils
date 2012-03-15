@@ -38,13 +38,13 @@ public:
   
   std::string Name;
   
-  std::vector<short> UnitIDs;
+  std::vector<int16_t> UnitIDs;
   
 private:
   
-  unsigned short name_len_;
+  uint16_t name_len_;
   
-  unsigned short unit_count_;
+  uint16_t unit_count_;
   
   virtual void serializeObject(void);
   

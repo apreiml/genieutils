@@ -41,7 +41,7 @@ void UnitHeader::serializeObject(void )
   
   if (Exists)
   {
-    serializeSize<unsigned short>(CommandCount, Commands.size());
+    serializeSize<uint16_t>(CommandCount, Commands.size());
     serializeSub<UnitCommand>(Commands, CommandCount);
   }
 }

@@ -48,13 +48,13 @@ void SoundItem::serializeObject(void )
 {
   serialize<std::string>(FileName, getFileNameSize());
   
-  serialize<long>(ResourceID);
-  serialize<short>(Probability);
+  serialize<int32_t>(ResourceID);
+  serialize<int16_t>(Probability);
   
   if (getGameVersion() >= genie::GV_AoK)
   {
-    serialize<short>(Civ);
-    serialize<short>(Unknown1);
+    serialize<int16_t>(Civ);
+    serialize<int16_t>(Unknown1);
   }
 }
 

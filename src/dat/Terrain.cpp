@@ -84,38 +84,38 @@ short Terrain::getUnknown10Size(void)
 //------------------------------------------------------------------------------
 void Terrain::serializeObject(void )
 { 
-  serialize<short>(Unknown1);
-  serialize<short>(Unknown2);
+  serialize<int16_t>(Unknown1);
+  serialize<int16_t>(Unknown2);
   
   serialize<std::string>(Name, getNameSize());
   serialize<std::string>(Name2, getNameSize());
   
-  serialize<long>(SLP);
-  serialize<long>(Unknown3);
-  serialize<long>(SoundID);
+  serialize<int32_t>(SLP);
+  serialize<int32_t>(Unknown3);
+  serialize<int32_t>(SoundID);
   
   if (getGameVersion() >= genie::GV_AoK)
   {
-    serialize<long>(BlendPriority);
-    serialize<long>(BlendType);
+    serialize<int32_t>(BlendPriority);
+    serialize<int32_t>(BlendType);
   }
   
   serialize<char>(Colours, getColorSize());
-  serialize<short>(Unknown5);
-  serialize<short>(Unknown6);
+  serialize<int16_t>(Unknown5);
+  serialize<int16_t>(Unknown6);
   serialize<char>(Unknown7, UNKNOWN7_LEN);
-  serialize<short>(FrameCount);
-  serialize<short>(Unknown8, UNKNOWN8_LEN);
-  serialize<short>(Unknown9, UNKNOWN9_LEN);
-  serialize<short>(TerrainReplacementID);
-  serialize<short>(TerrainDimensions);
+  serialize<int16_t>(FrameCount);
+  serialize<int16_t>(Unknown8, UNKNOWN8_LEN);
+  serialize<int16_t>(Unknown9, UNKNOWN9_LEN);
+  serialize<int16_t>(TerrainReplacementID);
+  serialize<int16_t>(TerrainDimensions);
   
   serialize<char>(Unknown10, getUnknown10Size());
   
-  serialize<short>(TerrainUnitID, getTerrainUnitSize());
-  serialize<short>(TerrainUnitDensity, getTerrainUnitSize());
+  serialize<int16_t>(TerrainUnitID, getTerrainUnitSize());
+  serialize<int16_t>(TerrainUnitDensity, getTerrainUnitSize());
   serialize<char>(Unknown11, UNKNOWN11_LEN);
-  serialize<short>(NumberOfTerrainUnitsUsed);
+  serialize<int16_t>(NumberOfTerrainUnitsUsed);
   
   if (getGameVersion() >= genie::GV_SWGB)
     serialize<char>(SWGBUnknown1, SWGBUNKNOWN1_LEN);

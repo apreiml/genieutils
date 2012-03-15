@@ -53,7 +53,7 @@ public:
   std::string Name2;
   
   /// SLP resource id
-  long SLP;
+  int32_t SLP;
   
   //TODO
   char Unknown1;
@@ -72,21 +72,21 @@ public:
   char Unknown4;
   char Replay;
   
-  static unsigned short getCoordinatesSize();
+  static uint16_t getCoordinatesSize();
   /// TODO: What kind of coordinates?
-  std::vector<short> Coordinates;
+  std::vector<int16_t> Coordinates;
   
   short SoundID;
   char AttackSoundUsed;
   
   /// Number of frames per angle animation
-  unsigned short FrameCount;
+  uint16_t FrameCount;
   
   /// Number of angles tored in slp and also the number of extra structures.
   /// If there are more than 1 angle, AngleCount/2 - 1 frames will be
   /// mirrored. That means angles starting from south going clockwise to
   /// north are stored and the others will be mirrored.
-  unsigned short AngleCount;
+  uint16_t AngleCount;
   float Unknown13;
   
   /// Frame rate in seconds. (Delay between frames)
@@ -103,7 +103,7 @@ public:
   std::vector<GraphicAttackSound> AttackSounds;
     
 private:
-  unsigned short DeltaCount;
+  uint16_t DeltaCount;
   
   static const short NAME_LEN_SWGB = 25;
   

@@ -34,13 +34,13 @@ TerrainBorder::~TerrainBorder()
 }
 
 //------------------------------------------------------------------------------
-unsigned int TerrainBorder::getNameSize()
+uint32_t TerrainBorder::getNameSize()
 {
   return 13;
 }
 
 //------------------------------------------------------------------------------
-unsigned int TerrainBorder::getUnknown3Size()
+uint32_t TerrainBorder::getUnknown3Size()
 {
   return 1410;
 }
@@ -48,31 +48,31 @@ unsigned int TerrainBorder::getUnknown3Size()
 //------------------------------------------------------------------------------
 void TerrainBorder::serializeObject(void )
 { 
-  //serialize<short>(Unknown1);
-  serialize<short>(Enabled);
+  //serialize<int16_t>(Unknown1);
+  serialize<int16_t>(Enabled);
   
   serialize<std::string>(Name, getNameSize());
   serialize<std::string>(Name2, getNameSize());
   
-  serialize<long>(RessourceID);
+  serialize<int32_t>(RessourceID);
   
-  serialize<long>(Unknown3);
-  serialize<long>(Unknown4);
+  serialize<int32_t>(Unknown3);
+  serialize<int32_t>(Unknown4);
   
   serialize<char>(Colors, 3);
   
   serialize<char>(Unknown5);
   
-  serialize<long>(Unknown6);
-  serialize<long>(Unknown7);
+  serialize<int32_t>(Unknown6);
+  serialize<int32_t>(Unknown7);
   
   serializeSub<TBFrameData>(Frames, 230);
   
-  serialize<short>(FrameCount);
+  serialize<int16_t>(FrameCount);
   
-  serialize<short>(Unknown8);
-  serialize<short>(Unknown9);
-  serialize<short>(Unknown10);
+  serialize<int16_t>(Unknown8);
+  serialize<int16_t>(Unknown9);
+  serialize<int16_t>(Unknown10);
 }
 
 
@@ -91,9 +91,9 @@ TBFrameData::~TBFrameData()
 //------------------------------------------------------------------------------
 void TBFrameData::serializeObject(void )
 {
-  serialize<short>(FrameID);
-  serialize<short>(Flag1);
-  serialize<short>(Flag2);
+  serialize<int16_t>(FrameID);
+  serialize<int16_t>(Flag1);
+  serialize<int16_t>(Flag2);
 }
 
 }

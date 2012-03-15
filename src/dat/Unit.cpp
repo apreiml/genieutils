@@ -132,36 +132,36 @@ void Unit::serializeObject(void )
   //Type 10+
   serialize<char>(Type);
   
-  serializeSize<unsigned short>(NameLength, Name);
-  serialize<short>(ID1);        //TODO: Check
-  serialize<unsigned short>(LanguageDllName);
-  serialize<unsigned short>(LanguageDllCreation);
-  serialize<short>(Class);
+  serializeSize<uint16_t>(NameLength, Name);
+  serialize<int16_t>(ID1);        //TODO: Check
+  serialize<uint16_t>(LanguageDllName);
+  serialize<uint16_t>(LanguageDllCreation);
+  serialize<int16_t>(Class);
   
   if (getGameVersion() >= genie::GV_AoK)
-    serialize<short>(StandingGraphic);
+    serialize<int16_t>(StandingGraphic);
   else
-    serialize<short>(StandingGraphic, true);
+    serialize<int16_t>(StandingGraphic, true);
   
-  serialize<short>(DyingGraphic);
+  serialize<int16_t>(DyingGraphic);
   serialize<char>(DeathMode);
-  serialize<short>(HitPoints);
+  serialize<int16_t>(HitPoints);
   serialize<float>(LineOfSight);
   serialize<char>(GarrisonCapacity); 
   serialize<float>(SizeRadius);
   
   serialize<float>(HPBarHeight1);
   
-  serialize<short>(TrainSound, (getGameVersion() >= genie::GV_AoK) ? false : true);
-  serialize<short>(DeadUnitID);
+  serialize<int16_t>(TrainSound, (getGameVersion() >= genie::GV_AoK) ? false : true);
+  serialize<int16_t>(DeadUnitID);
   serialize<char>(PlacementMode);
   serialize<char>(AirMode);
-  serialize<short>(IconID);
+  serialize<int16_t>(IconID);
   serialize<char>(HideInEditor);
-  serialize<short>(Unknown1);
+  serialize<int16_t>(Unknown1);
   
   if (getGameVersion() >= genie::GV_AoK)
-    serialize<short>(Enabled);
+    serialize<int16_t>(Enabled);
   else
   {
     char enabled = Enabled;
@@ -169,14 +169,14 @@ void Unit::serializeObject(void )
     Enabled = enabled;
   }
   
-  serialize<short>(PlacementBypassTerrain);
-  serialize<short>(PlacementTerrain);
+  serialize<int16_t>(PlacementBypassTerrain);
+  serialize<int16_t>(PlacementTerrain);
   serialize<float>(EditorRadius);
   serialize<char>(BuildingMode);
   serialize<char>(VisibleInFog);
-  serialize<short>(TerrainRestriction);
+  serialize<int16_t>(TerrainRestriction);
   serialize<char>(FlyMode);
-  serialize<short>(ResourceCapacity);
+  serialize<int16_t>(ResourceCapacity);
   serialize<float>(ResourceDecay);
   serialize<char>(BlastType); //TODO: AoE/ROR: [0]:blast_type?
   serialize<char>(Unknown2);
@@ -184,7 +184,7 @@ void Unit::serializeObject(void )
   serialize<char>(MinimapMode);
   
   if (getGameVersion() >= genie::GV_AoK)// || getGameVersion() == genie::GV_TC)
-    serialize<short>(CommandAttribute);
+    serialize<int16_t>(CommandAttribute);
   else
   {
     char attr = CommandAttribute;
@@ -192,14 +192,14 @@ void Unit::serializeObject(void )
     CommandAttribute = attr;
   }
   
-  serialize<short>(Unknown3);
-  serialize<short>(Unknown3B);
+  serialize<int16_t>(Unknown3);
+  serialize<int16_t>(Unknown3B);
   
   if (getGameVersion() <= genie::GV_RoR)
     serialize<char>(Unknown3a);
   
-  serialize<unsigned short>(LanguageDllHelp);
-  serialize<short>(HotKey, getHotKeySize());
+  serialize<uint16_t>(LanguageDllHelp);
+  serialize<int16_t>(HotKey, getHotKeySize());
   serialize<char>(Unknown4);
   serialize<char>(Unknown5);
   serialize<bool>(Unselectable);
@@ -242,26 +242,26 @@ void Unit::serializeObject(void )
   serializeSize<unsigned char>(DamageGraphicCount, DamageGraphics.size());
   serializeSub<unit::DamageGraphic>(DamageGraphics, DamageGraphicCount);
   
-  serialize<short>(SelectionSound);
-  serialize<short>(DyingSound);
-  serialize<short>(AttackSound);
+  serialize<int16_t>(SelectionSound);
+  serialize<int16_t>(DyingSound);
+  serialize<int16_t>(AttackSound);
   
   serialize<std::string>(Name, NameLength);
   
   if (getGameVersion() >= genie::GV_SWGB)
   {
-    //serializeSize<unsigned short>(NameLength2, Name2.size());
-    serializeSize<unsigned short>(NameLength2, Name2);
+    //serializeSize<uint16_t>(NameLength2, Name2.size());
+    serializeSize<uint16_t>(NameLength2, Name2);
     serialize<std::string>(Name2, NameLength2);
     
-    serialize<short>(Unitline);
+    serialize<int16_t>(Unitline);
     serialize<char>(MinTechLevel);
   }
   
-  serialize<short>(ID2);
+  serialize<int16_t>(ID2);
     
   if (getGameVersion() >= genie::GV_AoK)
-    serialize<short>(ID3);
+    serialize<int16_t>(ID3);
   
   if (Type == genie::UT_AoeTrees)
     return;

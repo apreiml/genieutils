@@ -46,24 +46,24 @@ void PlayerColour::serializeObject(void )
   if (getGameVersion() < genie::GV_AoK)
     serialize<std::string>(Name, NAME_LEN);
   
-  serialize<long>(ID);
+  serialize<int32_t>(ID);
   
   if (getGameVersion() < genie::GV_AoK)
   {
     short col_short = Colour;
-    serialize<short>(col_short);
+    serialize<int16_t>(col_short);
     Colour = col_short;
   }
   else
   {
-    serialize<long>(Palette);
-    serialize<long>(Colour);
-    serialize<long>(Unknown1);
-    serialize<long>(Unknown2);
-    serialize<long>(MinimapColour);
-    serialize<long>(Unknown3);
-    serialize<long>(Unknown4);
-    serialize<long>(Unknown5);
+    serialize<int32_t>(Palette);
+    serialize<int32_t>(Colour);
+    serialize<int32_t>(Unknown1);
+    serialize<int32_t>(Unknown2);
+    serialize<int32_t>(MinimapColour);
+    serialize<int32_t>(Unknown3);
+    serialize<int32_t>(Unknown4);
+    serialize<int32_t>(Unknown5);
   }
 }
 

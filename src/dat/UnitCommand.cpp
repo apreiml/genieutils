@@ -65,17 +65,17 @@ short UnitCommand::getGraphicsSize(void)
 //------------------------------------------------------------------------------
 void UnitCommand::serializeObject(void )
 {
-  serialize<short>(One);
-  serialize<short>(ID);
+  serialize<int16_t>(One);
+  serialize<int16_t>(ID);
   serialize<char>(Unknown1); 
-  serialize<short>(Type);
-  serialize<short>(ClassID);
-  serialize<short>(UnitID);
-  serialize<short>(Unknown2);
-  serialize<short>(ResourceIn);
-  serialize<short>(SubType);
-  serialize<short>(ResourceOut);
-  serialize<short>(Unknown3);
+  serialize<int16_t>(Type);
+  serialize<int16_t>(ClassID);
+  serialize<int16_t>(UnitID);
+  serialize<int16_t>(Unknown2);
+  serialize<int16_t>(ResourceIn);
+  serialize<int16_t>(SubType);
+  serialize<int16_t>(ResourceOut);
+  serialize<int16_t>(Unknown3);
   serialize<float>(Unknown4);
   serialize<float>(ExecutionRadius);
   serialize<float>(Unknown5);
@@ -85,10 +85,10 @@ void UnitCommand::serializeObject(void )
   serialize<char>(Unknown9);
   serialize<char>(Unknown10);
   serialize<char>(Unknown11);
-  serialize<short>(Unknown12);
-  serialize<short>(Unknown13);
+  serialize<int16_t>(Unknown12);
+  serialize<int16_t>(Unknown13);
   serialize<char>(Unknown14);
-  serialize<short>(Graphics, getGraphicsSize());
+  serialize<int16_t>(Graphics, getGraphicsSize());
 }
 
 

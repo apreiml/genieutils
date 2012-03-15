@@ -39,7 +39,7 @@ public:
   
   std::vector<TechTreeAge> TechTreeAges;
   
-  long Unknown2; //1
+  int32_t Unknown2; //1
   
   std::vector<BuildingConnection> BuildingConnections;
   
@@ -50,7 +50,7 @@ public:
 private:
   unsigned char age_count_;
   unsigned char total_building_count_;
-  unsigned short total_unit_count_; // short in >= swgb
+  uint16_t total_unit_count_; // short in >= swgb
   unsigned char total_research_count_;
   
   virtual void serializeObject(void);
@@ -64,20 +64,20 @@ public:
   TechTreeAge();
   virtual ~TechTreeAge();
   
-  long Unknown1;
-  long ID; //Age ID?
+  int32_t Unknown1;
+  int32_t ID; //Age ID?
   char Unknown2; //Always 2
   
-  std::vector<long> Buildings;
-  std::vector<long> Units;
-  std::vector<long> Researches;
+  std::vector<int32_t> Buildings;
+  std::vector<int32_t> Units;
+  std::vector<int32_t> Researches;
   
-  long Unknown3; //Always 1
-  long Unknown4; //Second Age ID?
+  int32_t Unknown3; //Always 1
+  int32_t Unknown4; //Second Age ID?
   
-  unsigned short getZeroesSize(); 
+  uint16_t getZeroesSize(); 
   
-  std::vector<short> Zeroes;
+  std::vector<int16_t> Zeroes;
 private:
   unsigned char building_count_;
   unsigned char unit_count_;
@@ -92,38 +92,38 @@ public:
   BuildingConnection();
   virtual ~BuildingConnection();
   
-  long ID;
+  int32_t ID;
   char Unknown1; //always 2
   
-  std::vector<long> Buildings;
+  std::vector<int32_t> Buildings;
   
-  std::vector<long> Units;
+  std::vector<int32_t> Units;
 
-  std::vector<long> Researches;
+  std::vector<int32_t> Researches;
 
   /// Minimum amount of researches that need to be researched for this to be available.
-  long RequiredResearches;
-  long Age;
-  long UnitOrResearch1;
-  long UnitOrResearch2;
+  int32_t RequiredResearches;
+  int32_t Age;
+  int32_t UnitOrResearch1;
+  int32_t UnitOrResearch2;
   
-  unsigned int getUnknown2aSize();
-  std::vector<long> Unknown2a;
+  uint32_t getUnknown2aSize();
+  std::vector<int32_t> Unknown2a;
   
   /// 0 Nothing, 1 Building, 2 Unit, 3 Research.
-  long Mode1;
-  long Mode2;
+  int32_t Mode1;
+  int32_t Mode2;
   
-  unsigned int getUnknown2bSize();
-  std::vector<long> Unknown2b;
+  uint32_t getUnknown2bSize();
+  std::vector<int32_t> Unknown2b;
   
-  const unsigned int getUnknown3Size() { return 11; }
+  const uint32_t getUnknown3Size() { return 11; }
   std::vector<char> Unknown3;
   
   /// 5 One or more connections, 6 No connections.
-  long Connections;
+  int32_t Connections;
   /// Makes available. Used by buildings, which need a research to be available.
-  long EnablingResearch;
+  int32_t EnablingResearch;
   
 private:
   
@@ -140,39 +140,39 @@ public:
   UnitConnection();
   virtual ~UnitConnection();
   
-  long ID;
+  int32_t ID;
   char Unknown1; //always 2
-  long UpperBuilding;
+  int32_t UpperBuilding;
 
   /// Minimum amount of researches that need to be researched for this to be available.
-  long RequiredResearches;
-  long Age;
-  long UnitOrResearch1; // unit or research
-  long UnitOrResearch2; // unit or research
+  int32_t RequiredResearches;
+  int32_t Age;
+  int32_t UnitOrResearch1; // unit or research
+  int32_t UnitOrResearch2; // unit or research
   
-  unsigned int getUnknown2aSize();
-  std::vector<long> Unknown2a;
+  uint32_t getUnknown2aSize();
+  std::vector<int32_t> Unknown2a;
   
   /// 0 Nothing, 1 Building, 2 Unit, 3 Research.
-  long Mode1;
-  long Mode2;
+  int32_t Mode1;
+  int32_t Mode2;
   
-  unsigned int getUnknown2bSize();
-  std::vector<long> Unknown2b;
+  uint32_t getUnknown2bSize();
+  std::vector<int32_t> Unknown2b;
   
-  long VerticalLine;
+  int32_t VerticalLine;
   
   //char *connected unit count*
-  std::vector<long> Units;
+  std::vector<int32_t> Units;
   
   /// 1 First, 2 Second.
-  long LocationInAge;
+  int32_t LocationInAge;
   /// Upgrades unit. Used by units, which aren't first in upgrade line.
-  long RequiredResearch;
+  int32_t RequiredResearch;
   /// 2 First in vertical line. 3 Not first.
-  long LineMode;
+  int32_t LineMode;
   /// Makes available. Used by units, which need a research to be available.
-  long EnablingResearch;
+  int32_t EnablingResearch;
   
 private:
   unsigned char unit_count_;
@@ -187,35 +187,35 @@ public:
   ResearchConnection();
   virtual ~ResearchConnection();
   
-  long ID;
+  int32_t ID;
   char Unknown1; //always 2
-  long UpperBuilding;
+  int32_t UpperBuilding;
   
-  std::vector<long> Buildings;
+  std::vector<int32_t> Buildings;
   
-  std::vector<long> Units;
+  std::vector<int32_t> Units;
 
-  std::vector<long> Researches;
+  std::vector<int32_t> Researches;
 
   /// Minimum amount of researches that need to be researched for this to be available.
-  long RequiredResearches;
-  long Age;
-  long UpperResearch;
+  int32_t RequiredResearches;
+  int32_t Age;
+  int32_t UpperResearch;
   
-  unsigned int getUnknown2aSize();
-  std::vector<long> Unknown2a;
+  uint32_t getUnknown2aSize();
+  std::vector<int32_t> Unknown2a;
   
   /// 0 Independent/new in its line. 3 Depends on a previous research in its line.
-  long LineMode;
+  int32_t LineMode;
   
-  unsigned int getUnknown2bSize();
-  std::vector<long> Unknown2b;
+  uint32_t getUnknown2bSize();
+  std::vector<int32_t> Unknown2b;
   
-  long VerticalLine;
+  int32_t VerticalLine;
   /// 0 Hidden, 1 First, 2 Second.
-  long LocationInAge;
+  int32_t LocationInAge;
   /// 0 First Age. Others.
-  long Unknown9;
+  int32_t Unknown9;
  
 private:
   unsigned char building_count_;

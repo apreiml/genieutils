@@ -40,12 +40,12 @@ GraphicAttackSound::~GraphicAttackSound()
 
 void GraphicAttackSound::serializeObject(void )
 {
-  serialize<short>(SoundDelay);
-  serialize<short>(SoundID);
-  serialize<short>(SoundDelay2);
-  serialize<short>(SoundID2);
-  serialize<short>(SoundDelay3);
-  serialize<short>(SoundID3);
+  serialize<int16_t>(SoundDelay);
+  serialize<int16_t>(SoundID);
+  serialize<int16_t>(SoundDelay2);
+  serialize<int16_t>(SoundID2);
+  serialize<int16_t>(SoundDelay3);
+  serialize<int16_t>(SoundID3);
 }
 
 

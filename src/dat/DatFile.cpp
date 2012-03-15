@@ -100,11 +100,11 @@ void DatFile::serializeObject(void )
   
   if (getGameVersion() >= genie::GV_SWGB)
   {
-    serializeSize<unsigned short>(civ_countSW_, Civs.size());
-    serialize<long>(SUnknown2);
-    serialize<long>(SUnknown3);
-    serialize<long>(SUnknown4);
-    serialize<long>(SUnknown5);
+    serializeSize<uint16_t>(civ_countSW_, Civs.size());
+    serialize<int32_t>(SUnknown2);
+    serialize<int32_t>(SUnknown3);
+    serialize<int32_t>(SUnknown4);
+    serialize<int32_t>(SUnknown5);
     
     if (verbose_)
     {
@@ -116,8 +116,8 @@ void DatFile::serializeObject(void )
     }
   }
   
-  serializeSize<unsigned short>(terrain_restriction_count_, TerrainRestrictions.size());
-  serializeSize<unsigned short>(terrain_count_, Terrains.size());
+  serializeSize<uint16_t>(terrain_restriction_count_, TerrainRestrictions.size());
+  serializeSize<uint16_t>(terrain_count_, Terrains.size());
  
   if (verbose_)
   {
@@ -126,30 +126,30 @@ void DatFile::serializeObject(void )
     std::cout << "TerCount: " << terrain_count_ << std::endl;
   }
   
-  serialize<long>(TerrainRestrictionPointers1, terrain_restriction_count_);
+  serialize<int32_t>(TerrainRestrictionPointers1, terrain_restriction_count_);
   
   if (getGameVersion() >= genie::GV_AoK)
-    serialize<long>(TerrainRestrictionPointers2, terrain_restriction_count_);
+    serialize<int32_t>(TerrainRestrictionPointers2, terrain_restriction_count_);
   
   TerrainRestriction::setTerrainCount(terrain_count_);
   serializeSub<TerrainRestriction>(TerrainRestrictions, terrain_restriction_count_);
     
-  serializeSize<unsigned short>(player_color_count_, PlayerColours.size());
+  serializeSize<uint16_t>(player_color_count_, PlayerColours.size());
   
   if (verbose_)
     std::cout << "PlayerColours: " << player_color_count_ << std::endl;
   
   serializeSub<PlayerColour>(PlayerColours, player_color_count_);
   
-  serializeSize<unsigned short>(sound_count_, Sounds.size());
+  serializeSize<uint16_t>(sound_count_, Sounds.size());
   
   if (verbose_)
     std::cout << "Sounds: " << sound_count_ << std::endl;
    
   serializeSub<Sound>(Sounds, sound_count_);
   
-  serializeSize<unsigned short>(graphic_count_, GraphicPointers.size());
-  serialize<long>(GraphicPointers, graphic_count_);
+  serializeSize<uint16_t>(graphic_count_, GraphicPointers.size());
+  serialize<int32_t>(GraphicPointers, graphic_count_);
   serializeSubWithPointers<Graphic>(Graphics, graphic_count_, GraphicPointers);
   
   if (verbose_)
@@ -193,16 +193,16 @@ void DatFile::serializeObject(void )
   
   switch (getGameVersion()) // Empty space.
   {
-    case genie::GV_AoE:  serialize<long>(&ZeroSpace, 1); break;
-    case genie::GV_RoR:  serialize<long>(&ZeroSpace, 1); break;
-    case genie::GV_AoK:  serialize<long>(&ZeroSpace, 7); break;
-    case genie::GV_TC:   serialize<long>(&ZeroSpace, 7); break;
-    case genie::GV_SWGB: serialize<long>(&ZeroSpace, 7); break;
-    case genie::GV_CC:   serialize<long>(&ZeroSpace, 7); break;
+    case genie::GV_AoE:  serialize<int32_t>(&ZeroSpace, 1); break;
+    case genie::GV_RoR:  serialize<int32_t>(&ZeroSpace, 1); break;
+    case genie::GV_AoK:  serialize<int32_t>(&ZeroSpace, 7); break;
+    case genie::GV_TC:   serialize<int32_t>(&ZeroSpace, 7); break;
+    case genie::GV_SWGB: serialize<int32_t>(&ZeroSpace, 7); break;
+    case genie::GV_CC:   serialize<int32_t>(&ZeroSpace, 7); break;
     default: break;
   }
   
-  serializeSize<unsigned short>(terrain_count2_, Terrains.size());
+  serializeSize<uint16_t>(terrain_count2_, Terrains.size());
   
   switch (getGameVersion()) // is this really the techtree?
   {
@@ -218,7 +218,7 @@ void DatFile::serializeObject(void )
   if (verbose_)
     std::cout << " to 0x" <<std::hex << tellg() << std::dec << ")" << std::endl;
   
-  serializeSize<unsigned long>(techage_count_, Techages.size());
+  serializeSize<uint32_t>(techage_count_, Techages.size());
   
   if (verbose_)
     std::cout << "Techage: " << techage_count_ << std::endl;
@@ -227,13 +227,13 @@ void DatFile::serializeObject(void )
   
   if (getGameVersion() >= genie::GV_SWGB) //pos: 0x111936
   {
-    serializeSize<unsigned short>(unit_line_count_, UnitLines.size());
+    serializeSize<uint16_t>(unit_line_count_, UnitLines.size());
     serializeSub<UnitLine>(UnitLines, unit_line_count_);
   }
   
   if (getGameVersion() >= genie::GV_AoK)
   { 
-    serializeSize<unsigned long>(unit_count_, UnitHeaders.size());
+    serializeSize<uint32_t>(unit_count_, UnitHeaders.size());
 
     if (verbose_)
       std::cout << "Unitcount: " << unit_count_ << std::endl;
@@ -241,7 +241,7 @@ void DatFile::serializeObject(void )
     serializeSub<UnitHeader>(UnitHeaders, unit_count_);
   }
   
-  serializeSize<unsigned short>(civ_count_, Civs.size());
+  serializeSize<uint16_t>(civ_count_, Civs.size());
   
   if (verbose_)
     std::cout << "Civcount: " << civ_count_ << std::endl;
@@ -251,7 +251,7 @@ void DatFile::serializeObject(void )
   if (getGameVersion() >= genie::GV_SWGB)
     serialize<char>(SUnknown7);
   
-  serializeSize<unsigned short>(research_count_, Researchs.size());
+  serializeSize<uint16_t>(research_count_, Researchs.size());
   
   if (verbose_)
     std::cout << "Researchcount: " << research_count_ << std::endl;
@@ -266,7 +266,7 @@ void DatFile::serializeObject(void )
   
   if (getGameVersion() >= genie::GV_AoK)
   {
-    serialize<long>(UnknownPreTechTree, 7);
+    serialize<int32_t>(UnknownPreTechTree, 7);
     serialize<ISerializable>(TechTree);
     
   }

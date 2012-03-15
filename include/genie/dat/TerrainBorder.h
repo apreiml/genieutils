@@ -47,9 +47,9 @@ public:
   TerrainBorder();
   virtual ~TerrainBorder();
   
-  static unsigned int getNameSize();
+  static uint32_t getNameSize();
   
-  static unsigned int getUnknown3Size();
+  static uint32_t getUnknown3Size();
   
   short Enabled;
   
@@ -60,16 +60,16 @@ public:
   std::string Name2;
   
   /// ID of the SLP Resource in BORDER.DRS
-  long RessourceID; 
+  int32_t RessourceID; 
   
-  long Unknown3; // 0
-  long Unknown4; // -1
+  int32_t Unknown3; // 0
+  int32_t Unknown4; // -1
   
   std::vector<char> Colors;
   
   char Unknown5;
-  long Unknown6; // 6 and 7 both zero, part of frame data?
-  long Unknown7;
+  int32_t Unknown6; // 6 and 7 both zero, part of frame data?
+  int32_t Unknown7;
   
   std::vector<TBFrameData> Frames;
   

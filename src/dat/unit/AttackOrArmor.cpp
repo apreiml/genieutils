@@ -39,8 +39,8 @@ AttackOrArmor::~AttackOrArmor()
 
 void AttackOrArmor::serializeObject(void )
 {
-  serialize<short>(Class);
-  serialize<short>(Amount);
+  serialize<int16_t>(Class);
+  serialize<int16_t>(Amount);
 }
 
 }

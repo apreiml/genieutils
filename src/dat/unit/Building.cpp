@@ -55,36 +55,36 @@ Building::~Building()
 }
 void Building::serializeObject(void )
 {
-  serialize<short>(ConstructionGraphicID);
+  serialize<int16_t>(ConstructionGraphicID);
   
   if (getGameVersion() >= genie::GV_TC)
-    serialize<short>(SnowGraphicID);
+    serialize<int16_t>(SnowGraphicID);
   
-  serialize<short>(AdjacentMode);
+  serialize<int16_t>(AdjacentMode);
   serialize<char>(Unknown31);
   serialize<char>(Unknown31b);
-  serialize<short>(StackUnitID);
-  serialize<short>(TerrainID);
-  serialize<short>(Unknown32);
-  serialize<short>(ResearchID);
+  serialize<int16_t>(StackUnitID);
+  serialize<int16_t>(TerrainID);
+  serialize<int16_t>(Unknown32);
+  serialize<int16_t>(ResearchID);
   
   if (getGameVersion() >= genie::GV_AoK)
   {
     serialize<char>(Unknown33);
     serializeSub<unit::BuildingAnnex>(Annexes, 4);
-    serialize<short>(HeadUnit);
-    serialize<short>(TransformUnit);
-    serialize<short>(Unknown34);
+    serialize<int16_t>(HeadUnit);
+    serialize<int16_t>(TransformUnit);
+    serialize<int16_t>(Unknown34);
   }
   
-  serialize<short>(ConstructionSound);
+  serialize<int16_t>(ConstructionSound);
   
   if (getGameVersion() >= genie::GV_AoK)
   {
     serialize<char>(GarrisonType);
     serialize<float>(GarrisonHealRate);
-    serialize<long>(Unknown35);
-    serialize<short>(Unknown36);
+    serialize<int32_t>(Unknown35);
+    serialize<int16_t>(Unknown36);
     serialize<char>(Unknown37, UNKNOWN37_SIZE);
   }
 }

@@ -43,9 +43,9 @@ TerrainPassGraphic::~TerrainPassGraphic()
 //------------------------------------------------------------------------------
 void TerrainPassGraphic::serializeObject()
 {
-  serialize<long>(Buildable);
-  serialize<long>(GraphicIDs);
-  serialize<long>(ReplicationAmount);
+  serialize<int32_t>(Buildable);
+  serialize<int32_t>(GraphicIDs);
+  serialize<int32_t>(ReplicationAmount);
 }
 
 }

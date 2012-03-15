@@ -42,7 +42,7 @@ void TechTree::serializeObject(void )
   serializeSize<unsigned char>(total_building_count_, BuildingConnections.size());
   
   if (getGameVersion() >= genie::GV_SWGB)
-   serializeSize<unsigned short>(total_unit_count_, UnitConnections.size());
+   serializeSize<uint16_t>(total_unit_count_, UnitConnections.size());
   else
   {
     unsigned char tbc = total_unit_count_;
@@ -54,7 +54,7 @@ void TechTree::serializeObject(void )
   
   serializeSub<TechTreeAge>(TechTreeAges, age_count_);
   
-  serialize<long>(Unknown2);
+  serialize<int32_t>(Unknown2);
   
   serializeSub<BuildingConnection>(BuildingConnections, total_building_count_);
   serializeSub<UnitConnection>(UnitConnections, total_unit_count_);
@@ -77,7 +77,7 @@ TechTreeAge::~TechTreeAge()
 }
 
 //------------------------------------------------------------------------------
-unsigned short TechTreeAge::getZeroesSize() 
+uint16_t TechTreeAge::getZeroesSize() 
 {
   if (getGameVersion() >= genie::GV_AoK)
   {
@@ -94,23 +94,23 @@ unsigned short TechTreeAge::getZeroesSize()
 //------------------------------------------------------------------------------
 void TechTreeAge::serializeObject(void )
 {
-  serialize<long>(Unknown1);
-  serialize<long>(ID);
+  serialize<int32_t>(Unknown1);
+  serialize<int32_t>(ID);
   serialize<char>(Unknown2);
   
   serializeSize<unsigned char>(building_count_, Buildings.size());
-  serialize<long>(Buildings, building_count_);
+  serialize<int32_t>(Buildings, building_count_);
   
   serializeSize<unsigned char>(unit_count_, Units.size());
-  serialize<long>(Units, unit_count_);
+  serialize<int32_t>(Units, unit_count_);
   
   serializeSize<unsigned char>(research_count_, Researches.size());
-  serialize<long>(Researches, research_count_);
+  serialize<int32_t>(Researches, research_count_);
   
-  serialize<long>(Unknown3);
-  serialize<long>(Unknown4);
+  serialize<int32_t>(Unknown3);
+  serialize<int32_t>(Unknown4);
   
-  serialize<short>(Zeroes, getZeroesSize());
+  serialize<int16_t>(Zeroes, getZeroesSize());
 } 
 
 //------------------------------------------------------------------------------
@@ -134,7 +134,7 @@ BuildingConnection::~BuildingConnection()
 }
 
 //------------------------------------------------------------------------------
-unsigned int BuildingConnection::getUnknown2aSize()
+uint32_t BuildingConnection::getUnknown2aSize()
 {
   if (getGameVersion() >= genie::GV_SWGB)
     return 18;
@@ -143,7 +143,7 @@ unsigned int BuildingConnection::getUnknown2aSize()
 }
 
 //------------------------------------------------------------------------------
-unsigned int BuildingConnection::getUnknown2bSize()
+uint32_t BuildingConnection::getUnknown2bSize()
 {
   if (getGameVersion() >= genie::GV_SWGB)
     return 17;
@@ -154,34 +154,34 @@ unsigned int BuildingConnection::getUnknown2bSize()
 //------------------------------------------------------------------------------
 void BuildingConnection::serializeObject(void)
 {
-  serialize<long>(ID);
+  serialize<int32_t>(ID);
   serialize<char>(Unknown1);
   
   serializeSize<unsigned char>(building_count_, Buildings.size());
-  serialize<long>(Buildings, building_count_);
+  serialize<int32_t>(Buildings, building_count_);
   
   serializeSize<unsigned char>(unit_count_, Units.size());
-  serialize<long>(Units, unit_count_);
+  serialize<int32_t>(Units, unit_count_);
   
   serializeSize<unsigned char>(research_count_, Researches.size());
-  serialize<long>(Researches, research_count_);
+  serialize<int32_t>(Researches, research_count_);
   
-  serialize<long>(RequiredResearches);
-  serialize<long>(Age);
-  serialize<long>(UnitOrResearch1);
-  serialize<long>(UnitOrResearch2);
+  serialize<int32_t>(RequiredResearches);
+  serialize<int32_t>(Age);
+  serialize<int32_t>(UnitOrResearch1);
+  serialize<int32_t>(UnitOrResearch2);
   
-  serialize<long>(Unknown2a, getUnknown2aSize());
+  serialize<int32_t>(Unknown2a, getUnknown2aSize());
   
-  serialize<long>(Mode1);
-  serialize<long>(Mode2);
+  serialize<int32_t>(Mode1);
+  serialize<int32_t>(Mode2);
   
-  serialize<long>(Unknown2b, getUnknown2bSize());
+  serialize<int32_t>(Unknown2b, getUnknown2bSize());
   
   serialize<char>(Unknown3, getUnknown3Size());
   
-  serialize<long>(Connections);
-  serialize<long>(EnablingResearch); 
+  serialize<int32_t>(Connections);
+  serialize<int32_t>(EnablingResearch); 
 }
 
 //------------------------------------------------------------------------------
@@ -209,7 +209,7 @@ UnitConnection::~UnitConnection()
 }
 
 //------------------------------------------------------------------------------
-unsigned int UnitConnection::getUnknown2aSize()
+uint32_t UnitConnection::getUnknown2aSize()
 {
   if (getGameVersion() >= genie::GV_SWGB)
     return 18;
@@ -218,7 +218,7 @@ unsigned int UnitConnection::getUnknown2aSize()
 }
 
 //------------------------------------------------------------------------------
-unsigned int UnitConnection::getUnknown2bSize()
+uint32_t UnitConnection::getUnknown2bSize()
 {
   if (getGameVersion() >= genie::GV_SWGB)
     return 17;
@@ -229,31 +229,31 @@ unsigned int UnitConnection::getUnknown2bSize()
 //------------------------------------------------------------------------------
 void UnitConnection::serializeObject(void)
 {
-  serialize<long>(ID);
+  serialize<int32_t>(ID);
   serialize<char>(Unknown1);
-  serialize<long>(UpperBuilding);
-  serialize<long>(RequiredResearches);
-  serialize<long>(Age);
-  serialize<long>(UnitOrResearch1);
-  serialize<long>(UnitOrResearch2);
+  serialize<int32_t>(UpperBuilding);
+  serialize<int32_t>(RequiredResearches);
+  serialize<int32_t>(Age);
+  serialize<int32_t>(UnitOrResearch1);
+  serialize<int32_t>(UnitOrResearch2);
 
-  serialize<long>(Unknown2a, getUnknown2aSize());
+  serialize<int32_t>(Unknown2a, getUnknown2aSize());
   
-  serialize<long>(Mode1);
-  serialize<long>(Mode2);
+  serialize<int32_t>(Mode1);
+  serialize<int32_t>(Mode2);
   
-  serialize<long>(Unknown2b, getUnknown2bSize());
+  serialize<int32_t>(Unknown2b, getUnknown2bSize());
   
-  serialize<long>(VerticalLine);
+  serialize<int32_t>(VerticalLine);
   
   serializeSize<unsigned char>(unit_count_, Units.size());
-  serialize<long>(Units, unit_count_);
+  serialize<int32_t>(Units, unit_count_);
   
-  serialize<long>(LocationInAge);
-  serialize<long>(RequiredResearch);
-  serialize<long>(LineMode);
+  serialize<int32_t>(LocationInAge);
+  serialize<int32_t>(RequiredResearch);
+  serialize<int32_t>(LineMode);
   
-  serialize<long>(EnablingResearch);  
+  serialize<int32_t>(EnablingResearch);  
 }
 
 //------------------------------------------------------------------------------
@@ -277,7 +277,7 @@ ResearchConnection::~ResearchConnection()
 }
 
 //------------------------------------------------------------------------------
-unsigned int ResearchConnection::getUnknown2aSize()
+uint32_t ResearchConnection::getUnknown2aSize()
 {
   if (getGameVersion() >= genie::GV_SWGB)
     return 19;
@@ -286,7 +286,7 @@ unsigned int ResearchConnection::getUnknown2aSize()
 }
 
 //------------------------------------------------------------------------------
-unsigned int ResearchConnection::getUnknown2bSize()
+uint32_t ResearchConnection::getUnknown2bSize()
 {
   if (getGameVersion() >= genie::GV_SWGB)
     return 18;
@@ -297,32 +297,32 @@ unsigned int ResearchConnection::getUnknown2bSize()
 //------------------------------------------------------------------------------
 void ResearchConnection::serializeObject(void)
 {
-  serialize<long>(ID);
+  serialize<int32_t>(ID);
   serialize<char>(Unknown1);
-  serialize<long>(UpperBuilding);
+  serialize<int32_t>(UpperBuilding);
   
   serializeSize<unsigned char>(building_count_, Buildings.size());
-  serialize<long>(Buildings, building_count_);
+  serialize<int32_t>(Buildings, building_count_);
   
   serializeSize<unsigned char>(unit_count_, Units.size());
-  serialize<long>(Units, unit_count_);
+  serialize<int32_t>(Units, unit_count_);
   
   serializeSize<unsigned char>(research_count_, Researches.size());
-  serialize<long>(Researches, research_count_);
+  serialize<int32_t>(Researches, research_count_);
   
-  serialize<long>(RequiredResearches);
-  serialize<long>(Age);
-  serialize<long>(UpperResearch);
+  serialize<int32_t>(RequiredResearches);
+  serialize<int32_t>(Age);
+  serialize<int32_t>(UpperResearch);
   
-  serialize<long>(Unknown2a, getUnknown2aSize());
+  serialize<int32_t>(Unknown2a, getUnknown2aSize());
   
-  serialize<long>(LineMode);
+  serialize<int32_t>(LineMode);
   
-  serialize<long>(Unknown2b, getUnknown2bSize());
+  serialize<int32_t>(Unknown2b, getUnknown2bSize());
   
-  serialize<long>(VerticalLine);
-  serialize<long>(LocationInAge);
-  serialize<long>(Unknown9);
+  serialize<int32_t>(VerticalLine);
+  serialize<int32_t>(LocationInAge);
+  serialize<int32_t>(Unknown9);
 }
 
 }

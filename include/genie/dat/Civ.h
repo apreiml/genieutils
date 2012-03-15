@@ -39,7 +39,7 @@ public:
   char One;
   
   /// Returns size for both names
-  static short getNameSize();
+  static uint16_t getNameSize();
   
   /// Internal name
   std::string Name;
@@ -48,7 +48,7 @@ public:
   std::string Name2;
   
   /// Number of resources defined for this civilization
-  unsigned short ResourceCount;
+  uint16_t ResourceCount;
   
   /// ID of the technology tree for a civ.
   short TechTreeID;
@@ -61,15 +61,15 @@ public:
   
   char GraphicSet;
   
-  std::vector<long> UnitPointers;
+  std::vector<int32_t> UnitPointers;
   
   /// Units defined for this civ.
   std::vector<Unit> Units;
   
-  std::vector<short> SUnknown1; // Unknown in >=SWGB (cnt=4)
+  std::vector<int16_t> SUnknown1; // Unknown in >=SWGB (cnt=4)
   
 private:
-  unsigned short UnitCount;
+  uint16_t UnitCount;
   
   virtual void serializeObject(void);
 };

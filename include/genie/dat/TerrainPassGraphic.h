@@ -33,9 +33,9 @@ public:
   virtual ~TerrainPassGraphic();
   
   /// Indicates if you can build on it: 0 = no, -1 = yes
-  long Buildable;               
-  std::pair<long, long> GraphicIDs;
-  long ReplicationAmount;
+  int32_t Buildable;               
+  std::pair<int32_t, int32_t> GraphicIDs;
+  int32_t ReplicationAmount;
   
 private:  
   virtual void serializeObject(void);

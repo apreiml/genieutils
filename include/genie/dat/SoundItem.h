@@ -40,7 +40,7 @@ public:
   
   /// ID of the resource in the drs file, if -1 the sound file may be stored
   /// in the Sound directory. 
-  long ResourceID;
+  int32_t ResourceID;
   
   /// Probability out of 100 that this item will be played
   short Probability;

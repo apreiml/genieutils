@@ -39,7 +39,7 @@ BuildingAnnex::~BuildingAnnex()
 
 void BuildingAnnex::serializeObject(void )
 {
-  serialize<short>(UnitID);
+  serialize<int16_t>(UnitID);
   serialize<float>(Misplacement);
 }
 

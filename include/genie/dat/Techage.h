@@ -42,7 +42,7 @@ public:
   
 private:
   /// Number of effects
-  unsigned short EffectCount;
+  uint16_t EffectCount;
   
   virtual void serializeObject(void);
 };

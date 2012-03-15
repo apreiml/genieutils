@@ -36,9 +36,9 @@ Sound::~Sound()
 
 void Sound::serializeObject(void )
 {
-  serialize<long>(ID);
-  serializeSize<unsigned short>(ItemCount, Items.size());
-  serialize<long>(Unknown1);
+  serialize<int32_t>(ID);
+  serializeSize<uint16_t>(ItemCount, Items.size());
+  serialize<int32_t>(Unknown1);
   
   serializeSub<SoundItem>(Items, ItemCount);
 }

@@ -53,10 +53,10 @@ short DeadFish::getUnknown16Size()
 
 void DeadFish::serializeObject(void )
 {
-  serialize<short>(WalkingGraphic);
+  serialize<int16_t>(WalkingGraphic);
   serialize<float>(RotationSpeed);
   serialize<char>(Unknown11);
-  serialize<short>(TrackingUnit);
+  serialize<int16_t>(TrackingUnit);
   serialize<char>(TrackingUnitUsed);
   serialize<float>(TrackingUnitDensity);
   

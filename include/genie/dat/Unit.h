@@ -82,15 +82,15 @@ public:
   char Type;
   
   /// Length of the internal name
-  unsigned short NameLength;
+  uint16_t NameLength;
   
   short ID1;
   
   /// ID of the name string stored in the language.dll file
-  unsigned short LanguageDllName;
+  uint16_t LanguageDllName;
   
   /// ID of the name string stored in the language.dll file
-  unsigned short LanguageDllCreation;
+  uint16_t LanguageDllCreation;
   
   /// Class that gives certain properties
   short Class;
@@ -194,10 +194,10 @@ public:
   short Unknown3;
   short Unknown3B;
   char Unknown3a;//only in aoe/ror
-  unsigned short LanguageDllHelp;
+  uint16_t LanguageDllHelp;
   
   static short getHotKeySize();
-  std::vector<short> HotKey; //4
+  std::vector<int16_t> HotKey; //4
   char Unknown4;
   char Unknown5;
   bool Unselectable;
@@ -234,7 +234,7 @@ public:
   std::pair <float, float> SelectionRadius;
   float HPBarHeight2;
   
-  static const unsigned short RESOURCE_STORAGE_CNT = 3;
+  static const uint16_t RESOURCE_STORAGE_CNT = 3;
   
   typedef ResourceUsage<short, float, char> ResourceStorage;
   
@@ -249,7 +249,7 @@ public:
   short DyingSound;
   short AttackSound;
   std::string Name;
-  unsigned short NameLength2;
+  uint16_t NameLength2;
   std::string Name2;
   
   /// MinGameVersion: SWGB

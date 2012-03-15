@@ -49,7 +49,7 @@ Research::~Research()
 }
 
 //------------------------------------------------------------------------------
-unsigned short Research::getRequiredTechsSize()
+uint16_t Research::getRequiredTechsSize()
 {
   if (getGameVersion() >= genie::GV_AoK)
     return 6;
@@ -58,13 +58,13 @@ unsigned short Research::getRequiredTechsSize()
 }
 
 //------------------------------------------------------------------------------
-unsigned short Research::getResourceCostsSize()
+uint16_t Research::getResourceCostsSize()
 {
   return 3;
 }
 
 //------------------------------------------------------------------------------
-unsigned short Research::getPointersSize()
+uint16_t Research::getPointersSize()
 {
   return 3;
 }
@@ -72,34 +72,34 @@ unsigned short Research::getPointersSize()
 //------------------------------------------------------------------------------
 void Research::serializeObject(void )
 {
-  serialize<short>(RequiredTechs, getRequiredTechsSize());
+  serialize<int16_t>(RequiredTechs, getRequiredTechsSize());
               
   serializeSub<ResearchResourceCost>(ResourceCosts, getResourceCostsSize());
-  serialize<short>(RequiredTechCount);
+  serialize<int16_t>(RequiredTechCount);
   
   if (getGameVersion() >= genie::GV_AoK)
   {
-    serialize<short>(Civ);
-    serialize<short>(FullTechMode);
+    serialize<int16_t>(Civ);
+    serialize<int16_t>(FullTechMode);
   }
   
-  serialize<short>(ResearchLocation);
-  serialize<unsigned short>(LanguageDllName);
-  serialize<unsigned short>(LanguageDllDescription);
-  serialize<short>(ResearchTime);
-  serialize<short>(TechageID);
-  serialize<short>(Type);
-  serialize<short>(IconID);
+  serialize<int16_t>(ResearchLocation);
+  serialize<uint16_t>(LanguageDllName);
+  serialize<uint16_t>(LanguageDllDescription);
+  serialize<int16_t>(ResearchTime);
+  serialize<int16_t>(TechageID);
+  serialize<int16_t>(Type);
+  serialize<int16_t>(IconID);
   serialize<char>(ButtonID);
-  serialize<long>(Pointers, getPointersSize()); //TODO: AoE/RoR: [0..1]: LanguagePointer
+  serialize<int32_t>(Pointers, getPointersSize()); //TODO: AoE/RoR: [0..1]: LanguagePointer
   
-  serializeSize<unsigned short>(NameLength, Name);
+  serializeSize<uint16_t>(NameLength, Name);
   if (NameLength > 0)
     serialize<std::string>(Name, NameLength);
   
   if (getGameVersion() >= genie::GV_SWGB)
   {
-    serializeSize<unsigned short>(NameLength2, Name2); 
+    serializeSize<uint16_t>(NameLength2, Name2); 
     if (NameLength2 > 0)
       serialize<std::string>(Name2, NameLength2);
   }

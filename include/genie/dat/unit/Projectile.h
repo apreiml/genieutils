@@ -39,9 +39,9 @@ public:
   
   char Unknown20; //2 //aoe/ror 1, aok 1, tc 2
   char Unknown20_1;
-  unsigned short AttackCount;
+  uint16_t AttackCount;
   std::vector<unit::AttackOrArmor> Attacks;
-  unsigned short ArmourCount;
+  uint16_t ArmourCount;
   std::vector<unit::AttackOrArmor> Armours;
   short Unknown21;
   float MaxRange;

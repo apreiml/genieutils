@@ -43,9 +43,9 @@ TechageEffect::~TechageEffect()
 void TechageEffect::serializeObject(void )
 {
   serialize<char>(Type);
-  serialize<short>(A);  //unit (TODO)
-  serialize<short>(B);  //class
-  serialize<short>(C);  //attribute
+  serialize<int16_t>(A);  //unit (TODO)
+  serialize<int16_t>(B);  //class
+  serialize<int16_t>(C);  //attribute
   serialize<float>(D);  //amount
 }
 

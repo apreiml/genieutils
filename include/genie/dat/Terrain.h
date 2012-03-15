@@ -39,11 +39,11 @@ public:
   
   std::string Name;
   std::string Name2;
-  long SLP;
-  long Unknown3;
-  long SoundID;
-  long BlendPriority;//not in aoe/ror
-  long BlendType; //not in aoe/ror
+  int32_t SLP;
+  int32_t Unknown3;
+  int32_t SoundID;
+  int32_t BlendPriority;//not in aoe/ror
+  int32_t BlendType; //not in aoe/ror
   
   static short getColorSize();
   std::vector<char> Colours;
@@ -53,9 +53,9 @@ public:
   std::vector<char> Unknown7;
   short FrameCount;
   static const short UNKNOWN8_LEN = 2;
-  std::vector<short> Unknown8;
+  std::vector<int16_t> Unknown8;
   static const short UNKNOWN9_LEN = 54;
-  std::vector<short> Unknown9;
+  std::vector<int16_t> Unknown9;
   short TerrainReplacementID;
   static const short TERRAIN_DIMENSIONS_LEN = 2;
   std::pair<short, short> TerrainDimensions;
@@ -63,14 +63,14 @@ public:
   std::vector<char> Unknown10;
   
   short getTerrainUnitSize();
-  std::vector<short> TerrainUnitID;
-  std::vector<short> TerrainUnitDensity;
+  std::vector<int16_t> TerrainUnitID;
+  std::vector<int16_t> TerrainUnitDensity;
   
   static const short UNKNOWN11_LEN = 30;
   std::vector<char> Unknown11;
   short NumberOfTerrainUnitsUsed;
   
-  static const unsigned short SWGBUNKNOWN1_LEN = 24;
+  static const uint16_t SWGBUNKNOWN1_LEN = 24;
   std::vector<char> SWGBUnknown1;
   
 private:

@@ -35,16 +35,16 @@ public:
   static const short NAME_LEN = 30;
   //char *Name; // AoE/RoR only char [30]
   std::string Name;
-  long ID;
+  int32_t ID;
   
-  long Palette; // not in aoe/ror
-  long Colour; // short in aoe/ror
-  long Unknown1; // not in aoe/ror
-  long Unknown2; // not in aoe/ror
-  long MinimapColour; // not in aoe/ror
-  long Unknown3; // not in aoe/ror
-  long Unknown4; // not in aoe/ror
-  long Unknown5; // not in aoe/ror
+  int32_t Palette; // not in aoe/ror
+  int32_t Colour; // short in aoe/ror
+  int32_t Unknown1; // not in aoe/ror
+  int32_t Unknown2; // not in aoe/ror
+  int32_t MinimapColour; // not in aoe/ror
+  int32_t Unknown3; // not in aoe/ror
+  int32_t Unknown4; // not in aoe/ror
+  int32_t Unknown5; // not in aoe/ror
     
 private:
   virtual void serializeObject(void);
