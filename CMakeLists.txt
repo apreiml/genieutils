@@ -99,6 +99,7 @@ set(SCRIPT_SRC
     src/script/ScnFile.cpp
     src/script/scn/ScnResource.cpp
     src/script/scn/ScnPlayerData.cpp
+    src/script/scn/MapDescription.cpp
     )
 
 set(UTIL_SRC

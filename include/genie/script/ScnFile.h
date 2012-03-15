@@ -25,12 +25,12 @@
 #include "genie/file/Compressor.h"
 
 #include "scn/ScnResource.h"
+#include "scn/ScnPlayerData.h"
+#include "scn/MapDescription.h"
 
 namespace genie
 {
   
-class ScnPlayerData1;
-
 //------------------------------------------------------------------------------
 /// Class to read and write scenario files (.scn and .scx). The version of the
 /// game will be auto-detected on read. 
@@ -45,6 +45,8 @@ public:
   /// Extracts a scenario (for debugging purpose).
   //
   void extractRaw(const char *from, const char *to);
+  
+  static uint32_t getSeparator(void);
   
   // Uncompressed Header:
   
@@ -84,6 +86,10 @@ public:
   std::string originalFileName;
   
   ScnResource resource;
+  
+  ScnPlayerData2 playerData2;
+  
+  MapDescription map;
   
 private:
   std::string version_;
