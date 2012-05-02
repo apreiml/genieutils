@@ -5,8 +5,8 @@ Genieutils consists of a library and some tools to work with certain data and
 resource files of genie engine games.
 
 Notice that this library is in developement, that means the API will change.
-Please also backups your files before editing them to avoid file corruption
-because of a bug.
+Please also backup your files before editing to avoid file corruption
+because of possible bugs.
 
 Features
 --------
@@ -14,4 +14,9 @@ Features
 * reading/writing of empires*.dat and genie*.dat files
 * reading of drs, slp and pal files (partly)
 * reading of scn/scx files (partly)
+
+Planned Features
+----------------
+
+* reading/writing of lagnuage*.dll files
 
