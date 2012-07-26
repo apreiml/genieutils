@@ -38,7 +38,7 @@ public:
   Graphic &operator=(const Graphic& other);
   
   /// Returns the size of Name
-  short getNameSize(void);
+  int16_t getNameSize(void);
   
   /// These two name strings appear to be equal in all graphics, so the 
   /// second one's use is unknown. Like the genie unit's internal name value, 
@@ -47,7 +47,7 @@ public:
   std::string Name;
   
   /// Returns the size of Name2
-  short getName2Size(void);
+  int16_t getName2Size(void);
   
   /// See Name
   std::string Name2;
@@ -76,7 +76,7 @@ public:
   /// TODO: What kind of coordinates?
   std::vector<int16_t> Coordinates;
   
-  short SoundID;
+  int16_t SoundID;
   char AttackSoundUsed;
   
   /// Number of frames per angle animation
@@ -96,8 +96,8 @@ public:
   float ReplayDelay;
   
   char SequenceType;
-  short ID;
-  short Type;//char in aoe/ror //TODO: Mirroring mode?
+  int16_t ID;
+  int16_t Type;//char in aoe/ror //TODO: Mirroring mode?
   
   std::vector<GraphicDelta> Deltas;
   std::vector<GraphicAttackSound> AttackSounds;
@@ -105,10 +105,10 @@ public:
 private:
   uint16_t DeltaCount;
   
-  static const short NAME_LEN_SWGB = 25;
+  static const int16_t NAME_LEN_SWGB = 25;
   
-  static const short NAME_LEN = 21;
-  static const short NAME_LEN2 = 13;
+  static const int16_t NAME_LEN = 21;
+  static const int16_t NAME_LEN2 = 13;
   
   char *CstrName; //char [21]
   char *CstrName2; //char [13]
