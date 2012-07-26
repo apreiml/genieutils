@@ -39,11 +39,11 @@ public:
   
   static short getResourceCostsSize();
   
-  typedef ResourceUsage<short, short, short> ResourceCost;
+  typedef ResourceUsage<int16_t, int16_t, int16_t> ResourceCost;
   
   std::vector<ResourceCost> ResourceCosts; //3
-  short TrainTime;
-  short TrainLocationID;
+  int16_t TrainTime;
+  int16_t TrainLocationID;
   char ButtonID;
   char Unknown26;//not in aoe/ror
   
@@ -52,7 +52,7 @@ public:
   char Unknown28;//not in aoe/ror
   char MissileGraphicDelay;//not in aoe/ror
   char HeroMode;//not in aoe/ror
-  std::pair<short, short> GarrisonGraphic; //not in aoe/ror
+  std::pair<int16_t, int16_t> GarrisonGraphic; //not in aoe/ror
   float AttackMissileDuplicationAmount1;//not in aoe/ror
   char AttackMissileDuplicationAmount2;//not in aoe/ror
   
@@ -73,7 +73,7 @@ public:
     have a different graphic.
    */
   char Unknown29;//not in aoe/ror
-  short DisplayedPierceArmour;
+  int16_t DisplayedPierceArmour;
   
 private:
   virtual void serializeObject(void);
