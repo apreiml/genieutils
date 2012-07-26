@@ -38,7 +38,7 @@ public:
   Graphic &operator=(const Graphic& other);
   
   /// Returns the size of Name
-  int16_t getNameSize(void);
+  short getNameSize(void);
   
   /// These two name strings appear to be equal in all graphics, so the 
   /// second one's use is unknown. Like the genie unit's internal name value, 
@@ -47,7 +47,7 @@ public:
   std::string Name;
   
   /// Returns the size of Name2
-  int16_t getName2Size(void);
+  short getName2Size(void);
   
   /// See Name
   std::string Name2;
@@ -105,10 +105,10 @@ public:
 private:
   uint16_t DeltaCount;
   
-  static const int16_t NAME_LEN_SWGB = 25;
+  static const short NAME_LEN_SWGB = 25;
   
-  static const int16_t NAME_LEN = 21;
-  static const int16_t NAME_LEN2 = 13;
+  static const short NAME_LEN = 21;
+  static const short NAME_LEN2 = 13;
   
   char *CstrName; //char [21]
   char *CstrName2; //char [13]
