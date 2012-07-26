@@ -34,7 +34,7 @@ public:
   UnitLine();
   virtual ~UnitLine();
   
-  short ID;
+  int16_t ID;
   
   std::string Name;
   
