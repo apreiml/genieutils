@@ -56,7 +56,7 @@ public:
   int16_t Unknown13;
   char Unknown14;
   
-  static int16_t getGraphicsSize(void);
+  static short getGraphicsSize(void);
   std::vector<int16_t> Graphics;
   
 private:
