@@ -37,10 +37,10 @@ public:
   std::vector<float> TerrainAccessible;
   std::vector<TerrainPassGraphic> TerrainPassGraphics;
   
-  static void setTerrainCount(int16_t Terrain_Count);
+  static void setTerrainCount(short Terrain_Count);
    
 private:
-  static int16_t Terrain_Count_;
+  static short Terrain_Count_;
   
   virtual void serializeObject(void);
 };
