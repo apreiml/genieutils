@@ -51,10 +51,10 @@ public:
   uint16_t ResourceCount;
   
   /// ID of the technology tree for a civ.
-  short TechTreeID;
+  int16_t TechTreeID;
   
   /// ID of the team bonus
-  short TeamBonusID; // not in aoe/ror
+  int16_t TeamBonusID; // not in aoe/ror
   
   /// Resources can easily added and removed using this vector.
   std::vector<float> Resources;
