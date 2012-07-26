@@ -50,7 +50,7 @@ public:
 private:
   unsigned char age_count_;
   unsigned char total_building_count_;
-  uint16_t total_unit_count_; // short in >= swgb
+  uint16_t total_unit_count_; // int16_t in >= swgb
   unsigned char total_research_count_;
   
   virtual void serializeObject(void);
