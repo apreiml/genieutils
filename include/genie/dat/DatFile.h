@@ -79,7 +79,7 @@ public:
   
 public:
   // File data
-  static const int16_t FILE_VERSION_LEN = 8;
+  static const short FILE_VERSION_LEN = 8;
  
   std::vector<int32_t> TerrainRestrictionPointers1;
   std::vector<int32_t> TerrainRestrictionPointers2;
