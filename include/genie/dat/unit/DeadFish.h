@@ -37,16 +37,16 @@ public:
   DeadFish();
   virtual ~DeadFish();
   
-  std::pair<short, short> WalkingGraphic;
+  std::pair<int16_t, int16_t> WalkingGraphic;
   float RotationSpeed;
   char Unknown11;
-  short TrackingUnit;
-  char TrackingUnitUsed;//short
+  int16_t TrackingUnit;
+  char TrackingUnitUsed;
   float TrackingUnitDensity;
   float Unknown12;//not in aoe/ror
   
   short getUnknown16Size();
-  std::vector<char> Unknown16; //17 //4 short, float, 3 short aoe/ror 1 char
+  std::vector<char> Unknown16; //17 //4 int16_t, float, 3 int16_t aoe/ror 1 char
   
 private:
   virtual void serializeObject(void);
