@@ -32,7 +32,7 @@ public:
   SoundItem();
   virtual ~SoundItem();
   
-  int16_t getFileNameSize();
+  short getFileNameSize();
   
   /// File name of the resource
   /// 13 in games <= TC and 27 in games >= SWGB
