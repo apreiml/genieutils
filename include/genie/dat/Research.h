@@ -44,24 +44,24 @@ public:
   /// Size of ResourceCosts vector (3)
   uint16_t getResourceCostsSize(void );
   
-  typedef ResourceUsage<short, short, char> ResearchResourceCost;
+  typedef ResourceUsage<int16_t, int16_t, char> ResearchResourceCost;
   
   /// Resource cost in a list of max 3
   std::vector<ResearchResourceCost> ResourceCosts; //3
   
   /// Holds the number of how much of the required technologies you need.
-  short RequiredTechCount;
+  int16_t RequiredTechCount;
   
   /// ID of the civilization that gets this technologie. -1 if unused
   /// MinGameVersion: aok
-  short Civ;      
+  int16_t Civ;      
   
   /// Set to 1 if this tech is enabled in full tech mode or 0 if not.
   /// MinGameVersion: aok
-  short FullTechMode;     
+  int16_t FullTechMode;     
   
   /// ID of the unit where this research is available to buy.
-  short ResearchLocation; 
+  int16_t ResearchLocation; 
   
   /// Index of the name in language.dll
   uint16_t LanguageDllName;
@@ -70,16 +70,16 @@ public:
   uint16_t LanguageDllDescription;
   
   /// Number of seconds it takes to research
-  short ResearchTime;
+  int16_t ResearchTime;
   
   /// Holds the techage id that corresponds to this data
-  short TechageID;
+  int16_t TechageID;
   
   /// Age tech or not: 0 for regular and 2 for age.
-  short Type;
+  int16_t Type;
   
   /// ID of the research's icon in icon.slp (frame number - 1)
-  short IconID;
+  int16_t IconID;
   
   /// ID of the button
   char ButtonID;

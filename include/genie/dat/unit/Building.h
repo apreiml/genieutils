@@ -37,29 +37,29 @@ public:
   Building();
   virtual ~Building();
   
-  short ConstructionGraphicID;
-  short SnowGraphicID; //not in aok/aoe/ror
+  int16_t ConstructionGraphicID;
+  int16_t SnowGraphicID; //not in aok/aoe/ror
   /// Enabler for annex units.
-  short AdjacentMode;
+  int16_t AdjacentMode;
   char Unknown31;
   char Unknown31b;
-  short StackUnitID;
-  short TerrainID;
-  short Unknown32;
-  short ResearchID;
+  int16_t StackUnitID;
+  int16_t TerrainID;
+  int16_t Unknown32;
+  int16_t ResearchID;
   char Unknown33;
   
   static const uint16_t BUILDING_ANNEXES_CNT = 4;
   
   std::vector<unit::BuildingAnnex> Annexes; // 4
-  short HeadUnit;
-  short TransformUnit;
-  short Unknown34;
-  short ConstructionSound;
+  int16_t HeadUnit;
+  int16_t TransformUnit;
+  int16_t Unknown34;
+  int16_t ConstructionSound;
   char GarrisonType;
   float GarrisonHealRate;
   int32_t Unknown35;
-  short Unknown36;
+  int16_t Unknown36;
   
   static const uint16_t UNKNOWN37_SIZE = 6;
   std::vector<char> Unknown37; // 6

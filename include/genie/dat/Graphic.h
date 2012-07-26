@@ -76,7 +76,7 @@ public:
   /// TODO: What kind of coordinates?
   std::vector<int16_t> Coordinates;
   
-  short SoundID;
+  int16_t SoundID;
   char AttackSoundUsed;
   
   /// Number of frames per angle animation
@@ -96,8 +96,8 @@ public:
   float ReplayDelay;
   
   char SequenceType;
-  short ID;
-  short Type;//char in aoe/ror //TODO: Mirroring mode?
+  int16_t ID;
+  int16_t Type;//char in aoe/ror //TODO: Mirroring mode?
   
   std::vector<GraphicDelta> Deltas;
   std::vector<GraphicAttackSound> AttackSounds;

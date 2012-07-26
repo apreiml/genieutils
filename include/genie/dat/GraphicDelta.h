@@ -32,14 +32,14 @@ public:
   GraphicDelta();
   virtual ~GraphicDelta();
   
-  short GraphicID;
-  short Unknown1;
-  short Unknown2;
-  short Unknown3;
-  short DirectionX; //In Pixels?
-  short DirectionY; //In Pixels?
-  short Unknown4;
-  short Unknown5;
+  int16_t GraphicID;
+  int16_t Unknown1;
+  int16_t Unknown2;
+  int16_t Unknown3;
+  int16_t DirectionX; //In Pixels?
+  int16_t DirectionY; //In Pixels?
+  int16_t Unknown4;
+  int16_t Unknown5;
   
 private:
   virtual void serializeObject(void);

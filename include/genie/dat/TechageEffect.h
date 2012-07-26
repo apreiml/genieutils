@@ -37,9 +37,9 @@ public:
     
   //  DO NOT ALTER THESE! Unless you test that the game won't crash.
   char Type;
-  short A;
-  short B;
-  short C;
+  int16_t A;
+  int16_t B;
+  int16_t C;
   float D;
     
 private:

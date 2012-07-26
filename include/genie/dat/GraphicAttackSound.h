@@ -33,12 +33,12 @@ public:
   virtual ~GraphicAttackSound();
   
   //TODO: Vector
-  short SoundDelay;
-  short SoundID;
-  short SoundDelay2;
-  short SoundID2;
-  short SoundDelay3;
-  short SoundID3;
+  int16_t SoundDelay;
+  int16_t SoundID;
+  int16_t SoundDelay2;
+  int16_t SoundID2;
+  int16_t SoundDelay3;
+  int16_t SoundID3;
 
 private:
   virtual void serializeObject(void);

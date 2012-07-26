@@ -32,8 +32,8 @@ public:
   Terrain();
   virtual ~Terrain();
   
-  short Unknown1;
-  short Unknown2; //must be one or the game will crash
+  int16_t Unknown1;
+  int16_t Unknown2; //must be one or the game will crash
   
   short getNameSize(void);
   
@@ -47,18 +47,18 @@ public:
   
   static short getColorSize();
   std::vector<char> Colours;
-  short Unknown5;
-  short Unknown6;
+  int16_t Unknown5;
+  int16_t Unknown6;
   static const short UNKNOWN7_LEN = 23;
   std::vector<char> Unknown7;
-  short FrameCount;
+  int16_t FrameCount;
   static const short UNKNOWN8_LEN = 2;
   std::vector<int16_t> Unknown8;
   static const short UNKNOWN9_LEN = 54;
   std::vector<int16_t> Unknown9;
-  short TerrainReplacementID;
+  int16_t TerrainReplacementID;
   static const short TERRAIN_DIMENSIONS_LEN = 2;
-  std::pair<short, short> TerrainDimensions;
+  std::pair<int16_t, int16_t> TerrainDimensions;
   short getUnknown10Size();
   std::vector<char> Unknown10;
   
@@ -68,9 +68,9 @@ public:
   
   static const short UNKNOWN11_LEN = 30;
   std::vector<char> Unknown11;
-  short NumberOfTerrainUnitsUsed;
+  int16_t NumberOfTerrainUnitsUsed;
   
-  static const uint16_t SWGBUNKNOWN1_LEN = 24;
+  static const short SWGBUNKNOWN1_LEN = 24;
   std::vector<char> SWGBUnknown1;
   
 private:

@@ -43,18 +43,18 @@ public:
   std::vector<unit::AttackOrArmor> Attacks;
   uint16_t ArmourCount;
   std::vector<unit::AttackOrArmor> Armours;
-  short Unknown21;
+  int16_t Unknown21;
   float MaxRange;
   float BlastRadius;
   float ReloadTime1;
-  short ProjectileUnitID;
+  int16_t ProjectileUnitID;
   
   /// Percentage value determining the probability of an attack hiting
-  short AccuracyPercent;
+  int16_t AccuracyPercent;
   
   /// Used in AoE/RoR for towers.
   char TowerMode;
-  short Delay;
+  int16_t Delay;
   
   static short getGraphicDisplacementSize();
   std::vector<float> GraphicDisplacement; //3
@@ -62,9 +62,9 @@ public:
   char Unknown23;
   float MinRange;
   float GarrisonRecoveryRate;
-  short AttackGraphic;
-  short DisplayedMeleeArmour;
-  short DisplayedAttack;
+  int16_t AttackGraphic;
+  int16_t DisplayedMeleeArmour;
+  int16_t DisplayedAttack;
   float DisplayedRange;
   float ReloadTime2;
   

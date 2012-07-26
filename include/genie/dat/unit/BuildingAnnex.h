@@ -36,7 +36,7 @@ public:
   BuildingAnnex();
   virtual ~BuildingAnnex();
   
-  short UnitID;
+  int16_t UnitID;
   std::pair <float, float> Misplacement;
   
 private:

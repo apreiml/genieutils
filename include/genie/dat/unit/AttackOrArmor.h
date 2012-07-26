@@ -36,8 +36,8 @@ public:
   AttackOrArmor();
   virtual ~AttackOrArmor();
   
-  short Class;
-  short Amount;
+  int16_t Class;
+  int16_t Amount;
   
 private:  
   virtual void serializeObject(void);
