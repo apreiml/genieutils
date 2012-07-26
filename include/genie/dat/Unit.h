@@ -84,7 +84,7 @@ public:
   /// Length of the internal name
   uint16_t NameLength;
   
-  short ID1;
+  int16_t ID1;
   
   /// ID of the name string stored in the language.dll file
   uint16_t LanguageDllName;
@@ -93,19 +93,19 @@ public:
   uint16_t LanguageDllCreation;
   
   /// Class that gives certain properties
-  short Class;
+  int16_t Class;
   
   /// Default standing graphic
-  std::pair<short, short> StandingGraphic;
+  std::pair<int16_t, int16_t> StandingGraphic;
   
   /// Graphic shown while the units is dying.
-  std::pair<short, short> DyingGraphic;
+  std::pair<int16_t, int16_t> DyingGraphic;
   
   /// TODO
   char DeathMode;
   
   /// Unit's hit points
-  short HitPoints;
+  int16_t HitPoints;
   
   /// Default line of sight measured in tiles
   float LineOfSight;
@@ -120,10 +120,10 @@ public:
   float HPBarHeight1;
   
   /// Sound played when the unit is created
-  std::pair<short, short> TrainSound;
+  std::pair<int16_t, int16_t> TrainSound;
   
   /// ID of the unit to change to when this one dies.
-  short DeadUnitID;
+  int16_t DeadUnitID;
   
   /// TODO
   char PlacementMode;
@@ -132,30 +132,30 @@ public:
   char AirMode;
   
   /// ID of the icon shown at the bottom when selected or when building
-  short IconID;
+  int16_t IconID;
   
   /// If true, unit can not be placed in the editor
   char HideInEditor;
   
   /// TODO Unknown
-  short Unknown1;         // Always -1
+  int16_t Unknown1;         // Always -1
   
   /// TODO
-  short Enabled; //bool in aoe/ror
-  std::pair <short, short> PlacementBypassTerrain;
-  std::pair <short, short> PlacementTerrain;
+  int16_t Enabled; //bool in aoe/ror
+  std::pair <int16_t, int16_t> PlacementBypassTerrain;
+  std::pair <int16_t, int16_t> PlacementTerrain;
   std::pair <float, float> EditorRadius;
   char BuildingMode;
   char VisibleInFog;
   
   /// ID of terrain restrictions that are imposed on the unit.
-  short TerrainRestriction;
+  int16_t TerrainRestriction;
   
   /// Bool which determines wheter the unit can fly.
   char FlyMode;
   
   /// How much resources this unit is able to carry
-  short ResourceCapacity;
+  int16_t ResourceCapacity;
   
   // TODO
   float ResourceDecay;
@@ -190,13 +190,13 @@ public:
    */
   char MinimapMode;
   
-  short CommandAttribute;// Page for Build button: 2 = Page 1, 10 = Page 2, ?11 = Page 3?
-  short Unknown3;
-  short Unknown3B;
+  int16_t CommandAttribute;// Page for Build button: 2 = Page 1, 10 = Page 2, ?11 = Page 3?
+  int16_t Unknown3;
+  int16_t Unknown3B;
   char Unknown3a;//only in aoe/ror
   uint16_t LanguageDllHelp;
   
-  static short getHotKeySize();
+  static int16_t getHotKeySize();
   std::vector<int16_t> HotKey; //4
   char Unknown4;
   char Unknown5;
@@ -219,7 +219,7 @@ public:
   char Attribute;
   /// Seems to be used only in SWGB/CC
   char Civilization;
-  static short getUnknown9Size();
+  static int16_t getUnknown9Size();
   std::vector<char> Unknown9; // 3 //aoe/ror 1, aok 0, tc 3
   
   /**
@@ -236,7 +236,7 @@ public:
   
   static const uint16_t RESOURCE_STORAGE_CNT = 3;
   
-  typedef ResourceUsage<short, float, char> ResourceStorage;
+  typedef ResourceUsage<int16_t, float, char> ResourceStorage;
   
   /// Resource cost of a unit TODO (3 different types of resource costs??)
   std::vector<ResourceStorage> ResourceStorages; //3
@@ -245,21 +245,21 @@ public:
   std::vector<unit::DamageGraphic> DamageGraphics;
   
   /// Sound that is played when this unit is selected
-  short SelectionSound;
-  short DyingSound;
-  short AttackSound;
+  int16_t SelectionSound;
+  int16_t DyingSound;
+  int16_t AttackSound;
   std::string Name;
   uint16_t NameLength2;
   std::string Name2;
   
   /// MinGameVersion: SWGB
-  short Unitline;
+  int16_t Unitline;
   
   /// MinGameVersion: SWGB
   char MinTechLevel;
   
-  short ID2;
-  short ID3;//not in aoe/ror
+  int16_t ID2;
+  int16_t ID3;//not in aoe/ror
 
 //      Type 20+
 
