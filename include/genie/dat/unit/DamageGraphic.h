@@ -35,7 +35,7 @@ public:
   DamageGraphic();
   virtual ~DamageGraphic();
   
-  short GraphicID;
+  int16_t GraphicID;
   char DamagePercent;
   char Unknown1; // 1 in AoE and RoR
   char Unknown2;
