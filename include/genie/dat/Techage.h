@@ -33,7 +33,7 @@ public:
   Techage();
   virtual ~Techage();
   
-  static int16_t getNameSize(void);
+  static short getNameSize(void);
   
   /// Internal name, changing doesn't effect anything.
   std::string Name;
