@@ -31,9 +31,9 @@ public:
   TBFrameData();
   virtual ~TBFrameData();
   
-  short FrameID;
-  short Flag1;
-  short Flag2;
+  int16_t FrameID;
+  int16_t Flag1;
+  int16_t Flag2;
   
 private:
   virtual void serializeObject(void);
@@ -51,7 +51,7 @@ public:
   
   static uint32_t getUnknown3Size();
   
-  short Enabled;
+  int16_t Enabled;
   
   /// Internal long name
   std::string Name;
@@ -73,11 +73,11 @@ public:
   
   std::vector<TBFrameData> Frames;
   
-  short FrameCount; //?
+  int16_t FrameCount; //?
   
-  short Unknown8; // always 0
-  short Unknown9;
-  short Unknown10;
+  int16_t Unknown8; // always 0
+  int16_t Unknown9;
+  int16_t Unknown10;
   
 private:
   virtual void serializeObject(void);
