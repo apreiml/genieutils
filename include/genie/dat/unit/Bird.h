@@ -37,15 +37,15 @@ public:
   Bird();
   virtual ~Bird();
   
-  short SheepConversion;//FFFF = No, 0000 = Yes
+  int16_t SheepConversion;//FFFF = No, 0000 = Yes
   float SearchRadius;
   float WorkRate;
-  std::pair<short, short> DropSite;
+  std::pair<int16_t, int16_t> DropSite;
   
   /// If activated unit switches villager types
   char VillagerMode;
-  short MoveSound;
-  short StopSound;
+  int16_t MoveSound;
+  int16_t StopSound;
   /// Some animals have this.
   char AnimalMode;
   uint16_t CommandCount;//only in aoe/ror
