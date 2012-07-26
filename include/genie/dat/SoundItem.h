@@ -32,7 +32,7 @@ public:
   SoundItem();
   virtual ~SoundItem();
   
-  short getFileNameSize();
+  int16_t getFileNameSize();
   
   /// File name of the resource
   /// 13 in games <= TC and 27 in games >= SWGB
@@ -43,9 +43,9 @@ public:
   int32_t ResourceID;
   
   /// Probability out of 100 that this item will be played
-  short Probability;
-  short Civ;//not in aoe/ror
-  short Unknown1;//not in aoe/ror; seems to be unused in tc
+  int16_t Probability;
+  int16_t Civ;//not in aoe/ror
+  int16_t Unknown1;//not in aoe/ror; seems to be unused in tc
   
 private:
   virtual void serializeObject(void);
