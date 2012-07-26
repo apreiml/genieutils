@@ -196,7 +196,7 @@ public:
   char Unknown3a;//only in aoe/ror
   uint16_t LanguageDllHelp;
   
-  static int16_t getHotKeySize();
+  static short getHotKeySize();
   std::vector<int16_t> HotKey; //4
   char Unknown4;
   char Unknown5;
@@ -219,7 +219,7 @@ public:
   char Attribute;
   /// Seems to be used only in SWGB/CC
   char Civilization;
-  static int16_t getUnknown9Size();
+  static short getUnknown9Size();
   std::vector<char> Unknown9; // 3 //aoe/ror 1, aok 0, tc 3
   
   /**
