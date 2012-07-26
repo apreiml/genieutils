@@ -32,17 +32,17 @@ public:
   UnitCommand();
   virtual ~UnitCommand();
   
-  short One;
-  short ID;
+  int16_t One;
+  int16_t ID;
   char Unknown1;
-  short Type;
-  short ClassID;
-  short UnitID;
-  short Unknown2;
-  short ResourceIn;
-  short SubType;
-  short ResourceOut;
-  short Unknown3;
+  int16_t Type;
+  int16_t ClassID;
+  int16_t UnitID;
+  int16_t Unknown2;
+  int16_t ResourceIn;
+  int16_t SubType;
+  int16_t ResourceOut;
+  int16_t Unknown3;
   float Unknown4;
   float ExecutionRadius;
   float Unknown5;
@@ -52,11 +52,11 @@ public:
   char Unknown9;
   char Unknown10;
   char Unknown11;
-  short Unknown12;
-  short Unknown13;
+  int16_t Unknown12;
+  int16_t Unknown13;
   char Unknown14;
   
-  static short getGraphicsSize(void);
+  static int16_t getGraphicsSize(void);
   std::vector<int16_t> Graphics;
   
 private:
