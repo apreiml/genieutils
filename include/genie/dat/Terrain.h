@@ -35,7 +35,7 @@ public:
   int16_t Unknown1;
   int16_t Unknown2; //must be one or the game will crash
   
-  int16_t getNameSize(void);
+  short getNameSize(void);
   
   std::string Name;
   std::string Name2;
@@ -45,19 +45,19 @@ public:
   int32_t BlendPriority;//not in aoe/ror
   int32_t BlendType; //not in aoe/ror
   
-  static int16_t getColorSize();
+  static short getColorSize();
   std::vector<char> Colours;
   int16_t Unknown5;
   int16_t Unknown6;
-  static const int16_t UNKNOWN7_LEN = 23;
+  static const short UNKNOWN7_LEN = 23;
   std::vector<char> Unknown7;
   int16_t FrameCount;
-  static const int16_t UNKNOWN8_LEN = 2;
+  static const short UNKNOWN8_LEN = 2;
   std::vector<int16_t> Unknown8;
-  static const int16_t UNKNOWN9_LEN = 54;
+  static const short UNKNOWN9_LEN = 54;
   std::vector<int16_t> Unknown9;
   int16_t TerrainReplacementID;
-  static const int16_t TERRAIN_DIMENSIONS_LEN = 2;
+  static const short TERRAIN_DIMENSIONS_LEN = 2;
   std::pair<int16_t, int16_t> TerrainDimensions;
   int16_t getUnknown10Size();
   std::vector<char> Unknown10;
@@ -66,11 +66,11 @@ public:
   std::vector<int16_t> TerrainUnitID;
   std::vector<int16_t> TerrainUnitDensity;
   
-  static const int16_t UNKNOWN11_LEN = 30;
+  static const short UNKNOWN11_LEN = 30;
   std::vector<char> Unknown11;
   int16_t NumberOfTerrainUnitsUsed;
   
-  static const uint16_t SWGBUNKNOWN1_LEN = 24;
+  static const short SWGBUNKNOWN1_LEN = 24;
   std::vector<char> SWGBUnknown1;
   
 private:
