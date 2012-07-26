@@ -59,10 +59,10 @@ public:
   int16_t TerrainReplacementID;
   static const short TERRAIN_DIMENSIONS_LEN = 2;
   std::pair<int16_t, int16_t> TerrainDimensions;
-  int16_t getUnknown10Size();
+  short getUnknown10Size();
   std::vector<char> Unknown10;
   
-  int16_t getTerrainUnitSize();
+  short getTerrainUnitSize();
   std::vector<int16_t> TerrainUnitID;
   std::vector<int16_t> TerrainUnitDensity;
   
