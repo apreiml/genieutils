@@ -28,17 +28,17 @@
 #include "genie/Types.h"
 #include "genie/file/IFile.h"
 #include "genie/file/Compressor.h"
-#include "TerrainRestriction.h";
-#include "PlayerColour.h";
-#include "Sound.h";
-#include "Graphic.h";
-#include "Terrain.h";
-#include "Techage.h";
-#include "UnitHeader.h";
-#include "Civ.h";
-#include "Research.h";
-#include "TerrainBorder.h";
-#include "UnitLine.h";
+#include "TerrainRestriction.h"
+#include "PlayerColour.h"
+#include "Sound.h"
+#include "Graphic.h"
+#include "Terrain.h"
+#include "Techage.h"
+#include "UnitHeader.h"
+#include "Civ.h"
+#include "Research.h"
+#include "TerrainBorder.h"
+#include "UnitLine.h"
 #include "TechTree.h"
 
 namespace boost {
