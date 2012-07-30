@@ -25,7 +25,8 @@ namespace genie
 {
  
 //------------------------------------------------------------------------------
-Unit::Unit() 
+Unit::Unit() : HotKey(getHotKeySize()), 
+               Unknown9(getUnknown9Size())
 {
 //    Type 10+
 

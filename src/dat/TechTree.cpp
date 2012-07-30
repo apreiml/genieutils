@@ -62,7 +62,7 @@ void TechTree::serializeObject(void )
 }
 
 //------------------------------------------------------------------------------
-TechTreeAge::TechTreeAge()
+TechTreeAge::TechTreeAge() : Zeroes(getZeroesSize())
 {
   Unknown1 = 0;
   ID = 0;
@@ -114,7 +114,8 @@ void TechTreeAge::serializeObject(void )
 } 
 
 //------------------------------------------------------------------------------
-BuildingConnection::BuildingConnection()
+BuildingConnection::BuildingConnection() : Unknown2a(getUnknown2aSize()),
+Unknown2b(getUnknown2bSize()), Unknown3(getUnknown3Size())
 {
   ID = 0;
   Unknown1 = 2;
@@ -185,7 +186,7 @@ void BuildingConnection::serializeObject(void)
 }
 
 //------------------------------------------------------------------------------
-UnitConnection::UnitConnection() 
+UnitConnection::UnitConnection() : Unknown2a(getUnknown2aSize()), Unknown2b(getUnknown2bSize())
 {
   ID = 0;
   Unknown1 = 2;
@@ -257,7 +258,7 @@ void UnitConnection::serializeObject(void)
 }
 
 //------------------------------------------------------------------------------
-ResearchConnection::ResearchConnection()
+ResearchConnection::ResearchConnection() : Unknown2a(getUnknown2aSize()), Unknown2b(getUnknown2bSize())
 {
   ID = 0;
   Unknown1 = 2;

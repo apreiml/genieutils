@@ -24,7 +24,7 @@ namespace genie
 {
   
 //------------------------------------------------------------------------------
-UnitCommand::UnitCommand()
+UnitCommand::UnitCommand() : Graphics(getGraphicsSize(), -1)
 {
   One = 0;
   ID = -1;

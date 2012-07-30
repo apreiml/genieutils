@@ -26,7 +26,7 @@ namespace genie
 namespace unit
 {
 
-DeadFish::DeadFish()
+DeadFish::DeadFish() : Unknown16(getUnknown16Size())
 {
   WalkingGraphic.first = -1;
   WalkingGraphic.second = -1;

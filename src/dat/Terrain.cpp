@@ -24,8 +24,12 @@ namespace genie
 {
 
 //------------------------------------------------------------------------------
-Terrain::Terrain() : Unknown7(UNKNOWN7_LEN), Unknown8(UNKNOWN8_LEN), 
-                     Unknown9(UNKNOWN9_LEN), 
+Terrain::Terrain() : Colours(getColorSize()),
+                     Unknown7(UNKNOWN7_LEN), Unknown8(UNKNOWN8_LEN),
+                     Unknown9(UNKNOWN9_LEN),
+                     Unknown10(getUnknown10Size()),
+                     TerrainUnitID(getTerrainUnitSize()),
+                     TerrainUnitDensity(getTerrainUnitSize()),
                      Unknown11(UNKNOWN11_LEN),
                      SWGBUnknown1(SWGBUNKNOWN1_LEN)
 {

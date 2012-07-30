@@ -28,7 +28,8 @@ namespace genie
 short TerrainRestriction::Terrain_Count_ = 0;
 
 //------------------------------------------------------------------------------
-TerrainRestriction::TerrainRestriction() 
+TerrainRestriction::TerrainRestriction() : TerrainAccessible(Terrain_Count_),
+                                           TerrainPassGraphics(Terrain_Count_)
 {
 }
 
