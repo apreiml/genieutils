@@ -24,7 +24,9 @@ namespace genie
 {
 
 //------------------------------------------------------------------------------
-Research::Research() 
+Research::Research() : RequiredTechs(getRequiredTechsSize(), -1),
+                       ResourceCosts(getResourceCostsSize()),
+                       Pointers(getPointersSize())
 {
   RequiredTechCount = 0;
   Civ = -1;
