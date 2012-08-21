@@ -45,8 +45,7 @@ public:
   int32_t BlendPriority;//not in aoe/ror
   int32_t BlendType; //not in aoe/ror
   
-  static short getColorSize();
-  std::vector<char> Colours;
+  std::vector<unsigned char> Colors;
   int16_t Unknown5;
   int16_t Unknown6;
   static const short UNKNOWN7_LEN = 23;
