@@ -65,7 +65,7 @@ public:
   int32_t Unknown3; // 0
   int32_t Unknown4; // -1
   
-  std::vector<char> Colors;
+  std::vector<unsigned char> Colors;
   
   char Unknown5;
   int32_t Unknown6; // 6 and 7 both zero, part of frame data?

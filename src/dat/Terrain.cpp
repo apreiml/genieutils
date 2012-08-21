@@ -24,7 +24,7 @@ namespace genie
 {
 
 //------------------------------------------------------------------------------
-Terrain::Terrain() : Colours(getColorSize()),
+Terrain::Terrain() : Colors(3),
                      Unknown7(UNKNOWN7_LEN), Unknown8(UNKNOWN8_LEN),
                      Unknown9(UNKNOWN9_LEN),
                      Unknown10(getUnknown10Size()),
@@ -65,12 +65,6 @@ short Terrain::getNameSize()
 }
 
 //------------------------------------------------------------------------------
-short Terrain::getColorSize()
-{
-  return 3;
-}
-
-//------------------------------------------------------------------------------
 short Terrain::getTerrainUnitSize()
 {
   return 30;
@@ -104,7 +98,7 @@ void Terrain::serializeObject(void )
     serialize<int32_t>(BlendType);
   }
   
-  serialize<char>(Colours, getColorSize());
+  serialize<unsigned char>(Colors, 3);
   serialize<int16_t>(Unknown5);
   serialize<int16_t>(Unknown6);
   serialize<char>(Unknown7, UNKNOWN7_LEN);

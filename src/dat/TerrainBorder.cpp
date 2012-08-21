@@ -59,7 +59,7 @@ void TerrainBorder::serializeObject(void )
   serialize<int32_t>(Unknown3);
   serialize<int32_t>(Unknown4);
   
-  serialize<char>(Colors, 3);
+  serialize<unsigned char>(Colors, 3);
   
   serialize<char>(Unknown5);
   
