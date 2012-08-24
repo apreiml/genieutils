@@ -1,0 +1,3 @@
+[submodule "extern/pcrio"]
+	path = extern/pcrio
+	url = https://github.com/apreiml/pcrio.git

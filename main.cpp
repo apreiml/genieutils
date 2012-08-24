@@ -13,6 +13,7 @@
 #include "genie/resource/Color.h"
 #include <genie/script/ScnFile.h>
 #include <genie/file/Compressor.h>
+#include <genie/lang/LangFile.h>
 #include <boost/iostreams/copy.hpp>
 #include <boost/smart_ptr.hpp>
 
@@ -161,13 +162,28 @@ void testScn()
   
 }
 
+void testLang()
+{
+  genie::LangFile lf;
+  
+  lf.load("language.dll");
+  
+  std::cout << "GetString: " << lf.getUtf8String(42320) << std::endl;
+  
+  lf.setUtf8String(42320, "Test pcrio ftw!");
+  
+  
+  lf.saveAs("new_lang.dll");
+}
+
 int main(int argc, char **argv) {
 
   genie::Logger::setLogLevel(genie::Logger::L_INFO);
   
 //   testDrs();
   
-  testScn();
+//   testScn();
+  testLang();
   
   /*
   std::ifstream ifs;
