@@ -21,4 +21,54 @@
 namespace genie
 {
   
+//------------------------------------------------------------------------------
+LangFile::LangFile() 
+{
+  pfile_ = 0;
+}
+  
+//------------------------------------------------------------------------------
+LangFile::~LangFile() 
+{
+  if (pfile_)
+    pcr_free(pfile_);
+}
+
+//------------------------------------------------------------------------------
+void LangFile::load(const char *fileName) throw (std::ios_base::failure)
+{
+  pfile_ = pcr_read_file(fileName);
+}
+
+//------------------------------------------------------------------------------
+void LangFile::saveAs(const char *fileName) throw (std::ios_base::failure)
+{
+  pcr_write_file(fileName, pfile_);
+}
+
+std::string LangFile::getUtf8String(unsigned int id)
+{
+  struct enc_string eStr = pcr_get_string(pfile_, id, 0); //TODO language?
+  
+  //TODO encode to utf8.
+  
+  return std::string(eStr.string->str);
+}
+
+void LangFile::setUtf8String(unsigned int id, std::string str)
+{
+  //TODO encode from utf8
+  
+  pcr_set_string(pfile_, id, 0, str.c_str()); //TODO language?
+}
+  
+//------------------------------------------------------------------------------
+void LangFile::unload(void)
+{
+  if (pfile_)
+    pcr_free(pfile_);
+  
+  pfile_ = 0;
+}
+
 }

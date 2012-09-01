@@ -32,13 +32,16 @@ Research::Research() : RequiredTechs(getRequiredTechsSize(), -1),
   Civ = -1;
   FullTechMode = 0;
   ResearchLocation = -1;
-  LanguageDllName = 7000;
-  LanguageDllDescription = 8000;
+  LanguageDLLName = 7000;
+  LanguageDLLDescription = 8000;
   ResearchTime = 0;
   TechageID = -1;
   Type = 0;
   IconID = -1;
   ButtonID = 0;
+  Pointers[0] = 107000;
+  Pointers[1] = 157000;
+  Pointers[2] = -1;
   NameLength = 0;
   Name = "";
   NameLength2 = 0;
@@ -86,8 +89,8 @@ void Research::serializeObject(void )
   }
   
   serialize<int16_t>(ResearchLocation);
-  serialize<uint16_t>(LanguageDllName);
-  serialize<uint16_t>(LanguageDllDescription);
+  serialize<uint16_t>(LanguageDLLName);
+  serialize<uint16_t>(LanguageDLLDescription);
   serialize<int16_t>(ResearchTime);
   serialize<int16_t>(TechageID);
   serialize<int16_t>(Type);

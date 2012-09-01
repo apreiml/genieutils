@@ -64,10 +64,10 @@ public:
   int16_t ResearchLocation; 
   
   /// Index of the name in language.dll
-  uint16_t LanguageDllName;
+  uint16_t LanguageDLLName;
   
   /// Index of the description in language.dll
-  uint16_t LanguageDllDescription;
+  uint16_t LanguageDLLDescription;
   
   /// Number of seconds it takes to research
   int16_t ResearchTime;

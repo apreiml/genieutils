@@ -19,8 +19,35 @@
 #ifndef GENIE_LANGFILE_H
 #define GENIE_LANGFILE_H
 
+#include <genie/file/IFile.h>
+#include <pcrio/pcrio.h>
+
 namespace genie
 {
+
+class LangFile : public IFile
+{
+  
+public:
+  LangFile();
+  virtual ~LangFile();
+  
+  virtual void load(const char *fileName) throw (std::ios_base::failure);
+  virtual void saveAs(const char *fileName) throw (std::ios_base::failure);
+  
+  std::string getUtf8String(unsigned int id);
+  void setUtf8String(unsigned int id, std::string str);
+  
+protected:
+  
+  virtual void unload(void);
+  
+  virtual void serializeObject(void) {}
+  
+private:
+  struct pcr_file *pfile_;
+  
+};
   
 }
 
