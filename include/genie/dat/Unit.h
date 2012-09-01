@@ -87,10 +87,10 @@ public:
   int16_t ID1;
   
   /// ID of the name string stored in the language.dll file
-  uint16_t LanguageDLLName;
+  uint16_t LanguageDllName;
   
   /// ID of the name string stored in the language.dll file
-  uint16_t LanguageDLLCreation;
+  uint16_t LanguageDllCreation;
   
   /// Class that gives certain properties
   int16_t Class;
@@ -194,9 +194,10 @@ public:
   int16_t Unknown3;
   int16_t Unknown3B;
   char Unknown3a;//only in aoe/ror
-  int32_t LanguageDLLHelp;
-  int32_t LanguageDLLHotKeyText;
-  int16_t HotKey;
+  uint16_t LanguageDllHelp;
+  
+  static short getHotKeySize();
+  std::vector<int16_t> HotKey; //4
   char Unknown4;
   char Unknown5;
   bool Unselectable;

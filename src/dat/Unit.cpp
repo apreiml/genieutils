@@ -25,15 +25,16 @@ namespace genie
 {
  
 //------------------------------------------------------------------------------
-Unit::Unit() : Unknown9(getUnknown9Size())
+Unit::Unit() : HotKey(getHotKeySize()), 
+               Unknown9(getUnknown9Size())
 {
 //    Type 10+
 
   Type = UT_EyeCandy;
   NameLength = 9;
   ID1 = -1;
-  LanguageDLLName = 5000;
-  LanguageDLLCreation = 6000;
+  LanguageDllName = 5000;
+  LanguageDllCreation = 6000;
   Class = -1;
   StandingGraphic.first = -1;
   StandingGraphic.second = -1;
@@ -75,9 +76,7 @@ Unit::Unit() : Unknown9(getUnknown9Size())
   Unknown3 = 0;
   Unknown3B = 0;
   Unknown3a = 0;
-  LanguageDLLHelp = 105000;
-  LanguageDLLHotKeyText = 155000;
-  HotKey = 16000;
+  LanguageDllHelp = 39000;
   Unknown4 = 0;
   Unknown5 = 0;
   Unselectable = 0;
@@ -117,6 +116,12 @@ Unit::~Unit()
 }
 
 //------------------------------------------------------------------------------
+short Unit::getHotKeySize()
+{
+  return 4;
+}
+
+//------------------------------------------------------------------------------
 short Unit::getUnknown9Size()
 {
   return 2;
@@ -130,8 +135,8 @@ void Unit::serializeObject(void )
   
   serializeSize<uint16_t>(NameLength, Name);
   serialize<int16_t>(ID1);        //TODO: Check
-  serialize<uint16_t>(LanguageDLLName);
-  serialize<uint16_t>(LanguageDLLCreation);
+  serialize<uint16_t>(LanguageDllName);
+  serialize<uint16_t>(LanguageDllCreation);
   serialize<int16_t>(Class);
   
   if (getGameVersion() >= genie::GV_AoK)
@@ -194,9 +199,8 @@ void Unit::serializeObject(void )
   if (getGameVersion() <= genie::GV_RoR)
     serialize<char>(Unknown3a);
   
-  serialize<int32_t>(LanguageDLLHelp);
-  serialize<int32_t>(LanguageDLLHotKeyText);
-  serialize<int16_t>(HotKey);
+  serialize<uint16_t>(LanguageDllHelp);
+  serialize<int16_t>(HotKey, getHotKeySize());
   serialize<char>(Unknown4);
   serialize<char>(Unknown5);
   serialize<bool>(Unselectable);
