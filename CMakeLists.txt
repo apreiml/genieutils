@@ -10,12 +10,15 @@ set(Genieutils_LIBRARY genieutils)
 
 project(genieutils)
 
+set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/)
+
 find_package(ZLIB REQUIRED)
 #find_package(Boost 1.42 COMPONENTS iostreams program_options REQUIRED)
 find_package(Boost 1.42 COMPONENTS iostreams program_options unit_test_framework REQUIRED)
 
+find_package(Icu)
+
 if (GUTILS_TEST)
-  set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/)
   find_package(SFML COMPONENTS SYSTEM WINDOW GRAPHICS REQUIRED)
 endif (GUTILS_TEST)
 
@@ -132,7 +135,7 @@ set_source_files_properties(extern/pcrio/pcrio.c PROPERTIES LANGUAGE CXX )
 add_library(${Genieutils_LIBRARY} ${FILE_SRC} ${LANG_SRC} ${DAT_SRC} 
                                   ${RESOURCE_SRC} ${UTIL_SRC} ${SCRIPT_SRC} 
                                   ${PCRIO_SRC})
-target_link_libraries(${Genieutils_LIBRARY} ${ZLIB_LIBRARIES} ${Boost_LIBRARIES})
+target_link_libraries(${Genieutils_LIBRARY} ${ZLIB_LIBRARIES} ${Boost_LIBRARIES} ${Icu_LIBRARY})
 
 #add_executable(main main.cpp)
 #target_link_libraries(main ${Genieutils_LIBRARY})

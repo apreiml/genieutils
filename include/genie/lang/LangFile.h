@@ -22,6 +22,8 @@
 #include <genie/file/IFile.h>
 #include <pcrio/pcrio.h>
 
+struct UConverter;
+
 namespace genie
 {
 
@@ -35,8 +37,9 @@ public:
   virtual void load(const char *fileName) throw (std::ios_base::failure);
   virtual void saveAs(const char *fileName) throw (std::ios_base::failure);
   
-  std::string getUtf8String(unsigned int id);
-  void setUtf8String(unsigned int id, std::string str);
+  // get/set strings in utf-8
+  std::string getString(unsigned int id);
+  void setString(unsigned int id, std::string str);
   
 protected:
   
@@ -46,7 +49,7 @@ protected:
   
 private:
   struct pcr_file *pfile_;
-  
+  pcr_error_code error_code_;
 };
   
 }

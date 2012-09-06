@@ -168,9 +168,11 @@ void testLang()
   
   lf.load("language.dll");
   
-  std::cout << "GetString: " << lf.getUtf8String(42320) << std::endl;
+  std::cout << "GetString: " << lf.getString(42320) << std::endl;
   
-  lf.setUtf8String(42320, "Test pcrio ftw!");
+  lf.setString(42320, "Test pcrio ftw! U: ö ü ä ÜÄÖ haha");
+  
+  std::cout << "GetOtherString: " << lf.getString(4442) << std::endl;
   
   
   lf.saveAs("new_lang.dll");
