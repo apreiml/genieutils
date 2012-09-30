@@ -141,7 +141,7 @@ public:
   int16_t Unknown1;         // Always -1
   
   /// TODO
-  int16_t Enabled; //bool in aoe/ror
+  int16_t Enabled;
   std::pair <int16_t, int16_t> PlacementBypassTerrain;
   std::pair <int16_t, int16_t> PlacementTerrain;
   std::pair <float, float> EditorRadius;
@@ -199,7 +199,7 @@ public:
   int16_t HotKey;
   char Unknown4;
   char Unknown5;
-  bool Unselectable;
+  char Unselectable;
   char Unknown6;
   char Unknown7;// not in aoe/ror
   char Unknown8;// not in aoe/ror
