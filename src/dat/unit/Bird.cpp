@@ -52,7 +52,7 @@ void Bird::serializeObject(void )
   serialize<char>(VillagerMode);
   serialize<int16_t>(MoveSound);
   serialize<int16_t>(StopSound);
-  serialize<char>(AnimalMode); //TODO: AoE/RoR: animal_mode
+  serialize<char>(AnimalMode);
   
   if (getGameVersion() <= genie::GV_RoR)
   {

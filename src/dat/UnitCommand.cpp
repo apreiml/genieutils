@@ -26,7 +26,7 @@ namespace genie
 //------------------------------------------------------------------------------
 UnitCommand::UnitCommand() : Graphics(getGraphicsSize(), -1)
 {
-  One = 0;
+  One = 1;
   ID = -1;
   Unknown1 = 0;
   Type = 7;
@@ -37,18 +37,17 @@ UnitCommand::UnitCommand() : Graphics(getGraphicsSize(), -1)
   SubType = -1;
   ResourceOut = -1;
   Unknown3 = -1;
-  Unknown4 = 0;
+  WorkRateMultiplier = 0;
   ExecutionRadius = 0;
-  Unknown5 = 0;
+  ExtraRange = 0;
+  Unknown4 = 1;
+  Unknown5 = 3;
   Unknown6 = 1;
-  Unknown7 = 3;
+  Unknown7 = 1;
   Unknown8 = 1;
-  Unknown9 = 1;
-  Unknown10 = 1;
+  Unknown9 = 5;
+  Unknown10 = 0;
   Unknown11 = 0;
-  Unknown12 = 0;
-  Unknown13 = 5;
-  Unknown14 = 9;
 }
 
 //------------------------------------------------------------------------------
@@ -76,20 +75,18 @@ void UnitCommand::serializeObject(void )
   serialize<int16_t>(SubType);
   serialize<int16_t>(ResourceOut);
   serialize<int16_t>(Unknown3);
-  serialize<float>(Unknown4);
+  serialize<float>(WorkRateMultiplier);
   serialize<float>(ExecutionRadius);
+  serialize<float>(ExtraRange);
+  serialize<char>(Unknown4);
   serialize<float>(Unknown5);
   serialize<char>(Unknown6);
-  serialize<float>(Unknown7);
-  serialize<char>(Unknown8);
+  serialize<char>(Unknown7);
+  serialize<int32_t>(Unknown8);
   serialize<char>(Unknown9);
   serialize<char>(Unknown10);
   serialize<char>(Unknown11);
-  serialize<int16_t>(Unknown12);
-  serialize<int16_t>(Unknown13);
-  serialize<char>(Unknown14);
   serialize<int16_t>(Graphics, getGraphicsSize());
 }
-
 
 }

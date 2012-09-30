@@ -43,18 +43,17 @@ public:
   int16_t SubType;
   int16_t ResourceOut;
   int16_t Unknown3;
-  float Unknown4;
+  float WorkRateMultiplier;
   float ExecutionRadius;
+  float ExtraRange;
+  char Unknown4;
   float Unknown5;
   char Unknown6;
-  float Unknown7;
-  char Unknown8;
+  char Unknown7;
+  int32_t Unknown8;
   char Unknown9;
   char Unknown10;
   char Unknown11;
-  int16_t Unknown12;
-  int16_t Unknown13;
-  char Unknown14;
   
   static short getGraphicsSize(void);
   std::vector<int16_t> Graphics;

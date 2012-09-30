@@ -199,7 +199,7 @@ void Unit::serializeObject(void )
   serialize<int16_t>(HotKey);
   serialize<char>(Unknown4);
   serialize<char>(Unknown5);
-  serialize<bool>(Unselectable);
+  serialize<char>(Unselectable);
   serialize<char>(Unknown6);
   
   if (getGameVersion() >= genie::GV_AoK)
@@ -214,23 +214,16 @@ void Unit::serializeObject(void )
     serialize<char>(SelectionShapeType);
   
   serialize<char>(SelectionShape);
-  //AoE/RoR: [0] unit_attribute
-  if (getGameVersion() != genie::GV_AoK)
+  
+  if (getGameVersion() >= genie::GV_TC)
   {
     serialize<char>(Attribute);
-    serialize<char>(Civilization); // TODO: selection color in AoE/RoR?
-  }
-
-  if (getGameVersion() >= genie::GV_TC)
+    serialize<char>(Civilization);
     serialize<char>(Unknown9, getUnknown9Size());
-  
-  
-  if (getGameVersion() >= genie::GV_AoK)
-  {
-    serialize<char>(SelectionEffect);
-    serialize<char>(EditorSelectionColour);
   }
   
+  serialize<char>(SelectionEffect);
+  serialize<char>(EditorSelectionColour);
   serialize<float>(SelectionRadius);
   serialize<float>(HPBarHeight2);
   
