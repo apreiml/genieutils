@@ -37,7 +37,7 @@ UnitHeader::~UnitHeader()
 //------------------------------------------------------------------------------
 void UnitHeader::serializeObject(void )
 {
-  serialize<bool>(Exists);
+  serialize<char>(Exists);
   
   if (Exists)
   {
