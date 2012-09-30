@@ -33,7 +33,7 @@ public:
   UnitHeader();
   virtual ~UnitHeader();
   
-  bool Exists;
+  char Exists;
   std::vector<UnitCommand> Commands;
   
 private:
