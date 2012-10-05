@@ -174,8 +174,15 @@ void testLang()
   
   std::cout << "GetOtherString: " << lf.getString(4442) << std::endl;
   
-  
   lf.saveAs("new_lang.dll");
+  
+  lf.load("new_lang.dll");
+  
+  
+  std::cout << "GetSaved String: \"" << lf.getString(42320) << "\"" << std::endl;
+  
+  lf.setString(1, "new one");
+  std::cout << lf.getString(1) << std::endl;
 }
 
 int main(int argc, char **argv) {

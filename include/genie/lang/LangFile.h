@@ -50,6 +50,9 @@ protected:
 private:
   struct pcr_file *pfile_;
   pcr_error_code error_code_;
+  
+  uint32_t default_culture_id_;
+  uint32_t default_codepage_;
 };
   
 }

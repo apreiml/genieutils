@@ -29,6 +29,9 @@ LangFile::LangFile()
 {
   pfile_ = 0;
   error_code_ = PCR_ERROR_NONE;
+  
+  default_culture_id_ = 0;
+  default_codepage_ = 0;
 }
   
 //------------------------------------------------------------------------------
@@ -52,6 +55,13 @@ void LangFile::load(const char *fileName) throw (std::ios_base::failure)
     
     throw std::ios_base::failure("Load: Can't load file: " + std::string(fileName));
   }
+  else
+  {
+    default_culture_id_ = pcr_get_default_culture_id(pfile_);
+    default_codepage_ = pcr_get_default_codepage(pfile_, default_culture_id_);
+    
+    std::cout << "Debug: Culture Id: " << default_culture_id_ << ", Codepage: " << default_codepage_ << std::endl;
+  }
 }
 
 //------------------------------------------------------------------------------
@@ -73,28 +83,39 @@ std::string LangFile::getString(unsigned int id)
   char *dest;
   std::string ret;
   std::stringstream c_name;
-  struct enc_string e_str;
+  pcr_string e_str;
   UErrorCode err = U_ZERO_ERROR;
   
-  e_str = pcr_get_string(pfile_, id, 0); //TODO language?
+  e_str = pcr_get_string(pfile_, id, default_culture_id_);
   
-  c_name << "windows-" << e_str.codepage;
-  
-  dest = new char[e_str.string->size + 1];
-  
-  ucnv_convert("UTF-8", c_name.str().c_str(), dest, e_str.string->size + 1, 
-               e_str.string->str, -1, &err);
-  
-  
-  if (U_FAILURE(err))
+  if (e_str.value == 0)
   {
-    std::cout << "Warning: Couldn't convert string!" << std::endl; //TODO ex
-    ret = std::string(e_str.string->str);
+    std::cout << "LangFile: String not found! Id: " << id << std::endl;
+    return std::string("");
+  }
+  
+  if (e_str.codepage > 0)
+  {
+    c_name << "windows-" << e_str.codepage;
+    
+    std::cout << "e_str.size: " << e_str.size << std::endl;
+    dest = new char[e_str.size * 2]; // or else to short if lots of umlaute TODO Why?
+    
+    ucnv_convert("UTF-8", c_name.str().c_str(), dest, e_str.size * 2,
+                e_str.value, -1, &err);
+    
+    if (U_FAILURE(err))
+    {
+      std::cout << "Warning: Get: Couldn't convert string!" << std::endl; //TODO ex
+      ret = std::string(e_str.value);
+    }
+    else
+      ret = std::string(dest);
+    
+    delete [] dest;
   }
   else
-    ret = std::string(dest);
-  
-  delete [] dest;
+    ret = std::string(e_str.value);
   
   return ret;
 }
@@ -103,13 +124,15 @@ void LangFile::setString(unsigned int id, std::string str)
 {
   char *dest;
   std::stringstream c_name;
-  struct enc_string e_str;
+  pcr_string e_str;
   std::string new_str;
   UErrorCode err = U_ZERO_ERROR;
   
-  e_str = pcr_get_string(pfile_, id, 0); //TODO language?
+//   e_str = pcr_get_string(pfile_, id, 0); //TODO language?
   
-  c_name << "windows-" << e_str.codepage;
+  //TODO String not found?
+  
+  c_name << "windows-" << default_codepage_;
   
   dest = new char[str.size()];
   
@@ -127,7 +150,16 @@ void LangFile::setString(unsigned int id, std::string str)
   
   delete [] dest;
   
-  pcr_set_string(pfile_, id, 0, new_str.c_str()); //TODO language?
+  e_str.value = new char[str.size() + 1];
+  strcpy(e_str.value, new_str.c_str());
+  e_str.value[str.size()] = '\0';
+  
+  e_str.size = new_str.size();
+  e_str.codepage = default_codepage_;
+  
+  pcr_set_string(pfile_, id, default_culture_id_, e_str); 
+  
+  delete [] e_str.value;
 }
   
 //------------------------------------------------------------------------------
