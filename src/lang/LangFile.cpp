@@ -133,7 +133,7 @@ std::string LangFile::getString(unsigned int id)
   else
     decoded_str = encoded_str;
   
-  free (e_str.value);
+  pcr_free_string_value (e_str);
   
   return decoded_str;
 }
