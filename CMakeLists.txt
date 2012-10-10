@@ -34,7 +34,11 @@ set(Boost_USE_STATIC_LIBS        ON)
 set(Boost_USE_MULTITHREADED      ON)
 set(Boost_USE_STATIC_RUNTIME    OFF)
 
-set(GUTILS_INCLUDE_DIRS ${Boost_INCLUDE_DIRS} extern/ ${ICONV_INCLUDE_DIR})
+set(GUTILS_INCLUDE_DIRS ${Boost_INCLUDE_DIRS} extern/)
+
+if (${ICONV_FOUND})
+  set(GUTILS_INCLUDE_DIRS ${GUTILS_INCLUDE_DIRS} ${ICONV_INCLUDE_DIR})
+endif (${ICONV_FOUND})
 
 if (GUTILS_TEST)
   include_directories(
