@@ -18,11 +18,15 @@
 
 #include "genie/lang/LangFile.h"
 
-#include <unicode/ucnv.h>
 #include <sstream>
+
+#include <iconv.h>
+#include <errno.h>
 
 namespace genie
 {
+  
+const char *LangFile::CONV_DEFAULT_CHARSET = "UTF-8";
   
 //------------------------------------------------------------------------------
 LangFile::LangFile() 
@@ -32,11 +36,19 @@ LangFile::LangFile()
   
   default_culture_id_ = 0;
   default_codepage_ = 0;
+  
+  system_default_charset_ = CONV_DEFAULT_CHARSET;
 }
   
 //------------------------------------------------------------------------------
 LangFile::~LangFile() 
 {
+  if (to_default_charset_cd_)
+    iconv_close(to_default_charset_cd_);
+  
+  if (from_default_charset_cd_)
+    iconv_close(from_default_charset_cd_);
+  
   if (pfile_)
     pcr_free(pfile_);
 }
@@ -57,10 +69,25 @@ void LangFile::load(const char *fileName) throw (std::ios_base::failure)
   }
   else
   {
+    std::stringstream c_name;
+    
     default_culture_id_ = pcr_get_default_culture_id(pfile_);
     default_codepage_ = pcr_get_default_codepage(pfile_, default_culture_id_);
     
     std::cout << "Debug: Culture Id: " << default_culture_id_ << ", Codepage: " << default_codepage_ << std::endl;
+  
+    if (default_codepage_ > 0)
+    {
+      c_name << "WINDOWS-" << default_codepage_;
+      
+      to_default_charset_cd_ = iconv_open(system_default_charset_.c_str(), c_name.str().c_str());
+      from_default_charset_cd_ = iconv_open(c_name.str().c_str(), system_default_charset_.c_str());
+      
+      std::cout << c_name.str().c_str() << std::endl;
+      
+      if (to_default_charset_cd_ == (iconv_t) - 1 || from_default_charset_cd_ == (iconv_t)-1)
+        throw std::string("Cannot open default converter.");
+    }
   }
 }
 
@@ -77,14 +104,12 @@ void LangFile::saveAs(const char *fileName) throw (std::ios_base::failure)
     throw std::ios_base::failure("Save: Cant write file: \"" + std::string(fileName));
 }
 
-//------------------------------------------------------------------------------
+//----------------------------------------------------------------------------
 std::string LangFile::getString(unsigned int id)
 {
-  char *dest;
-  std::string ret;
-  std::stringstream c_name;
   pcr_string e_str;
-  UErrorCode err = U_ZERO_ERROR;
+  
+  std::string encoded_str, decoded_str;
   
   e_str = pcr_get_string(pfile_, id, default_culture_id_);
   
@@ -94,67 +119,42 @@ std::string LangFile::getString(unsigned int id)
     return std::string("");
   }
   
+  encoded_str = std::string(e_str.value, e_str.size);
+  
   if (e_str.codepage > 0)
   {
-    c_name << "windows-" << e_str.codepage;
+    std::cout << "_----------------------" << std::endl;
+    decoded_str = convert_from(encoded_str, e_str.codepage);
     
-    std::cout << "e_str.size: " << e_str.size << std::endl;
-    dest = new char[e_str.size * 2]; // or else to short if lots of umlaute TODO Why?
+    std::cout << "decoded: " << decoded_str <<  std::endl;
     
-    ucnv_convert("UTF-8", c_name.str().c_str(), dest, e_str.size * 2,
-                e_str.value, -1, &err);
-    
-    if (U_FAILURE(err))
-    {
-      std::cout << "Warning: Get: Couldn't convert string!" << std::endl; //TODO ex
-      ret = std::string(e_str.value);
-    }
-    else
-      ret = std::string(dest);
-    
-    delete [] dest;
+    std::cout << "_----------------------" << std::endl;
   }
   else
-    ret = std::string(e_str.value);
+    decoded_str = encoded_str;
   
-  return ret;
+  free (e_str.value);
+  
+  return decoded_str;
 }
 
+//----------------------------------------------------------------------------
 void LangFile::setString(unsigned int id, std::string str)
 {
-  char *dest;
-  std::stringstream c_name;
   pcr_string e_str;
-  std::string new_str;
-  UErrorCode err = U_ZERO_ERROR;
+  std::string encoded_str;
+  size_t encoded_c_str_size = 0;
   
-//   e_str = pcr_get_string(pfile_, id, 0); //TODO language?
+  encoded_str = convert_to(str, default_codepage_);
   
-  //TODO String not found?
+  std::cout << "SetString: " << str << ", enc: " << encoded_str << std::endl;
   
-  c_name << "windows-" << default_codepage_;
+  encoded_c_str_size = strlen(encoded_str.c_str());
   
-  dest = new char[str.size()];
+  e_str.value = new char[encoded_c_str_size];
+  strncpy(e_str.value, encoded_str.c_str(), encoded_c_str_size);
   
-  ucnv_convert(c_name.str().c_str(), "UTF-8", dest, str.size(), 
-               str.c_str(), str.size(), &err);
-  
-  
-  if (U_FAILURE(err))
-  {
-    std::cout << "Warning: Couldn't convert string!" << std::endl; //TODO ex
-    new_str = str;
-  }
-  else
-    new_str = std::string(dest);
-  
-  delete [] dest;
-  
-  e_str.value = new char[str.size() + 1];
-  strcpy(e_str.value, new_str.c_str());
-  e_str.value[str.size()] = '\0';
-  
-  e_str.size = new_str.size();
+  e_str.size = encoded_c_str_size;
   e_str.codepage = default_codepage_;
   
   pcr_set_string(pfile_, id, default_culture_id_, e_str); 
@@ -162,13 +162,141 @@ void LangFile::setString(unsigned int id, std::string str)
   delete [] e_str.value;
 }
   
-//------------------------------------------------------------------------------
+//----------------------------------------------------------------------------
 void LangFile::unload(void)
 {
   if (pfile_)
     pcr_free(pfile_);
   
   pfile_ = 0;
+}
+
+//----------------------------------------------------------------------------
+std::string LangFile::convert_to(std::string in, uint32_t codepage)
+{
+  iconv_t cd;
+  std::string encoded_str;
+  
+  if (codepage == 0)
+  {
+    std::cout << "Codepage 0" << std::endl;
+    return in;
+  }
+  
+  if (codepage == default_codepage_)
+    cd = from_default_charset_cd_;
+  else
+  {
+    
+    std::stringstream conv_name;
+    
+    conv_name << "WINDOWS-" << codepage;
+    
+    if ((cd = iconv_open(conv_name.str().c_str(), system_default_charset_.c_str())) == (iconv_t)(-1))
+    {
+      std::string error = "Cannot open converter from " + system_default_charset_ +
+                          " to " + conv_name.str();
+                          
+      throw error;
+    }
+  }
+  
+  encoded_str = convert(cd, in);
+  
+  if (codepage != default_codepage_)
+    iconv_close(cd);
+  
+  return encoded_str;
+}
+
+//----------------------------------------------------------------------------
+std::string LangFile::convert_from(std::string in, uint32_t codepage)
+{
+  iconv_t cd;
+  std::string decoded_str;
+  
+  if (codepage == 0)
+  {
+    std::cout << "Codepage 0" << std::endl;
+    return in;
+  }
+  
+  if (codepage == default_codepage_)
+    cd = to_default_charset_cd_;
+  else
+  {
+    
+    std::stringstream conv_name;
+    
+    conv_name << "WINDOWS-" << codepage;
+    
+    if ((cd = iconv_open(system_default_charset_.c_str(), conv_name.str().c_str())) == (iconv_t)(-1))
+    {
+      std::string error = "Cannot open converter from " + conv_name.str() +
+                          " to " + system_default_charset_;
+                          
+      throw error;
+    }
+  }
+  
+  decoded_str = convert(cd, in);
+  
+  if (codepage != default_codepage_)
+    iconv_close(cd);
+  
+  return decoded_str;
+}
+  
+//----------------------------------------------------------------------------
+std::string LangFile::convert(iconv_t cd, std::string input)
+{
+  size_t inleft = input.size();
+  char *inbuf = new char[inleft];
+  char *inptr = inbuf;
+  
+  char buf[CONV_BUF_SIZE];
+  size_t outleft = CONV_BUF_SIZE, iconv_value = 0;
+  char *outptr = buf;
+
+  std::string decoded_str;
+  
+  strncpy(inbuf, input.c_str(), inleft);
+  
+  while (cd != (iconv_t)-1 && inleft > 0 && iconv_value == 0)
+  { 
+    iconv_value = iconv(cd, &inptr, &inleft, &outptr, &outleft);
+    
+    if (iconv_value == (size_t)-1) 
+    {
+      if(errno == E2BIG)
+      {
+        decoded_str += std::string(buf, CONV_BUF_SIZE);
+        outleft = CONV_BUF_SIZE;
+        outptr = buf;
+        iconv_value = 0;
+      }
+      else  
+      {
+        delete (inbuf);
+        
+        std::string error("Error in converting characters: ");
+
+        if(errno == EILSEQ)
+          error += "EILSEQ";
+        if(errno == EINVAL)
+          error += "EINVAL";
+        
+        throw error;
+      }
+    }
+    else
+      decoded_str += std::string(buf, CONV_BUF_SIZE - outleft);
+      
+  }
+  
+  delete (inbuf);
+  
+  return decoded_str;
 }
 
 }

@@ -21,6 +21,7 @@
 
 #include <genie/file/IFile.h>
 #include <pcrio/pcrio.h>
+#include <iconv.h>
 
 struct UConverter;
 
@@ -53,6 +54,22 @@ private:
   
   uint32_t default_culture_id_;
   uint32_t default_codepage_;
+  
+  static const unsigned int CONV_BUF_SIZE = 7;
+  static const char *CONV_DEFAULT_CHARSET;
+  
+  std::string system_default_charset_;  // all strings will converted from/to this charset
+  
+  iconv_t to_default_charset_cd_; 
+  iconv_t from_default_charset_cd_; 
+  
+  /// Convert a utf8 string to codepage
+  std::string convert_to(std::string in, uint32_t codepage);
+  
+  /// Convert a string from codepage to utf8
+  std::string convert_from(std::string in, uint32_t codepage);
+  
+  std::string convert(iconv_t cd, std::string input);//char *in_ptr, size_t in_size);
 };
   
 }

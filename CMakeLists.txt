@@ -16,7 +16,15 @@ find_package(ZLIB REQUIRED)
 #find_package(Boost 1.42 COMPONENTS iostreams program_options REQUIRED)
 find_package(Boost 1.42 COMPONENTS iostreams program_options unit_test_framework REQUIRED)
 
-find_package(Icu)
+find_package(Iconv)
+
+if (${ICONV_FOUND})
+  message(STATUS "Iconv found! Language file support: ENABLED")
+  set(GU_LANG_SUPPORT true)
+else (${ICONV_FOUND})
+  message(STATUS "Iconv not found: Language file support: DISABLED")
+  set(GU_LANG_SUPPORT false)
+endif (${ICONV_FOUND})
 
 if (GUTILS_TEST)
   find_package(SFML COMPONENTS SYSTEM WINDOW GRAPHICS REQUIRED)
@@ -26,7 +34,7 @@ set(Boost_USE_STATIC_LIBS        ON)
 set(Boost_USE_MULTITHREADED      ON)
 set(Boost_USE_STATIC_RUNTIME    OFF)
 
-set(GUTILS_INCLUDE_DIRS ${Boost_INCLUDE_DIRS} extern/)
+set(GUTILS_INCLUDE_DIRS ${Boost_INCLUDE_DIRS} extern/ ${ICONV_INCLUDE_DIR})
 
 if (GUTILS_TEST)
   include_directories(
@@ -52,9 +60,17 @@ set(FILE_SRC
     src/file/Compressor.cpp
     )
 
-set(LANG_SRC
-    src/lang/LangFile.cpp
-    )
+if (${GU_LANG_SUPPORT})
+  set(PCRIO_SRC extern/pcrio/pcrio.c)
+  set_source_files_properties(extern/pcrio/pcrio.c PROPERTIES LANGUAGE CXX )
+
+  set(LANG_SRC ${PCRIO_SRC}
+      src/lang/LangFile.cpp
+     )
+else (${GU_LANG_SUPPORT})
+  set(LANG_SRC)
+endif (${GU_LANG_SUPPORT})
+    
 
 set(DAT_SRC
     src/dat/Research.cpp 
@@ -124,8 +140,6 @@ set(EXTRACT_SRC src/tools/extract/datextract.cpp)
 set(BINCOMP_SRC src/tools/bincompare/bincomp.cpp
                 src/tools/bincompare/main.cpp)
                 
-set(PCRIO_SRC extern/pcrio/pcrio.c)
-set_source_files_properties(extern/pcrio/pcrio.c PROPERTIES LANGUAGE CXX )
 
 
 #------------------------------------------------------------------------------#
@@ -134,8 +148,8 @@ set_source_files_properties(extern/pcrio/pcrio.c PROPERTIES LANGUAGE CXX )
 
 add_library(${Genieutils_LIBRARY} ${FILE_SRC} ${LANG_SRC} ${DAT_SRC} 
                                   ${RESOURCE_SRC} ${UTIL_SRC} ${SCRIPT_SRC} 
-                                  ${PCRIO_SRC})
-target_link_libraries(${Genieutils_LIBRARY} ${ZLIB_LIBRARIES} ${Boost_LIBRARIES} ${Icu_LIBRARY})
+                                )
+target_link_libraries(${Genieutils_LIBRARY} ${ZLIB_LIBRARIES} ${Boost_LIBRARIES} ${Icu_LIBRARY} ${ICONV_LIBRARIES})
 
 #add_executable(main main.cpp)
 #target_link_libraries(main ${Genieutils_LIBRARY})
