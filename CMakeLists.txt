@@ -13,8 +13,13 @@ project(genieutils)
 set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/)
 
 find_package(ZLIB REQUIRED)
-#find_package(Boost 1.42 COMPONENTS iostreams program_options REQUIRED)
-find_package(Boost 1.42 COMPONENTS iostreams program_options unit_test_framework REQUIRED)
+find_package(Boost 1.42 COMPONENTS iostreams program_options REQUIRED)
+
+
+if (GUTILS_TEST)
+  find_package(Boost 1.42 COMPONENTS unit_test_framework REQUIRED)
+  find_package(SFML COMPONENTS SYSTEM WINDOW GRAPHICS REQUIRED)
+endif (GUTILS_TEST)
 
 find_package(Iconv)
 
@@ -26,13 +31,13 @@ else (${ICONV_FOUND})
   set(GU_LANG_SUPPORT false)
 endif (${ICONV_FOUND})
 
-if (GUTILS_TEST)
-  find_package(SFML COMPONENTS SYSTEM WINDOW GRAPHICS REQUIRED)
-endif (GUTILS_TEST)
+# boost options:
 
 set(Boost_USE_STATIC_LIBS        ON)
 set(Boost_USE_MULTITHREADED      ON)
 set(Boost_USE_STATIC_RUNTIME    OFF)
+
+# include directories:
 
 set(GUTILS_INCLUDE_DIRS ${Boost_INCLUDE_DIRS} extern/)
 
