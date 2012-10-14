@@ -60,6 +60,7 @@ void LangFile::load(const char *fileName) throw (std::ios_base::failure)
 {
   setFileName(fileName);
   
+  log.info("-------");
   log.info("Loading \"%s\"", fileName);
   
   error_code_ = PCR_ERROR_NONE;  
