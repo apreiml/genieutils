@@ -21,8 +21,9 @@
 
 #include <genie/file/IFile.h>
 #include <genie/util/Logger.h>
-#include <pcrio/pcrio.h>
 #include <iconv.h>
+
+#include "pcrio/pcrio.h"
 
 struct UConverter;
 
