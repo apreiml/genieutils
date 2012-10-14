@@ -20,6 +20,7 @@
 #define GENIE_LANGFILE_H
 
 #include <genie/file/IFile.h>
+#include <genie/util/Logger.h>
 #include <pcrio/pcrio.h>
 #include <iconv.h>
 
@@ -49,6 +50,9 @@ protected:
   virtual void serializeObject(void) {}
   
 private:
+  
+  static Logger &log;
+  
   struct pcr_file *pfile_;
   pcr_error_code error_code_;
   

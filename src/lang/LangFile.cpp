@@ -28,6 +28,8 @@ namespace genie
   
 const char *LangFile::CONV_DEFAULT_CHARSET = "UTF-8";
   
+Logger& LangFile::log = Logger::getLogger("freeaoe.DrsFile");
+
 //------------------------------------------------------------------------------
 LangFile::LangFile() 
 {
@@ -56,6 +58,10 @@ LangFile::~LangFile()
 //------------------------------------------------------------------------------
 void LangFile::load(const char *fileName) throw (std::ios_base::failure)
 {
+  setFileName(fileName);
+  
+  log.info("Loading \"%s\"", fileName);
+  
   error_code_ = PCR_ERROR_NONE;  
   
   pfile_ = pcr_read_file(fileName, &error_code_);
@@ -74,11 +80,13 @@ void LangFile::load(const char *fileName) throw (std::ios_base::failure)
     default_culture_id_ = pcr_get_default_culture_id(pfile_);
     default_codepage_ = pcr_get_default_codepage(pfile_, default_culture_id_);
     
-    std::cout << "Debug: Culture Id: " << default_culture_id_ << ", Codepage: " << default_codepage_ << std::endl;
+    log.info("Culture Id: %d, Codepage: %d.", default_culture_id_, default_codepage_); 
   
     if (default_codepage_ > 0)
     {
       c_name << "WINDOWS-" << default_codepage_;
+     
+      log.info("Loading \"%s\" charset converter description.", c_name.str().c_str());
       
       to_default_charset_cd_ = iconv_open(system_default_charset_.c_str(), c_name.str().c_str());
       from_default_charset_cd_ = iconv_open(c_name.str().c_str(), system_default_charset_.c_str());
@@ -88,6 +96,8 @@ void LangFile::load(const char *fileName) throw (std::ios_base::failure)
       if (to_default_charset_cd_ == (iconv_t) - 1 || from_default_charset_cd_ == (iconv_t)-1)
         throw std::string("Cannot open default converter.");
     }
+    else
+      log.info("Codepage: 0");
   }
 }
 
@@ -111,29 +121,23 @@ std::string LangFile::getString(unsigned int id)
   
   std::string encoded_str, decoded_str;
   
+  log.info("%s: getString(%d);", getFileName(), id);
+  
   e_str = pcr_get_string(pfile_, id, default_culture_id_);
   
   if (e_str.value == 0)
   {
-    std::cout << "LangFile: String not found! Id: " << id << std::endl;
+    log.info("| String not found!");
     return std::string("");
   }
   
   encoded_str = std::string(e_str.value, e_str.size);
   
-  if (e_str.codepage > 0)
-  {
-    std::cout << "_----------------------" << std::endl;
-    decoded_str = convert_from(encoded_str, e_str.codepage);
-    
-    std::cout << "decoded: " << decoded_str <<  std::endl;
-    
-    std::cout << "_----------------------" << std::endl;
-  }
-  else
-    decoded_str = encoded_str;
+  decoded_str = convert_from(encoded_str, e_str.codepage);
   
   pcr_free_string_value (e_str);
+  
+  log.info("| Result: \"%s\"", decoded_str.c_str());
   
   return decoded_str;
 }
@@ -145,9 +149,11 @@ void LangFile::setString(unsigned int id, std::string str)
   std::string encoded_str;
   size_t encoded_c_str_size = 0;
   
+  log.info("%s: setString(%d, %s);", getFileName(), id, str.c_str());
+  
   encoded_str = convert_to(str, default_codepage_);
   
-  std::cout << "SetString: " << str << ", enc: " << encoded_str << std::endl;
+  log.info("| Convert from \"%s\" to \"%s\".", str.c_str(), encoded_str.c_str());
   
   encoded_c_str_size = strlen(encoded_str.c_str());
   
@@ -180,6 +186,7 @@ std::string LangFile::convert_to(std::string in, uint32_t codepage)
   if (codepage == 0)
   {
     std::cout << "Codepage 0" << std::endl;
+    log.info("| Skip convert (Codepage: 0).");
     return in;
   }
   
@@ -217,7 +224,7 @@ std::string LangFile::convert_from(std::string in, uint32_t codepage)
   
   if (codepage == 0)
   {
-    std::cout << "Codepage 0" << std::endl;
+    log.info("| Skip convert (Codepage: 0).");
     return in;
   }
   
@@ -285,6 +292,8 @@ std::string LangFile::convert(iconv_t cd, std::string input)
           error += "EILSEQ";
         if(errno == EINVAL)
           error += "EINVAL";
+        
+        log.error("%s", error.c_str());
         
         throw error;
       }

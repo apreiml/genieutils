@@ -68,6 +68,8 @@ public:
   /// @param loglevel minimum level to log
   //
   static void setLogLevel(LogLevel loglevel);
+  
+  static void setGlobalOutputStream(std::ostream &ostream);
 
   //----------------------------------------------------------------------------
   /// Logs messages which aren't very important, but they highlight the 
@@ -116,6 +118,9 @@ protected:
 private:
   Logger();
   virtual ~Logger();
+  
+  static std::ostream *global_out_;
+  std::ostream *out_;
 
 private:
   static LogLevel LOG_LEVEL;

@@ -26,6 +26,8 @@ namespace genie
 
 Logger::LogLevel Logger::LOG_LEVEL = L_OFF;
 
+std::ostream *Logger::global_out_ = &std::cout;
+
 //------------------------------------------------------------------------------
 Logger& Logger::getRootLogger(void) 
 {
@@ -45,9 +47,15 @@ void Logger::setLogLevel(Logger::LogLevel loglevel)
   Logger::LOG_LEVEL = loglevel;
 }
 
+void Logger::setGlobalOutputStream(std::ostream &ostream)
+{
+  global_out_ = &ostream;
+}
+
 //------------------------------------------------------------------------------
 Logger::Logger() 
 {
+  out_ = 0;
 }
 
 //------------------------------------------------------------------------------
@@ -73,8 +81,10 @@ void Logger::log(Logger::LogLevel loglevel, va_list args, const char *msg)
     char msgBuf[1024];                  //TODO: reserve memory on time
     vsprintf(msgBuf, msg, args);
 
-    //TODO: should be selectable if log goes to stdout or file
-    std::cout << getLogLevelName(loglevel) << ": " << msgBuf << std::endl;
+    if (out_)
+      *out_ << getLogLevelName(loglevel) << ": " << msgBuf << std::endl;
+    else
+      *global_out_ << getLogLevelName(loglevel) << ": " << msgBuf << std::endl;
   }
 }
 

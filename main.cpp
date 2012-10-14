@@ -189,6 +189,11 @@ int main(int argc, char **argv) {
 
   genie::Logger::setLogLevel(genie::Logger::L_INFO);
   
+  std::ofstream log_out;
+  log_out.open("log.txt");
+  
+  genie::Logger::setGlobalOutputStream(log_out);
+  
 //   testDrs();
   
 //   testScn();
@@ -214,5 +219,6 @@ int main(int argc, char **argv) {
   ifs.close();
   ofs.close();
    */
+  
   return 0;
 }
