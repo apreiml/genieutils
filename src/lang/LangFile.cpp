@@ -23,6 +23,8 @@
 #include <iconv.h>
 #include <errno.h>
 
+#include "pcrio/pcrio.h"
+
 namespace genie
 {
   
@@ -34,7 +36,6 @@ Logger& LangFile::log = Logger::getLogger("freeaoe.DrsFile");
 LangFile::LangFile() 
 {
   pfile_ = 0;
-  error_code_ = PCR_ERROR_NONE;
   
   default_culture_id_ = 0;
   default_codepage_ = 0;
@@ -58,12 +59,15 @@ LangFile::~LangFile()
 //------------------------------------------------------------------------------
 void LangFile::load(const char *fileName) throw (std::ios_base::failure)
 {
+  pcr_error_code error_code_ = PCR_ERROR_NONE;  
+  
   setFileName(fileName);
   
   log.info("-------");
   log.info("Loading \"%s\"", fileName);
   
-  error_code_ = PCR_ERROR_NONE;  
+  if (pfile_)
+    pcr_free(pfile_);
   
   pfile_ = pcr_read_file(fileName, &error_code_);
   
@@ -72,7 +76,8 @@ void LangFile::load(const char *fileName) throw (std::ios_base::failure)
     pcr_free(pfile_);
     pfile_ = 0;
     
-    throw std::ios_base::failure("Load: Can't load file: " + std::string(fileName));
+    throw std::ios_base::failure("Load: Can't load file: " + std::string(fileName) +
+      ": Error: " + std::string(pcr_error_message(error_code_)));
   }
   else
   {
@@ -105,8 +110,10 @@ void LangFile::load(const char *fileName) throw (std::ios_base::failure)
 //------------------------------------------------------------------------------
 void LangFile::saveAs(const char *fileName) throw (std::ios_base::failure)
 {
-  if (PCR_FAILURE(error_code_) || pfile_ == 0)
-    throw std::ios_base::failure("Save: Can't save flawed or unloaded file: "
+  pcr_error_code error_code_ = PCR_ERROR_NONE;
+  
+  if (pfile_ == 0)
+    throw std::ios_base::failure("Save: Can't save unloaded file: "
                                  + std::string(fileName));
   
   pcr_write_file(fileName, pfile_, &error_code_);
