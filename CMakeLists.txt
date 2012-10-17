@@ -17,6 +17,9 @@ set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/)
 find_package(ZLIB REQUIRED)
 find_package(Boost 1.42 COMPONENTS iostreams REQUIRED)
 
+if (GUTILS_TOOLS)
+  find_package(Boost 1.42 COMPONENTS program_options REQUIRED)
+endif(GUTILS_TOOLS)
 
 if (GUTILS_TEST)
   find_package(Boost 1.42 COMPONENTS unit_test_framework program_options REQUIRED)
