@@ -127,8 +127,6 @@ std::string LangFile::getString(unsigned int id)
 {
   pcr_string e_str;
   
-  std::string encoded_str, decoded_str;
-  
   log.info("%s: getString(%d);", getFileName(), id);
   
   e_str = pcr_get_string(pfile_, id, default_culture_id_);
@@ -138,6 +136,8 @@ std::string LangFile::getString(unsigned int id)
     log.info("| String not found!");
     return std::string("");
   }
+  
+  std::string encoded_str, decoded_str;
   
   encoded_str = std::string(e_str.value, e_str.size);
   
