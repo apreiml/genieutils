@@ -135,7 +135,7 @@ std::string LangFile::getString(unsigned int id)
   
   if (e_str.value == 0)
   {
-    log.info("| String not found!");
+    log.debug("%s: String [%d] not found!", getFileName(), id);
     return std::string("");
   }
   
@@ -192,11 +192,7 @@ std::string LangFile::convert_to(std::string in, uint32_t codepage)
   std::string encoded_str;
   
   if (codepage == 0)
-  {
-    std::cout << "Codepage 0" << std::endl;
-    log.info("| Skip convert (Codepage: 0).");
     return in;
-  }
   
   if (codepage == default_codepage_)
     cd = from_default_charset_cd_;
@@ -231,10 +227,7 @@ std::string LangFile::convert_from(std::string in, uint32_t codepage)
   std::string decoded_str;
   
   if (codepage == 0)
-  {
-    log.info("| Skip convert (Codepage: 0).");
     return in;
-  }
   
   if (codepage == default_codepage_)
     cd = to_default_charset_cd_;
