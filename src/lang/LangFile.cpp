@@ -57,34 +57,52 @@ LangFile::~LangFile()
 }
 
 //------------------------------------------------------------------------------
-void LangFile::load(const char *fileName) throw (std::ios_base::failure)
+void LangFile::load(const char *filename) throw (std::ios_base::failure)
 {
   pcr_error_code error_code_ = PCR_ERROR_NONE;  
   
-  setFileName(fileName);
+  setFileName(filename);
   
   log.info("-------");
-  log.info("Loading \"%s\"", fileName);
+  log.info("Loading \"%s\"", filename);
   
   if (pfile_)
     pcr_free(pfile_);
   
-  pfile_ = pcr_read_file(fileName, &error_code_);
+  pfile_ = pcr_read_file(filename, &error_code_);
   
   if (PCR_FAILURE(error_code_))
   {
     pcr_free(pfile_);
     pfile_ = 0;
     
-    throw std::ios_base::failure("Load: Can't load file: " + std::string(fileName) +
+    throw std::ios_base::failure("Load: Can't load file: " + std::string(filename) +
       ": Error: " + std::string(pcr_error_message(error_code_)));
   }
   else
   {
     std::stringstream c_name;
     
-    default_culture_id_ = pcr_get_default_culture_id(pfile_);
-    default_codepage_ = pcr_get_default_codepage(pfile_, default_culture_id_);
+    const struct culture_info_array *culture_info_array = pcr_get_culture_info(pfile_);
+    struct culture_info *ci_ptr = NULL;
+    
+    if (culture_info_array->count == 0)
+      throw std::string("No culture info! Corrupt file?: ") + std::string(filename);
+    
+    ci_ptr = &culture_info_array->array[0];
+    
+    if (culture_info_array->count > 1)
+    {
+      log.warn("More than one culture in %s! Using the most common clulture!", filename);
+      
+      for (uint32_t i=0; i<culture_info_array->count; i++)
+        if (ci_ptr->item_count < culture_info_array->array[i].item_count)
+          ci_ptr = &culture_info_array->array[i];
+      
+    }
+    
+    default_culture_id_ = ci_ptr->id;
+    default_codepage_ = ci_ptr->codepage;
     
     log.info("Culture Id: %d, Codepage: %d.", default_culture_id_, default_codepage_); 
   
@@ -108,18 +126,18 @@ void LangFile::load(const char *fileName) throw (std::ios_base::failure)
 }
 
 //------------------------------------------------------------------------------
-void LangFile::saveAs(const char *fileName) throw (std::ios_base::failure)
+void LangFile::saveAs(const char *filename) throw (std::ios_base::failure)
 {
   pcr_error_code error_code_ = PCR_ERROR_NONE;
   
   if (pfile_ == 0)
     throw std::ios_base::failure("Save: Can't save unloaded file: "
-                                 + std::string(fileName));
+                                 + std::string(filename));
   
-  pcr_write_file(fileName, pfile_, &error_code_);
+  pcr_write_file(filename, pfile_, &error_code_);
   
   if (PCR_FAILURE(error_code_))
-    throw std::ios_base::failure("Save: Cant write file: \"" + std::string(fileName));
+    throw std::ios_base::failure("Save: Cant write file: \"" + std::string(filename));
 }
 
 //----------------------------------------------------------------------------

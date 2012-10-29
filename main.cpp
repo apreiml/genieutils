@@ -7,9 +7,9 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Window/Event.hpp>
-#include <SFML/Graphics/Texture.hpp>
-#include "genie/resource/DrsFile.h"
-#include "genie/resource/SlpFile.h"
+#include <SFML/Graphics/Texture.hpp> 
+#include "genie/resource/DrsFile.h" 
+#include "genie/resource/SlpFile.h" 
 #include "genie/resource/Color.h"
 #include <genie/script/ScnFile.h>
 #include <genie/file/Compressor.h>
@@ -183,6 +183,10 @@ void testLang()
   
   lf.setString(1, "new one");
   std::cout << lf.getString(1) << std::endl;
+
+  std::cout << "Loading aoe lang: " << std::endl;
+  lf.load("lang/aoe/language.dll");
+  lf.getString(54518);
 }
 
 int main(int argc, char **argv) {
