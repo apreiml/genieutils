@@ -187,6 +187,9 @@ void testLang()
   std::cout << "Loading aoe lang: " << std::endl;
   lf.load("lang/aoe/language.dll");
   lf.getString(54518);
+  
+  lf.load("lang/sw/language.dll");
+  lf.getString(3064);
 }
 
 int main(int argc, char **argv) {

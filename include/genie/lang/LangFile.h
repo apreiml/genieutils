@@ -38,9 +38,13 @@ public:
   virtual void load(const char *fileName) throw (std::ios_base::failure);
   virtual void saveAs(const char *fileName) throw (std::ios_base::failure);
   
-  // get/set strings in utf-8
+  // get/set strings in default_charset (utf-8)
   std::string getString(unsigned int id);
   void setString(unsigned int id, std::string str);
+  
+  /// Change the default charset. See libiconv doc for available ones.
+  /// If not set, default = UTF8.
+  void setDefaultCharset(const char *charset);
   
 protected:
   
@@ -60,7 +64,7 @@ private:
   static const unsigned int CONV_BUF_SIZE = 7;
   static const char *CONV_DEFAULT_CHARSET;
   
-  std::string system_default_charset_;  // all strings will converted from/to this charset
+  std::string system_default_charset_;  // all strings will be converted from/to this charset
   
   iconv_t to_default_charset_cd_; 
   iconv_t from_default_charset_cd_; 

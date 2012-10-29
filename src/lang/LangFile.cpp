@@ -194,6 +194,11 @@ void LangFile::setString(unsigned int id, std::string str)
   delete [] e_str.value;
 }
   
+void LangFile::setDefaultCharset(const char *charset)
+{
+  system_default_charset_ = std::string(charset);
+}
+  
 //----------------------------------------------------------------------------
 void LangFile::unload(void)
 {
