@@ -24,6 +24,7 @@
 #include <iconv.h>
 
 struct pcr_file;
+typedef pcr_file Pcr_file;
 
 namespace genie
 {
@@ -56,7 +57,7 @@ private:
   
   static Logger &log;
   
-  struct pcr_file *pfile_;
+  Pcr_file *pfile_;
   
   uint32_t default_culture_id_;
   uint32_t default_codepage_;
