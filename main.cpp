@@ -188,8 +188,13 @@ void testLang()
   lf.load("lang/aoe/language.dll");
   lf.getString(54518);
   
-  lf.load("lang/sw/language.dll");
-  lf.getString(3064);
+  genie::LangFile *lptr = new genie::LangFile();
+  
+  lptr->load("lang/sw/language.dll");
+  lptr->getString(3064);
+  
+  delete lptr;
+  
 }
 
 int main(int argc, char **argv) {

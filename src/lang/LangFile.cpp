@@ -40,6 +40,9 @@ LangFile::LangFile()
   default_culture_id_ = 0;
   default_codepage_ = 0;
   
+  to_default_charset_cd_ = (iconv_t)0;
+  from_default_charset_cd_ = (iconv_t)0;
+  
   system_default_charset_ = CONV_DEFAULT_CHARSET;
 }
   
