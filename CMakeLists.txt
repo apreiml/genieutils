@@ -57,7 +57,7 @@ endif (${GUTILS_TEST})
 
 include_directories(${GU_INCLUDE_DIRS})
 
-add_definitions(-Wall)
+add_definitions(-Wall -Wsign-compare)
 
 #------------------------------------------------------------------------------#
 # Source files: 
