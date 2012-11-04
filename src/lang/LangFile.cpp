@@ -52,8 +52,7 @@ LangFile::~LangFile()
   if (from_default_charset_cd_)
     iconv_close(from_default_charset_cd_);
   
-  if (pfile_)
-    pcr_free(pfile_);
+  unload();
 }
 
 //------------------------------------------------------------------------------
@@ -83,8 +82,8 @@ void LangFile::load(const char *filename) throw (std::ios_base::failure)
   {
     std::stringstream c_name;
     
-    const struct culture_info_array *culture_info_array = pcr_get_culture_info(pfile_);
-    struct culture_info *ci_ptr = NULL;
+    const Culture_info_array *culture_info_array = pcr_get_culture_info(pfile_);
+    Culture_info *ci_ptr = NULL;
     
     if (culture_info_array->count == 0)
       throw std::string("No culture info! Corrupt file?: ") + std::string(filename);
@@ -143,7 +142,7 @@ void LangFile::saveAs(const char *filename) throw (std::ios_base::failure)
 //----------------------------------------------------------------------------
 std::string LangFile::getString(unsigned int id)
 {
-  pcr_string e_str;
+  Pcr_string e_str;
   
   std::string encoded_str, decoded_str;
   
@@ -171,7 +170,7 @@ std::string LangFile::getString(unsigned int id)
 //----------------------------------------------------------------------------
 void LangFile::setString(unsigned int id, std::string str)
 {
-  pcr_string e_str;
+  Pcr_string e_str;
   std::string encoded_str;
   size_t encoded_c_str_size = 0;
   
