@@ -28,6 +28,7 @@ struct pcr_file;
 namespace genie
 {
 
+/// TODO Proper error handling
 class LangFile : public IFile
 {
   
@@ -58,22 +59,22 @@ private:
   
   struct pcr_file *pfile_;
   
-  uint32_t default_culture_id_;
-  uint32_t default_codepage_;
+  uint32_t defaultCultureId_;
+  uint32_t defaultCodepage_;
   
   static const unsigned int CONV_BUF_SIZE = 7;
   static const char *CONV_DEFAULT_CHARSET;
   
-  std::string system_default_charset_;  // all strings will be converted from/to this charset
+  std::string systemDefaultCharset_;  // all strings will be converted from/to this charset
   
-  iconv_t to_default_charset_cd_; 
-  iconv_t from_default_charset_cd_; 
+  iconv_t toDefaultCharsetCd_; 
+  iconv_t fromDefaultCharsetCd_; 
   
   /// Convert a utf8 string to codepage
-  std::string convert_to(std::string in, uint32_t codepage);
+  std::string convertTo(std::string in, uint32_t codepage);
   
   /// Convert a string from codepage to utf8
-  std::string convert_from(std::string in, uint32_t codepage);
+  std::string convertFrom(std::string in, uint32_t codepage);
   
   std::string convert(iconv_t cd, std::string input);//char *in_ptr, size_t in_size);
 };

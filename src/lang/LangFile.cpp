@@ -37,23 +37,23 @@ LangFile::LangFile()
 {
   pfile_ = 0;
   
-  default_culture_id_ = 0;
-  default_codepage_ = 0;
+  defaultCultureId_ = 0;
+  defaultCodepage_ = 0;
   
-  to_default_charset_cd_ = (iconv_t)0;
-  from_default_charset_cd_ = (iconv_t)0;
+  toDefaultCharsetCd_ = (iconv_t)0;
+  fromDefaultCharsetCd_ = (iconv_t)0;
   
-  system_default_charset_ = CONV_DEFAULT_CHARSET;
+  systemDefaultCharset_ = CONV_DEFAULT_CHARSET;
 }
   
 //------------------------------------------------------------------------------
 LangFile::~LangFile() 
 {
-  if (to_default_charset_cd_)
-    iconv_close(to_default_charset_cd_);
+  if (toDefaultCharsetCd_)
+    iconv_close(toDefaultCharsetCd_);
   
-  if (from_default_charset_cd_)
-    iconv_close(from_default_charset_cd_);
+  if (fromDefaultCharsetCd_)
+    iconv_close(fromDefaultCharsetCd_);
   
   if (pfile_)
     pcr_free(pfile_);
@@ -62,7 +62,7 @@ LangFile::~LangFile()
 //------------------------------------------------------------------------------
 void LangFile::load(const char *filename) throw (std::ios_base::failure)
 {
-  pcr_error_code error_code_ = PCR_ERROR_NONE;  
+  pcr_error_code errorCode_ = PCR_ERROR_NONE;  
   
   setFileName(filename);
   
@@ -72,55 +72,42 @@ void LangFile::load(const char *filename) throw (std::ios_base::failure)
   if (pfile_)
     pcr_free(pfile_);
   
-  pfile_ = pcr_read_file(filename, &error_code_);
+  pfile_ = pcr_read_file(filename, &errorCode_);
   
-  if (PCR_FAILURE(error_code_))
+  if (PCR_FAILURE(errorCode_))
   {
     pcr_free(pfile_);
     pfile_ = 0;
     
     throw std::ios_base::failure("Load: Can't load file: " + std::string(filename) +
-      ": Error: " + std::string(pcr_error_message(error_code_)));
+      ": Error: " + std::string(pcr_error_message(errorCode_)));
   }
   else
   {
-    std::stringstream c_name;
+    std::stringstream cName;
     
-    const struct culture_info_array *culture_info_array = pcr_get_culture_info(pfile_);
-    struct culture_info *ci_ptr = NULL;
+    const struct pcr_language *lang = pcr_get_default_language(pfile_);
     
-    if (culture_info_array->count == 0)
-      throw std::string("No culture info! Corrupt file?: ") + std::string(filename);
+    if (!lang)
+      throw std::string("pcrio couldn't set default culture, not supported yet!");
     
-    ci_ptr = &culture_info_array->array[0];
+    defaultCultureId_ = lang->id;
+    defaultCodepage_ = lang->codepage;
     
-    if (culture_info_array->count > 1)
-    {
-      log.warn("More than one culture in %s! Using the most common clulture!", filename);
-      
-      for (uint32_t i=0; i<culture_info_array->count; i++)
-        if (ci_ptr->item_count < culture_info_array->array[i].item_count)
-          ci_ptr = &culture_info_array->array[i];
-      
-    }
-    
-    default_culture_id_ = ci_ptr->id;
-    default_codepage_ = ci_ptr->codepage;
-    
-    log.info("Culture Id: %d, Codepage: %d.", default_culture_id_, default_codepage_); 
+    log.info("Culture Id: %d, Codepage: %d.", defaultCultureId_, defaultCodepage_); 
   
-    if (default_codepage_ > 0)
+    if (defaultCodepage_ > 0)
     {
-      c_name << "WINDOWS-" << default_codepage_;
+      cName << "WINDOWS-" << defaultCodepage_;
      
-      log.info("Loading \"%s\" charset converter description.", c_name.str().c_str());
+      log.info("Loading \"%s\" charset converter description.", cName.str().c_str());
       
-      to_default_charset_cd_ = iconv_open(system_default_charset_.c_str(), c_name.str().c_str());
-      from_default_charset_cd_ = iconv_open(c_name.str().c_str(), system_default_charset_.c_str());
+      toDefaultCharsetCd_ = iconv_open(systemDefaultCharset_.c_str(), cName.str().c_str());
+      fromDefaultCharsetCd_ = iconv_open(cName.str().c_str(), systemDefaultCharset_.c_str());
       
-      std::cout << c_name.str().c_str() << std::endl;
+      std::cout << cName.str().c_str() << std::endl;
       
-      if (to_default_charset_cd_ == (iconv_t) - 1 || from_default_charset_cd_ == (iconv_t)-1)
+      if (toDefaultCharsetCd_ == (iconv_t) - 1 || fromDefaultCharsetCd_ == (iconv_t)-1)
         throw std::string("Cannot open default converter.");
     }
     else
@@ -131,75 +118,70 @@ void LangFile::load(const char *filename) throw (std::ios_base::failure)
 //------------------------------------------------------------------------------
 void LangFile::saveAs(const char *filename) throw (std::ios_base::failure)
 {
-  pcr_error_code error_code_ = PCR_ERROR_NONE;
+  pcr_error_code errorCode = PCR_ERROR_NONE;
   
   if (pfile_ == 0)
     throw std::ios_base::failure("Save: Can't save unloaded file: "
                                  + std::string(filename));
   
-  pcr_write_file(filename, pfile_, &error_code_);
+  pcr_write_file(filename, pfile_, &errorCode);
   
-  if (PCR_FAILURE(error_code_))
+  if (PCR_FAILURE(errorCode))
     throw std::ios_base::failure("Save: Cant write file: \"" + std::string(filename));
 }
 
 //----------------------------------------------------------------------------
 std::string LangFile::getString(unsigned int id)
 {
-  pcr_string e_str;
+  std::string encodedStr, decodedStr;
+  char *strBuf;
+  int strBufSize = pcr_get_strlen(pfile_, id) + 1;
   
-  std::string encoded_str, decoded_str;
-  
-  log.info("%s: getString(%d);", getFileName(), id);
-  
-  e_str = pcr_get_string(pfile_, id, default_culture_id_);
-  
-  if (e_str.value == 0)
+  if (strBufSize <= 1)
   {
     log.debug("%s: String [%d] not found!", getFileName(), id);
     return std::string("");
   }
   
-  encoded_str = std::string(e_str.value, e_str.size);
+  strBuf = new char[strBufSize];
   
-  decoded_str = convert_from(encoded_str, e_str.codepage);
+  log.info("%s: getString(%d);", getFileName(), id);
   
-  pcr_free_string_value (e_str);
+  pcr_get_string(pfile_, id, strBuf, strBufSize);
   
-  log.info("| Result: \"%s\"", decoded_str.c_str());
+  encodedStr = std::string(strBuf, strBufSize);
   
-  return decoded_str;
+  decodedStr = convertFrom(encodedStr, defaultCodepage_);
+  
+  log.info("| Result: \"%s\"", decodedStr.c_str());
+  
+  delete strBuf;
+  
+  return decodedStr;
 }
 
 //----------------------------------------------------------------------------
 void LangFile::setString(unsigned int id, std::string str)
 {
-  pcr_string e_str;
-  std::string encoded_str;
-  size_t encoded_c_str_size = 0;
+  std::string encodedStr;
   
   log.info("%s: setString(%d, %s);", getFileName(), id, str.c_str());
   
-  encoded_str = convert_to(str, default_codepage_);
+  encodedStr = convertTo(str, defaultCodepage_);
   
-  log.info("| Convert from \"%s\" to \"%s\".", str.c_str(), encoded_str.c_str());
+  log.info("| Convert from \"%s\" to \"%s\".", str.c_str(), encodedStr.c_str());
   
-  encoded_c_str_size = strlen(encoded_str.c_str());
+  const struct pcr_language *lang = pcr_get_default_language(pfile_);
   
-  e_str.value = new char[encoded_c_str_size];
-  strncpy(e_str.value, encoded_str.c_str(), encoded_c_str_size);
+  int err = pcr_set_stringC(pfile_, id, *lang, encodedStr.c_str());
   
-  e_str.size = encoded_c_str_size;
-  e_str.codepage = default_codepage_;
-  
-  pcr_set_string(pfile_, id, default_culture_id_, e_str); 
-  
-  delete [] e_str.value;
+  if (err != 0)
+    throw std::string("Error pcr_set_stringC!");
 }
   
 void LangFile::setDefaultCharset(const char *charset)
 {
-  system_default_charset_ = std::string(charset);
+  systemDefaultCharset_ = std::string(charset);
 }
   
 //----------------------------------------------------------------------------
@@ -212,16 +194,16 @@ void LangFile::unload(void)
 }
 
 //----------------------------------------------------------------------------
-std::string LangFile::convert_to(std::string in, uint32_t codepage)
+std::string LangFile::convertTo(std::string in, uint32_t codepage)
 {
   iconv_t cd;
-  std::string encoded_str;
+  std::string encodedStr;
   
   if (codepage == 0)
     return in;
   
-  if (codepage == default_codepage_)
-    cd = from_default_charset_cd_;
+  if (codepage == defaultCodepage_)
+    cd = fromDefaultCharsetCd_;
   else
   {
     
@@ -229,34 +211,34 @@ std::string LangFile::convert_to(std::string in, uint32_t codepage)
     
     conv_name << "WINDOWS-" << codepage;
     
-    if ((cd = iconv_open(conv_name.str().c_str(), system_default_charset_.c_str())) == (iconv_t)(-1))
+    if ((cd = iconv_open(conv_name.str().c_str(), systemDefaultCharset_.c_str())) == (iconv_t)(-1))
     {
-      std::string error = "Cannot open converter from " + system_default_charset_ +
+      std::string error = "Cannot open converter from " + systemDefaultCharset_ +
                           " to " + conv_name.str();
                           
       throw error;
     }
   }
   
-  encoded_str = convert(cd, in);
+  encodedStr = convert(cd, in);
   
-  if (codepage != default_codepage_)
+  if (codepage != defaultCodepage_)
     iconv_close(cd);
   
-  return encoded_str;
+  return encodedStr;
 }
 
 //----------------------------------------------------------------------------
-std::string LangFile::convert_from(std::string in, uint32_t codepage)
+std::string LangFile::convertFrom(std::string in, uint32_t codepage)
 {
   iconv_t cd;
-  std::string decoded_str;
+  std::string decodedStr;
   
   if (codepage == 0)
     return in;
   
-  if (codepage == default_codepage_)
-    cd = to_default_charset_cd_;
+  if (codepage == defaultCodepage_)
+    cd = toDefaultCharsetCd_;
   else
   {
     
@@ -264,21 +246,21 @@ std::string LangFile::convert_from(std::string in, uint32_t codepage)
     
     conv_name << "WINDOWS-" << codepage;
     
-    if ((cd = iconv_open(system_default_charset_.c_str(), conv_name.str().c_str())) == (iconv_t)(-1))
+    if ((cd = iconv_open(systemDefaultCharset_.c_str(), conv_name.str().c_str())) == (iconv_t)(-1))
     {
       std::string error = "Cannot open converter from " + conv_name.str() +
-                          " to " + system_default_charset_;
+                          " to " + systemDefaultCharset_;
                           
       throw error;
     }
   }
   
-  decoded_str = convert(cd, in);
+  decodedStr = convert(cd, in);
   
-  if (codepage != default_codepage_)
+  if (codepage != defaultCodepage_)
     iconv_close(cd);
   
-  return decoded_str;
+  return decodedStr;
 }
   
 //----------------------------------------------------------------------------
@@ -292,7 +274,7 @@ std::string LangFile::convert(iconv_t cd, std::string input)
   size_t outleft = CONV_BUF_SIZE, iconv_value = 0;
   char *outptr = buf;
 
-  std::string decoded_str;
+  std::string decodedStr;
   
   strncpy(inbuf, input.c_str(), inleft);
   
@@ -304,7 +286,7 @@ std::string LangFile::convert(iconv_t cd, std::string input)
     {
       if(errno == E2BIG)
       {
-        decoded_str += std::string(buf, CONV_BUF_SIZE);
+        decodedStr += std::string(buf, CONV_BUF_SIZE);
         outleft = CONV_BUF_SIZE;
         outptr = buf;
         iconv_value = 0;
@@ -326,13 +308,13 @@ std::string LangFile::convert(iconv_t cd, std::string input)
       }
     }
     else
-      decoded_str += std::string(buf, CONV_BUF_SIZE - outleft);
+      decodedStr += std::string(buf, CONV_BUF_SIZE - outleft);
       
   }
   
   delete (inbuf);
   
-  return decoded_str;
+  return decodedStr;
 }
 
 }
