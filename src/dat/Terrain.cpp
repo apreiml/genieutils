@@ -27,7 +27,7 @@ namespace genie
 Terrain::Terrain() : Colors(3),
                      Unknown7(UNKNOWN7_LEN), Unknown8(UNKNOWN8_LEN),
                      Unknown9(UNKNOWN9_LEN),
-                     Unknown10(getUnknown10Size()),
+                     Unknown10(0),
                      TerrainUnitID(getTerrainUnitSize()),
                      TerrainUnitDensity(getTerrainUnitSize()),
                      Unknown11(UNKNOWN11_LEN),
