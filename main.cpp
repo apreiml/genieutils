@@ -15,6 +15,7 @@
 #include <genie/file/Compressor.h>
 #include <genie/lang/LangFile.h>
 #include <genie/dat/Research.h>
+#include <genie/dat/DatFile.h>
 #include <boost/iostreams/copy.hpp>
 #include <boost/smart_ptr.hpp>
 
@@ -212,8 +213,15 @@ int main(int argc, char **argv) {
 //   testScn();
 //   testLang();
   
+  genie::ISerializable::setDefaultGameVersion(genie::GV_AoK);
   genie::Research rs;
-  rs.setGameVersion(genie::GV_AoK);
+  
+  genie::DatFile df;
+  df.load("empires2.dat");
+  
+  std::cout << df.getGameVersion() << std::endl;
+  std::cout << rs.getGameVersion() << std::endl;
+  
   
   /*
   std::ifstream ifs;

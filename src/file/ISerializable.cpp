@@ -24,13 +24,15 @@
 namespace genie
 {
   
+GameVersion ISerializable::defaultGameVersion = GV_None;
+  
 //------------------------------------------------------------------------------
 ISerializable::ISerializable()
 {
   istr_ = 0;
   ostr_ = 0;
   init_read_pos_ = 0;
-  gameVersion_ = GV_None;
+  gameVersion_ = ISerializable::defaultGameVersion;
 }
 
 //------------------------------------------------------------------------------
@@ -108,6 +110,15 @@ GameVersion ISerializable::getGameVersion(void ) const
   return gameVersion_;
 }
 
+void ISerializable::setDefaultGameVersion(GameVersion gv)
+{
+  defaultGameVersion = gv;
+}
+
+GameVersion ISerializable::getDefaultGameVersion(void )
+{
+  return defaultGameVersion;
+}
 //------------------------------------------------------------------------------
 void ISerializable::setOperation(Operation op)
 {

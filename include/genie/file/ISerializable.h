@@ -85,6 +85,9 @@ public:
   //----------------------------------------------------------------------------
   GameVersion getGameVersion(void) const;
   
+  static void setDefaultGameVersion(GameVersion gv);
+  static GameVersion getDefaultGameVersion(void);
+  
   //----------------------------------------------------------------------------
   /// Needs access to get and set stream methods for (de)compressing.
   //
@@ -509,6 +512,8 @@ private:
   Operation operation_;
   
   GameVersion gameVersion_;
+  
+  static GameVersion defaultGameVersion;
   
   size_t size_;
 };
