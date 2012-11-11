@@ -58,15 +58,19 @@ public:
   int16_t TerrainReplacementID;
   static const short TERRAIN_DIMENSIONS_LEN = 2;
   std::pair<int16_t, int16_t> TerrainDimensions;
-  short getUnknown10Size();
-  std::vector<char> Unknown10;
+  short getTerrainBorderSize();
   
-  short getTerrainUnitSize();
+  /// These refer to terrain borders, which are actually used only in AoE and RoR.
+  std::vector<int16_t> TerrainBorderID;
+  
+  static const short TERRAIN_UNITS_LEN = 30;
   std::vector<int16_t> TerrainUnitID;
   std::vector<int16_t> TerrainUnitDensity;
   
-  static const short UNKNOWN11_LEN = 30;
-  std::vector<char> Unknown11;
+  /// If two terrain units are to be placed on same spot, this selects which one will prevail others.
+  /// 1 = prevails, others don't.
+  std::vector<char> TerrainUnitPriority;
+  
   int16_t NumberOfTerrainUnitsUsed;
   
   static const short SWGBUNKNOWN1_LEN = 24;

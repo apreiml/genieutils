@@ -27,10 +27,10 @@ namespace genie
 Terrain::Terrain() : Colors(3),
                      Unknown7(UNKNOWN7_LEN), Unknown8(UNKNOWN8_LEN),
                      Unknown9(UNKNOWN9_LEN),
-                     Unknown10(0),
-                     TerrainUnitID(getTerrainUnitSize()),
-                     TerrainUnitDensity(getTerrainUnitSize()),
-                     Unknown11(UNKNOWN11_LEN),
+                     TerrainBorderID(0),
+                     TerrainUnitID(TERRAIN_UNITS_LEN),
+                     TerrainUnitDensity(TERRAIN_UNITS_LEN),
+                     TerrainUnitPriority(TERRAIN_UNITS_LEN),
                      SWGBUnknown1(SWGBUNKNOWN1_LEN)
 {
   Unknown1 = 0;
@@ -65,23 +65,17 @@ short Terrain::getNameSize()
 }
 
 //------------------------------------------------------------------------------
-short Terrain::getTerrainUnitSize()
+short Terrain::getTerrainBorderSize(void)
 {
-  return 30;
+  if (getGameVersion() >= genie::GV_TC)
+    return 42;
+  else
+    return 32;
 }
 
 //------------------------------------------------------------------------------
-short Terrain::getUnknown10Size(void)
-{
-  if (getGameVersion() >= genie::GV_TC)
-    return 84;
-  else
-    return 64;
-}
-  
-//------------------------------------------------------------------------------
 void Terrain::serializeObject(void )
-{ 
+{
   serialize<int16_t>(Unknown1);
   serialize<int16_t>(Unknown2);
   
@@ -107,12 +101,11 @@ void Terrain::serializeObject(void )
   serialize<int16_t>(Unknown9, UNKNOWN9_LEN);
   serialize<int16_t>(TerrainReplacementID);
   serialize<int16_t>(TerrainDimensions);
+  serialize<int16_t>(TerrainBorderID, getTerrainBorderSize());
   
-  serialize<char>(Unknown10, getUnknown10Size());
-  
-  serialize<int16_t>(TerrainUnitID, getTerrainUnitSize());
-  serialize<int16_t>(TerrainUnitDensity, getTerrainUnitSize());
-  serialize<char>(Unknown11, UNKNOWN11_LEN);
+  serialize<int16_t>(TerrainUnitID, TERRAIN_UNITS_LEN);
+  serialize<int16_t>(TerrainUnitDensity, TERRAIN_UNITS_LEN);
+  serialize<char>(TerrainUnitPriority, TERRAIN_UNITS_LEN);
   serialize<int16_t>(NumberOfTerrainUnitsUsed);
   
   if (getGameVersion() >= genie::GV_SWGB)
