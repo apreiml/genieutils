@@ -27,7 +27,7 @@ namespace genie
 Terrain::Terrain() : Colors(3),
                      Unknown7(UNKNOWN7_LEN), Unknown8(UNKNOWN8_LEN),
                      Unknown9(UNKNOWN9_LEN),
-                     TerrainBorderID(0),
+                     TerrainBorderIDs(0),
                      TerrainUnitID(TERRAIN_UNITS_LEN),
                      TerrainUnitDensity(TERRAIN_UNITS_LEN),
                      TerrainUnitPriority(TERRAIN_UNITS_LEN),
@@ -53,6 +53,13 @@ Terrain::Terrain() : Colors(3),
 //------------------------------------------------------------------------------
 Terrain::~Terrain()
 {
+}
+
+void Terrain::setGameVersion(GameVersion gv)
+{
+  ISerializable::setGameVersion(gv);
+  
+  TerrainBorderIDs.resize(getTerrainBorderSize());
 }
 
 //------------------------------------------------------------------------------
@@ -101,7 +108,7 @@ void Terrain::serializeObject(void )
   serialize<int16_t>(Unknown9, UNKNOWN9_LEN);
   serialize<int16_t>(TerrainReplacementID);
   serialize<int16_t>(TerrainDimensions);
-  serialize<int16_t>(TerrainBorderID, getTerrainBorderSize());
+  serialize<int16_t>(TerrainBorderIDs, getTerrainBorderSize());
   
   serialize<int16_t>(TerrainUnitID, TERRAIN_UNITS_LEN);
   serialize<int16_t>(TerrainUnitDensity, TERRAIN_UNITS_LEN);

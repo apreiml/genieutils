@@ -31,6 +31,7 @@ class Terrain : public ISerializable
 public:
   Terrain();
   virtual ~Terrain();
+  virtual void setGameVersion(GameVersion gv);
   
   int16_t Unknown1;
   int16_t Unknown2; //must be one or the game will crash
@@ -61,7 +62,7 @@ public:
   short getTerrainBorderSize();
   
   /// These refer to terrain borders, which are actually used only in AoE and RoR.
-  std::vector<int16_t> TerrainBorderID;
+  std::vector<int16_t> TerrainBorderIDs;
   
   static const short TERRAIN_UNITS_LEN = 30;
   std::vector<int16_t> TerrainUnitID;

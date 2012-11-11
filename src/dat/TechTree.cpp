@@ -76,6 +76,13 @@ TechTreeAge::~TechTreeAge()
 {
 }
 
+void TechTreeAge::setGameVersion(GameVersion gv) 
+{
+  ISerializable::setGameVersion(gv);
+  
+  Zeroes.resize(getZeroesSize());
+}
+
 //------------------------------------------------------------------------------
 uint16_t TechTreeAge::getZeroesSize() 
 {
@@ -132,6 +139,14 @@ Unknown2b(0), Unknown3(getUnknown3Size())
 //------------------------------------------------------------------------------
 BuildingConnection::~BuildingConnection()
 {
+}
+
+void BuildingConnection::setGameVersion(GameVersion gv)
+{
+  ISerializable::setGameVersion(gv);
+  
+  Unknown2a.resize(getUnknown2aSize());
+  Unknown2b.resize(getUnknown2bSize());
 }
 
 //------------------------------------------------------------------------------
@@ -209,6 +224,14 @@ UnitConnection::~UnitConnection()
 {
 }
 
+void UnitConnection::setGameVersion(GameVersion gv)
+{
+  ISerializable::setGameVersion(gv);
+  
+  Unknown2a.resize(getUnknown2aSize());
+  Unknown2b.resize(getUnknown2bSize());
+}
+
 //------------------------------------------------------------------------------
 uint32_t UnitConnection::getUnknown2aSize()
 {
@@ -275,6 +298,14 @@ ResearchConnection::ResearchConnection() : Unknown2a(0), Unknown2b(0)
 //------------------------------------------------------------------------------
 ResearchConnection::~ResearchConnection()
 {
+}
+
+void ResearchConnection::setGameVersion(GameVersion gv)
+{
+  ISerializable::setGameVersion(gv);
+  
+  Unknown2a.resize(getUnknown2aSize());
+  Unknown2b.resize(getUnknown2bSize());
 }
 
 //------------------------------------------------------------------------------

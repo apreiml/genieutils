@@ -80,7 +80,7 @@ public:
   //----------------------------------------------------------------------------
   /// 
   //
-  void setGameVersion(GameVersion gv);
+  virtual void setGameVersion(GameVersion gv);
   
   //----------------------------------------------------------------------------
   GameVersion getGameVersion(void) const;

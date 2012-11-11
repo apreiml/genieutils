@@ -42,6 +42,12 @@ DeadFish::~DeadFish()
 {
 
 }
+void DeadFish::setGameVersion(GameVersion gv)
+{
+  ISerializable::setGameVersion(gv);
+  
+  Unknown16.resize(getUnknown16Size());
+}
 
 short DeadFish::getUnknown16Size()
 {

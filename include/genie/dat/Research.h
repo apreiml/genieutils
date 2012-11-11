@@ -33,6 +33,7 @@ class Research : public ISerializable
 public:
   Research();
   virtual ~Research();
+  virtual void setGameVersion(GameVersion gv);
   
   /// Size of RequiredTechs vector (4 in aoe/ror and 6 in games >= aok)
   uint16_t getRequiredTechsSize(void );

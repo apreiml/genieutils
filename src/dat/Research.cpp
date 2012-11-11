@@ -53,6 +53,13 @@ Research::~Research()
 {
 }
 
+void Research::setGameVersion(GameVersion gv)
+{
+  ISerializable::setGameVersion(gv);
+  
+  RequiredTechs.resize(getRequiredTechsSize(), -1);
+}
+
 //------------------------------------------------------------------------------
 uint16_t Research::getRequiredTechsSize()
 {
