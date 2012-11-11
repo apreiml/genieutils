@@ -89,7 +89,7 @@ void ISerializable::serializeSubObject(ISerializable * const other)
   istr_ = other->istr_;
   ostr_ = other->ostr_;
   operation_ = other->operation_;
-  gameVersion_ = other->gameVersion_;
+  setGameVersion(other->gameVersion_);
   serializeObject();
 }
   

@@ -14,6 +14,7 @@
 #include <genie/script/ScnFile.h>
 #include <genie/file/Compressor.h>
 #include <genie/lang/LangFile.h>
+#include <genie/dat/Research.h>
 #include <boost/iostreams/copy.hpp>
 #include <boost/smart_ptr.hpp>
 
@@ -209,7 +210,10 @@ int main(int argc, char **argv) {
 //   testDrs();
   
 //   testScn();
-  testLang();
+//   testLang();
+  
+  genie::Research rs;
+  rs.setGameVersion(genie::GV_AoK);
   
   /*
   std::ifstream ifs;
