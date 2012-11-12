@@ -38,6 +38,13 @@ Civ::~Civ()
 {
 }
 
+void Civ::setGameVersion(GameVersion gv)
+{
+  ISerializable::setGameVersion(gv);
+  
+  updateGameVersion(Units);
+}
+
 uint16_t Civ::getNameSize(void)
 {
   return 20;

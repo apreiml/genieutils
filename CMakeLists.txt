@@ -23,7 +23,7 @@ endif(GUTILS_TOOLS)
 
 if (GUTILS_TEST)
   find_package(Boost 1.42 COMPONENTS unit_test_framework program_options REQUIRED)
-  find_package(SFML COMPONENTS SYSTEM WINDOW GRAPHICS REQUIRED)
+#  find_package(SFML COMPONENTS SYSTEM WINDOW GRAPHICS REQUIRED)
 endif (GUTILS_TEST)
 
 find_package(Iconv)
@@ -52,7 +52,7 @@ if (${ICONV_FOUND})
 endif (${ICONV_FOUND})
 
 if (${GUTILS_TEST})
-  set(GU_INCLUDE_DIRS ${GU_INCLUDE_DIRS} ${SFML_INCLUDE_DIR})
+#  set(GU_INCLUDE_DIRS ${GU_INCLUDE_DIRS} ${SFML_INCLUDE_DIR})
 endif (${GUTILS_TEST})
 
 include_directories(${GU_INCLUDE_DIRS})
@@ -182,8 +182,8 @@ endif (GUTILS_TOOLS)
 if (GUTILS_TEST)
   add_executable(main main.cpp)
   target_link_libraries(main ${Genieutils_LIBRARY}
-                      ${SFML_WINDOW_LIBRARY}
-                      ${SFML_SYSTEM_LIBRARY}
-                      ${SFML_GRAPHICS_LIBRARY}
+#                       ${SFML_WINDOW_LIBRARY}
+#                       ${SFML_SYSTEM_LIBRARY}
+#                       ${SFML_GRAPHICS_LIBRARY}
   )
 endif(GUTILS_TEST)

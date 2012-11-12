@@ -110,15 +110,18 @@ GameVersion ISerializable::getGameVersion(void ) const
   return gameVersion_;
 }
 
+//------------------------------------------------------------------------------
 void ISerializable::setDefaultGameVersion(GameVersion gv)
 {
   defaultGameVersion = gv;
 }
 
+//------------------------------------------------------------------------------
 GameVersion ISerializable::getDefaultGameVersion(void )
 {
   return defaultGameVersion;
 }
+
 //------------------------------------------------------------------------------
 void ISerializable::setOperation(Operation op)
 {

@@ -88,6 +88,18 @@ public:
   static void setDefaultGameVersion(GameVersion gv);
   static GameVersion getDefaultGameVersion(void);
   
+  /// Updates the game version of all objects in vec
+  //
+  template <typename T>
+  static void updateGameVersion(GameVersion gv, std::vector<T> &vec)
+  {
+    for (unsigned int i=0; i<vec.size(); i++)
+    {
+      ISerializable *item = dynamic_cast<ISerializable *>(&vec[i]);
+      item->setGameVersion(gv);
+    }
+  }
+  
   //----------------------------------------------------------------------------
   /// Needs access to get and set stream methods for (de)compressing.
   //
@@ -101,6 +113,14 @@ protected:
     OP_WRITE = 1,
     OP_CALC_SIZE = 2
   };
+  
+  /// Updates the gv of all objects with the gv of this object.
+  //
+  template <typename T>
+  void updateGameVersion(std::vector<T> &vec)
+  {
+    updateGameVersion<T>(getGameVersion(), vec);
+  }
   
   //----------------------------------------------------------------------------
   /// Set operation to process
