@@ -36,6 +36,7 @@ class Bird : public ISerializable
 public:
   Bird();
   virtual ~Bird();
+  virtual void setGameVersion(GameVersion gv);
   
   int16_t SheepConversion;//FFFF = No, 0000 = Yes
   float SearchRadius;
