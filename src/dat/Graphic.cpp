@@ -105,6 +105,14 @@ Graphic &Graphic::operator=(const Graphic &other)
   return *this;
 }
 
+void Graphic::setGameVersion(GameVersion gv)
+{
+  ISerializable::setGameVersion(gv);
+  
+  updateGameVersion(Deltas);
+  updateGameVersion(AttackSounds);
+}
+
 short Graphic::getNameSize()
 {
   if (getGameVersion() <= genie::GV_TC)

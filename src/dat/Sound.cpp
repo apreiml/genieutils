@@ -34,6 +34,13 @@ Sound::~Sound()
 
 }
 
+void Sound::setGameVersion(GameVersion gv)
+{
+  ISerializable::setGameVersion(gv);
+  
+  updateGameVersion(Items);
+}
+
 void Sound::serializeObject(void )
 {
   serialize<int32_t>(ID);

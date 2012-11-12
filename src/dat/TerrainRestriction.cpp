@@ -40,6 +40,14 @@ TerrainRestriction::~TerrainRestriction()
 }
 
 //------------------------------------------------------------------------------
+void TerrainRestriction::setGameVersion(GameVersion gv)
+{
+  ISerializable::setGameVersion(gv);
+  
+  updateGameVersion(TerrainPassGraphics);
+}
+
+//------------------------------------------------------------------------------
 void TerrainRestriction::setTerrainCount(short int Terrain_Count)
 {
   Terrain_Count_ = Terrain_Count;

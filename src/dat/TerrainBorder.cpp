@@ -45,6 +45,16 @@ uint32_t TerrainBorder::getUnknown3Size()
   return 1410;
 }
 
+
+//------------------------------------------------------------------------------
+void TerrainBorder::setGameVersion(GameVersion gv)
+{
+  ISerializable::setGameVersion(gv);
+  
+  updateGameVersion(Frames);
+}
+
+
 //------------------------------------------------------------------------------
 void TerrainBorder::serializeObject(void )
 { 

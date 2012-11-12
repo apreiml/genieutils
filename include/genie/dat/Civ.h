@@ -33,7 +33,7 @@ class Civ : public ISerializable
 public:
   Civ();
   virtual ~Civ();
-  
+  virtual void setGameVersion(GameVersion gv);
   
   /// Always one
   char One;

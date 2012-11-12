@@ -34,6 +34,7 @@ class Sound : public ISerializable
 public:
   Sound();
   virtual ~Sound();
+  virtual void setGameVersion(GameVersion gv);
   
   int32_t ID;
   int32_t Unknown1;      // This is always equal to 300000

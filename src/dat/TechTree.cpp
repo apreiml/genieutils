@@ -35,6 +35,16 @@ TechTree::~TechTree()
 }
 
 //------------------------------------------------------------------------------
+void TechTree::setGameVersion(GameVersion gv)
+{
+  ISerializable::setGameVersion(gv);
+  
+  updateGameVersion(BuildingConnections);
+  updateGameVersion(UnitConnections);
+  updateGameVersion(ResearchConnections);
+}
+
+//------------------------------------------------------------------------------
 void TechTree::serializeObject(void )
 {
   serializeSize<unsigned char>(age_count_, TechTreeAges.size());
@@ -62,7 +72,7 @@ void TechTree::serializeObject(void )
 }
 
 //------------------------------------------------------------------------------
-TechTreeAge::TechTreeAge() : Zeroes(0)
+TechTreeAge::TechTreeAge() : Zeroes(getZeroesSize())
 {
   Unknown1 = 0;
   ID = 0;
@@ -74,6 +84,13 @@ TechTreeAge::TechTreeAge() : Zeroes(0)
 //------------------------------------------------------------------------------
 TechTreeAge::~TechTreeAge()
 {
+}
+
+void TechTreeAge::setGameVersion(GameVersion gv) 
+{
+  ISerializable::setGameVersion(gv);
+  
+  Zeroes.resize(getZeroesSize());
 }
 
 //------------------------------------------------------------------------------
@@ -114,8 +131,8 @@ void TechTreeAge::serializeObject(void )
 } 
 
 //------------------------------------------------------------------------------
-BuildingConnection::BuildingConnection() : Unknown2a(0),
-Unknown2b(0), Unknown3(getUnknown3Size())
+BuildingConnection::BuildingConnection() : Unknown2a(getUnknown2aSize()),
+Unknown2b(getUnknown2bSize()), Unknown3(getUnknown3Size())
 {
   ID = 0;
   Unknown1 = 2;
@@ -132,6 +149,14 @@ Unknown2b(0), Unknown3(getUnknown3Size())
 //------------------------------------------------------------------------------
 BuildingConnection::~BuildingConnection()
 {
+}
+
+void BuildingConnection::setGameVersion(GameVersion gv)
+{
+  ISerializable::setGameVersion(gv);
+  
+  Unknown2a.resize(getUnknown2aSize());
+  Unknown2b.resize(getUnknown2bSize());
 }
 
 //------------------------------------------------------------------------------
@@ -186,7 +211,7 @@ void BuildingConnection::serializeObject(void)
 }
 
 //------------------------------------------------------------------------------
-UnitConnection::UnitConnection() : Unknown2a(0), Unknown2b(0)
+UnitConnection::UnitConnection() : Unknown2a(getUnknown2aSize()), Unknown2b(getUnknown2bSize())
 {
   ID = 0;
   Unknown1 = 2;
@@ -207,6 +232,14 @@ UnitConnection::UnitConnection() : Unknown2a(0), Unknown2b(0)
 //------------------------------------------------------------------------------
 UnitConnection::~UnitConnection()
 {
+}
+
+void UnitConnection::setGameVersion(GameVersion gv)
+{
+  ISerializable::setGameVersion(gv);
+  
+  Unknown2a.resize(getUnknown2aSize());
+  Unknown2b.resize(getUnknown2bSize());
 }
 
 //------------------------------------------------------------------------------
@@ -258,7 +291,7 @@ void UnitConnection::serializeObject(void)
 }
 
 //------------------------------------------------------------------------------
-ResearchConnection::ResearchConnection() : Unknown2a(0), Unknown2b(0)
+ResearchConnection::ResearchConnection() : Unknown2a(getUnknown2aSize()), Unknown2b(getUnknown2bSize())
 {
   ID = 0;
   Unknown1 = 2;
@@ -275,6 +308,14 @@ ResearchConnection::ResearchConnection() : Unknown2a(0), Unknown2b(0)
 //------------------------------------------------------------------------------
 ResearchConnection::~ResearchConnection()
 {
+}
+
+void ResearchConnection::setGameVersion(GameVersion gv)
+{
+  ISerializable::setGameVersion(gv);
+  
+  Unknown2a.resize(getUnknown2aSize());
+  Unknown2b.resize(getUnknown2bSize());
 }
 
 //------------------------------------------------------------------------------

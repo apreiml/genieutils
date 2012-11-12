@@ -59,6 +59,25 @@ DatFile::~DatFile()
 }
 
 //------------------------------------------------------------------------------
+void DatFile::setGameVersion(GameVersion gv)
+{
+  ISerializable::setGameVersion(gv);
+  
+  updateGameVersion(TerrainRestrictions);
+  updateGameVersion(PlayerColours);
+  updateGameVersion(Sounds);
+  updateGameVersion(Graphics);
+  updateGameVersion(Terrains);
+  updateGameVersion(TerrainBorders);
+  updateGameVersion(Techages);
+  updateGameVersion(UnitHeaders);
+  updateGameVersion(Civs);
+  updateGameVersion(Researchs);
+  updateGameVersion(UnitLines);
+  TechTree.setGameVersion(gv);
+}
+
+//------------------------------------------------------------------------------
 void DatFile::extractRaw(const char *inFile, const char *outFile)
 {
   std::ifstream ifs;

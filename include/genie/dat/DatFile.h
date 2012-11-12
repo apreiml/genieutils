@@ -65,6 +65,9 @@ public:
   virtual ~DatFile();
   
   //----------------------------------------------------------------------------
+  virtual void setGameVersion(GameVersion gv);
+  
+  //----------------------------------------------------------------------------
   /// Uncompress dat file.
   //
   void extractRaw(const char *inFile, const char *outFile);

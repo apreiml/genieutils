@@ -77,6 +77,7 @@ class Unit : public ISerializable
 public:
   Unit();
   virtual ~Unit();
+  virtual void setGameVersion(GameVersion gv); 
   
   /// See enum UnitType
   char Type;

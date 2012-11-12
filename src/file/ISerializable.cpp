@@ -24,13 +24,15 @@
 namespace genie
 {
   
+GameVersion ISerializable::defaultGameVersion = GV_None;
+  
 //------------------------------------------------------------------------------
 ISerializable::ISerializable()
 {
   istr_ = 0;
   ostr_ = 0;
   init_read_pos_ = 0;
-  gameVersion_ = GV_None;
+  gameVersion_ = ISerializable::defaultGameVersion;
 }
 
 //------------------------------------------------------------------------------
@@ -89,7 +91,7 @@ void ISerializable::serializeSubObject(ISerializable * const other)
   istr_ = other->istr_;
   ostr_ = other->ostr_;
   operation_ = other->operation_;
-  gameVersion_ = other->gameVersion_;
+  setGameVersion(other->gameVersion_);
   serializeObject();
 }
   
@@ -106,6 +108,18 @@ GameVersion ISerializable::getGameVersion(void ) const
     std::cerr << "Warning: Game version not set!" << std::endl;
 
   return gameVersion_;
+}
+
+//------------------------------------------------------------------------------
+void ISerializable::setDefaultGameVersion(GameVersion gv)
+{
+  defaultGameVersion = gv;
+}
+
+//------------------------------------------------------------------------------
+GameVersion ISerializable::getDefaultGameVersion(void )
+{
+  return defaultGameVersion;
 }
 
 //------------------------------------------------------------------------------

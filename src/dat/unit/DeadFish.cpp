@@ -26,7 +26,7 @@ namespace genie
 namespace unit
 {
 
-DeadFish::DeadFish() : Unknown16(0)
+DeadFish::DeadFish() : Unknown16(getUnknown16Size())
 {
   WalkingGraphic.first = -1;
   WalkingGraphic.second = -1;
@@ -41,6 +41,12 @@ DeadFish::DeadFish() : Unknown16(0)
 DeadFish::~DeadFish()
 {
 
+}
+void DeadFish::setGameVersion(GameVersion gv)
+{
+  ISerializable::setGameVersion(gv);
+  
+  Unknown16.resize(getUnknown16Size());
 }
 
 short DeadFish::getUnknown16Size()

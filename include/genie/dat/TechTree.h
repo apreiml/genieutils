@@ -36,6 +36,7 @@ class TechTree : public ISerializable
 public:
   TechTree();
   virtual ~TechTree();
+  virtual void setGameVersion(GameVersion gv);
   
   std::vector<TechTreeAge> TechTreeAges;
   
@@ -63,6 +64,7 @@ class TechTreeAge : public ISerializable
 public:
   TechTreeAge();
   virtual ~TechTreeAge();
+  virtual void setGameVersion(GameVersion gv);
   
   int32_t Unknown1;
   int32_t ID; //Age ID?
@@ -91,6 +93,7 @@ class BuildingConnection : public ISerializable
 public:
   BuildingConnection();
   virtual ~BuildingConnection();
+  virtual void setGameVersion(GameVersion gv);
   
   int32_t ID;
   char Unknown1; //always 2
@@ -139,6 +142,7 @@ class UnitConnection : public ISerializable
 public:
   UnitConnection();
   virtual ~UnitConnection();
+  virtual void setGameVersion(GameVersion gv);
   
   int32_t ID;
   char Unknown1; //always 2
@@ -186,6 +190,7 @@ class ResearchConnection : public ISerializable
 public:
   ResearchConnection();
   virtual ~ResearchConnection();
+  virtual void setGameVersion(GameVersion gv);
   
   int32_t ID;
   char Unknown1; //always 2

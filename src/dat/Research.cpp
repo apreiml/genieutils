@@ -24,7 +24,7 @@ namespace genie
 {
 
 //------------------------------------------------------------------------------
-Research::Research() : RequiredTechs(0, -1),
+Research::Research() : RequiredTechs(getRequiredTechsSize(), -1),
                        ResourceCosts(getResourceCostsSize()),
                        Pointers(getPointersSize())
 {
@@ -51,6 +51,15 @@ Research::Research() : RequiredTechs(0, -1),
 //------------------------------------------------------------------------------
 Research::~Research()
 {
+}
+
+void Research::setGameVersion(GameVersion gv)
+{
+  ISerializable::setGameVersion(gv);
+  
+  RequiredTechs.resize(getRequiredTechsSize(), -1);
+  
+  updateGameVersion(ResourceCosts);
 }
 
 //------------------------------------------------------------------------------

@@ -46,6 +46,7 @@ class TerrainBorder : public ISerializable
 public:
   TerrainBorder();
   virtual ~TerrainBorder();
+  virtual void setGameVersion(GameVersion gv);
   
   static uint32_t getNameSize();
   

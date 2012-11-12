@@ -116,6 +116,24 @@ Unit::~Unit()
 {
 }
 
+
+//------------------------------------------------------------------------------
+void Unit::setGameVersion(GameVersion gv)
+{
+  ISerializable::setGameVersion(gv);
+  
+  updateGameVersion(ResourceStorages);
+  updateGameVersion(DamageGraphics);
+  
+  DeadFish.setGameVersion(gv);
+  Bird.setGameVersion(gv);
+  Projectile.setGameVersion(gv);
+  ProjectileOnly.setGameVersion(gv);
+  Creatable.setGameVersion(gv);
+  Building.setGameVersion(gv);
+}
+
+
 //------------------------------------------------------------------------------
 short Unit::getUnknown9Size()
 {
