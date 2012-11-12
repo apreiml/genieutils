@@ -36,6 +36,7 @@ class TechTree : public ISerializable
 public:
   TechTree();
   virtual ~TechTree();
+  virtual void setGameVersion(GameVersion gv);
   
   std::vector<TechTreeAge> TechTreeAges;
   

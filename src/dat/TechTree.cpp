@@ -35,6 +35,16 @@ TechTree::~TechTree()
 }
 
 //------------------------------------------------------------------------------
+void TechTree::setGameVersion(GameVersion gv)
+{
+  ISerializable::setGameVersion(gv);
+  
+  updateGameVersion(BuildingConnections);
+  updateGameVersion(UnitConnections);
+  updateGameVersion(ResearchConnections);
+}
+
+//------------------------------------------------------------------------------
 void TechTree::serializeObject(void )
 {
   serializeSize<unsigned char>(age_count_, TechTreeAges.size());

@@ -219,14 +219,18 @@ int main(int argc, char **argv) {
   vec.push_back(rs);
   
   genie::DatFile df;
-  //df.load("empires2.dat");
+  df.load("empires2.dat");
   
- // std::cout << df.getGameVersion() << std::endl;
+  std::cout << df.getGameVersion() << std::endl;
   std::cout << rs.getGameVersion() << std::endl;
   
   genie::ISerializable::updateGameVersion(genie::GV_CC, vec);
   
   std::cout << vec[1].getGameVersion() << std::endl;
+  
+  df.Civs[0].setGameVersion(genie::GV_SWGB);
+  
+  std::cout << df.Civs[0].Units[0].getGameVersion() << std::endl;
   
   /*
   std::ifstream ifs;

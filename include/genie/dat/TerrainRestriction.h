@@ -33,6 +33,7 @@ class TerrainRestriction : public ISerializable
 public:
   TerrainRestriction();
   virtual ~TerrainRestriction();
+  virtual void setGameVersion(GameVersion gv);
   
   std::vector<float> TerrainAccessible;
   std::vector<TerrainPassGraphic> TerrainPassGraphics;
