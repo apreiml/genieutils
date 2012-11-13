@@ -50,10 +50,6 @@ if (${ICONV_FOUND})
   set(GU_INCLUDE_DIRS ${GU_INCLUDE_DIRS} ${ICONV_INCLUDE_DIR})
 endif (${ICONV_FOUND})
 
-if (${GUTILS_TEST})
-#  set(GU_INCLUDE_DIRS ${GU_INCLUDE_DIRS} ${SFML_INCLUDE_DIR})
-endif (${GUTILS_TEST})
-
 include_directories(${GU_INCLUDE_DIRS})
 
 add_definitions(-Wall -Wsign-compare)
@@ -157,9 +153,6 @@ add_library(${Genieutils_LIBRARY} ${FILE_SRC} ${LANG_SRC} ${DAT_SRC}
                                   ${RESOURCE_SRC} ${UTIL_SRC} ${SCRIPT_SRC} )
 target_link_libraries(${Genieutils_LIBRARY} ${ZLIB_LIBRARIES} ${Boost_LIBRARIES} ${ICONV_LIBRARIES})
 
-#add_executable(main main.cpp)
-#target_link_libraries(main ${Genieutils_LIBRARY})
-
 #------------------------------------------------------------------------------#
 # Dev tools:
 #------------------------------------------------------------------------------#
@@ -194,3 +187,4 @@ if (GUTILS_TEST)
 
   add_test(dat_test ${test_DIR}/dat_test)
 endif(GUTILS_TEST)
+
