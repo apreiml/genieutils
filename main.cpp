@@ -9,11 +9,13 @@
 #include "genie/resource/Color.h"
 #include <genie/script/ScnFile.h>
 #include <genie/file/Compressor.h>
+#include <genie/file/BinaryOutArchive.h>
 #include <genie/lang/LangFile.h>
 #include <genie/dat/Research.h>
 #include <genie/dat/DatFile.h>
 #include <boost/iostreams/copy.hpp>
 #include <boost/smart_ptr.hpp>
+#include <boost/archive/binary_oarchive.hpp>
 
 /*
 sf::Image createSfImage(uint32_t width, uint32_t height, const uint8_t* pixels, 
@@ -218,19 +220,33 @@ int main(int argc, char **argv) {
   vec.push_back(rs);
   vec.push_back(rs);
   
-  genie::DatFile df;
-  df.load("empires2.dat");
+//   genie::DatFile df;
+//   df.load("empires2.dat");
   
-  std::cout << df.getGameVersion() << std::endl;
-  std::cout << rs.getGameVersion() << std::endl;
+//   std::cout << df.getGameVersion() << std::endl;
+//   std::cout << rs.getGameVersion() << std::endl;
   
   genie::ISerializable::updateGameVersion(genie::GV_CC, vec);
-  
+  /*
   std::cout << vec[1].getGameVersion() << std::endl;
   
   df.Civs[0].setGameVersion(genie::GV_SWGB);
   
   std::cout << df.Civs[0].Units[0].getGameVersion() << std::endl;
+  std::cout << "Archive: " <<std::endl;
+  */
+  genie::SoundItem si;
+  si.Probability = 2;
+  si.ResourceID = 1;
+  
+  std::ofstream ofs("sout.datp", std::ios_base::binary);
+  genie::BinaryOutArchive boa(ofs);
+  
+  boa << si;
+  
+//   boost::archive::binary_oarchive oa(ofs, boost::archive::no_header | boost::archive::no_codecvt | boost::archive::no_tracking);
+//   oa << si;
+  
   
   /*
   std::ifstream ifs;

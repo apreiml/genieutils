@@ -20,7 +20,10 @@
 
 #ifndef GENIE_SOUNDITEM_H
 #define GENIE_SOUNDITEM_H
+
 #include "genie/file/ISerializable.h"
+
+#include <boost/serialization/access.hpp>
 
 namespace genie
 {
@@ -49,6 +52,16 @@ public:
   
 private:
   virtual void serializeObject(void);
+  
+  friend class boost::serialization::access;
+  
+  template<class Archive>
+  void serialize(Archive & ar, const unsigned int version)
+  {
+    ar & ResourceID;
+    ar & Probability;
+  }
+  
 };
 
 }

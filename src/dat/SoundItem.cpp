@@ -46,6 +46,7 @@ short SoundItem::getFileNameSize()
 
 void SoundItem::serializeObject(void )
 {
+  /*
   serialize<std::string>(FileName, getFileNameSize());
   
   serialize<int32_t>(ResourceID);
@@ -56,6 +57,7 @@ void SoundItem::serializeObject(void )
     serialize<int16_t>(Civ);
     serialize<int16_t>(Unknown1);
   }
+  */
 }
 
 
