@@ -67,14 +67,14 @@ void Creatable::serializeObject(void )
   if (getGameVersion() >= genie::GV_AoK)
   {
     serialize<char>(Unknown26);
-    serialize<int16_t>(Unknown27, UNKNOWN27_SIZE);
+    serializeVec<int16_t>(Unknown27, UNKNOWN27_SIZE);
     serialize<char>(Unknown28);
     serialize<char>(MissileGraphicDelay);
     serialize<char>(HeroMode);
     serialize<int16_t>(GarrisonGraphic);
     serialize<float>(AttackMissileDuplicationAmount1);
     serialize<char>(AttackMissileDuplicationAmount2);
-    serialize<float>(AttackMissileDuplicationSpawning, AMDBUNKNOWN_SIZE);
+    serializeVec<float>(AttackMissileDuplicationSpawning, AMDBUNKNOWN_SIZE);
     serialize<int32_t>(AttackMissileDuplicationUnit);
     serialize<int32_t>(AttackMissileDuplicationGraphic);
     serialize<char>(Unknown29);

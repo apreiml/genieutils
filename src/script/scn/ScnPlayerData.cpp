@@ -55,7 +55,7 @@ void ScnPlayerData2::serializeObject(void)
   
   serializeSub(aiFiles, 16);
   
-  serialize<uint8_t>(aiTypes, 16);
+  serializeVec<uint8_t>(aiTypes, 16);
 
   serialize<uint32_t>(separator_);
   

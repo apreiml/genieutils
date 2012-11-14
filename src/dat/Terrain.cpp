@@ -86,8 +86,8 @@ void Terrain::serializeObject(void )
   serialize<int16_t>(Unknown1);
   serialize<int16_t>(Unknown2);
   
-  serialize<std::string>(Name, getNameSize());
-  serialize<std::string>(Name2, getNameSize());
+  serializeStr(Name, getNameSize());
+  serializeStr(Name2, getNameSize());
   
   serialize<int32_t>(SLP);
   serialize<int32_t>(Unknown3);
@@ -99,24 +99,24 @@ void Terrain::serializeObject(void )
     serialize<int32_t>(BlendType);
   }
   
-  serialize<unsigned char>(Colors, 3);
+  serializeVec<unsigned char>(Colors, 3);
   serialize<int16_t>(Unknown5);
   serialize<int16_t>(Unknown6);
-  serialize<char>(Unknown7, UNKNOWN7_LEN);
+  serializeVec<char>(Unknown7, UNKNOWN7_LEN);
   serialize<int16_t>(FrameCount);
-  serialize<int16_t>(Unknown8, UNKNOWN8_LEN);
-  serialize<int16_t>(Unknown9, UNKNOWN9_LEN);
+  serializeVec<int16_t>(Unknown8, UNKNOWN8_LEN);
+  serializeVec<int16_t>(Unknown9, UNKNOWN9_LEN);
   serialize<int16_t>(TerrainReplacementID);
   serialize<int16_t>(TerrainDimensions);
-  serialize<int16_t>(TerrainBorderIDs, getTerrainBorderSize());
+  serializeVec<int16_t>(TerrainBorderIDs, getTerrainBorderSize());
   
-  serialize<int16_t>(TerrainUnitID, TERRAIN_UNITS_LEN);
-  serialize<int16_t>(TerrainUnitDensity, TERRAIN_UNITS_LEN);
-  serialize<char>(TerrainUnitPriority, TERRAIN_UNITS_LEN);
+  serializeVec<int16_t>(TerrainUnitID, TERRAIN_UNITS_LEN);
+  serializeVec<int16_t>(TerrainUnitDensity, TERRAIN_UNITS_LEN);
+  serializeVec<char>(TerrainUnitPriority, TERRAIN_UNITS_LEN);
   serialize<int16_t>(NumberOfTerrainUnitsUsed);
   
   if (getGameVersion() >= genie::GV_SWGB)
-    serialize<char>(SWGBUnknown1, SWGBUNKNOWN1_LEN);
+    serializeVec<char>(SWGBUnknown1, SWGBUNKNOWN1_LEN);
 }
 
 }

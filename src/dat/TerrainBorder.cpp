@@ -61,15 +61,15 @@ void TerrainBorder::serializeObject(void )
   //serialize<int16_t>(Unknown1);
   serialize<int16_t>(Enabled);
   
-  serialize<std::string>(Name, getNameSize());
-  serialize<std::string>(Name2, getNameSize());
+  serializeStr(Name, getNameSize());
+  serializeStr(Name2, getNameSize());
   
   serialize<int32_t>(RessourceID);
   
   serialize<int32_t>(Unknown3);
   serialize<int32_t>(Unknown4);
   
-  serialize<unsigned char>(Colors, 3);
+  serializeVec<unsigned char>(Colors, 3);
   
   serialize<char>(Unknown5);
   

@@ -24,6 +24,11 @@
 #include "genie/file/ISerializable.h"
 
 #include <boost/serialization/access.hpp>
+#include <boost/serialization/nvp.hpp>
+
+#include "genie/file/SerUtil.h"
+
+#define GENIE_NVP(var) BOOST_SERIALIZATION_NVP(var)
 
 namespace genie
 {
@@ -58,9 +63,19 @@ private:
   template<class Archive>
   void serialize(Archive & ar, const unsigned int version)
   {
-    ar & ResourceID;
-    ar & Probability;
+//     ar & GENIE_NVP(FileName);
+    SerUtil::sFixString<Archive>(ar, "FileName", FileName, getFileNameSize());
+    
+    ar & GENIE_NVP(ResourceID);
+    ar & GENIE_NVP(Probability);
+    
+    if (getGameVersion() >= genie::GV_AoK)
+    {
+      ar & GENIE_NVP(Civ);
+      ar & GENIE_NVP(Unknown1);
+    }
   }
+  //*/
   
 };
 

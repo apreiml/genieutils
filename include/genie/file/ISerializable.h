@@ -255,7 +255,7 @@ protected:
     T size;
     
     serializeSize<T>(size, str, cString);
-    serialize<std::string>(str, size);
+    serializeStr(str, size);
   }
   
   template <typename T>
@@ -325,8 +325,7 @@ protected:
   //----------------------------------------------------------------------------
   /// Spezialization of std::strings.
   //
-  template <typename T>
-  void serialize(std::string &str, size_t len)
+  void serializeStr(std::string &str, size_t len)
   {
     if (len > 0)
     {
@@ -349,7 +348,7 @@ protected:
   /// Reads or writes an array of data to/from a vector dependent on opeartion.
   //
   template <typename T>
-  void serialize(std::vector<T> &vec, size_t size)
+  void serializeVec(std::vector<T> &vec, size_t size)
   {
     switch(getOperation())
     {

@@ -56,7 +56,7 @@ void TerrainRestriction::setTerrainCount(short int Terrain_Count)
 //------------------------------------------------------------------------------
 void TerrainRestriction::serializeObject(void)
 {
-  serialize<float>(TerrainAccessible, Terrain_Count_);
+  serializeVec<float>(TerrainAccessible, Terrain_Count_);
   
   if (getGameVersion() >= genie::GV_AoK)
   {

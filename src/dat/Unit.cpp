@@ -237,7 +237,7 @@ void Unit::serializeObject(void )
   {
     serialize<char>(Attribute);
     serialize<char>(Civilization);
-    serialize<char>(Unknown9, getUnknown9Size());
+    serializeVec<char>(Unknown9, getUnknown9Size());
   }
   
   serialize<char>(SelectionEffect);
@@ -254,13 +254,13 @@ void Unit::serializeObject(void )
   serialize<int16_t>(DyingSound);
   serialize<int16_t>(AttackSound);
   
-  serialize<std::string>(Name, NameLength);
+  serializeStr(Name, NameLength);
   
   if (getGameVersion() >= genie::GV_SWGB)
   {
     //serializeSize<uint16_t>(NameLength2, Name2.size());
     serializeSize<uint16_t>(NameLength2, Name2);
-    serialize<std::string>(Name2, NameLength2);
+    serializeStr(Name2, NameLength2);
     
     serialize<int16_t>(Unitline);
     serialize<char>(MinTechLevel);

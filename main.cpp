@@ -10,12 +10,14 @@
 #include <genie/script/ScnFile.h>
 #include <genie/file/Compressor.h>
 #include <genie/file/BinaryOutArchive.h>
+#include <genie/file/BinaryInArchive.h>
 #include <genie/lang/LangFile.h>
 #include <genie/dat/Research.h>
 #include <genie/dat/DatFile.h>
 #include <boost/iostreams/copy.hpp>
 #include <boost/smart_ptr.hpp>
 #include <boost/archive/binary_oarchive.hpp>
+#include <boost/archive/xml_oarchive.hpp>
 
 /*
 sf::Image createSfImage(uint32_t width, uint32_t height, const uint8_t* pixels, 
@@ -236,13 +238,29 @@ int main(int argc, char **argv) {
   std::cout << "Archive: " <<std::endl;
   */
   genie::SoundItem si;
+  si.FileName = "test.wav";
   si.Probability = 2;
   si.ResourceID = 1;
   
   std::ofstream ofs("sout.datp", std::ios_base::binary);
+  std::ofstream xofs("sout.xml");
   genie::BinaryOutArchive boa(ofs);
+  boost::archive::xml_oarchive xoa(xofs);
   
-  boa << si;
+//   boa << si;
+  
+//   ofs.close();
+  std::ifstream ifs("iorw/sound_item.datp", std::ios_base::binary);
+  genie::BinaryInArchive bia(ifs);
+  
+  genie::SoundItem si2;
+  
+//   bia >> si2;
+//   boa << si2;
+  
+  std::cout << si2.FileName << std::endl;
+  
+//   xoa << BOOST_SERIALIZATION_NVP(si);
   
 //   boost::archive::binary_oarchive oa(ofs, boost::archive::no_header | boost::archive::no_codecvt | boost::archive::no_tracking);
 //   oa << si;

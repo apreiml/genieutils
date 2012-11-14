@@ -86,7 +86,7 @@ uint16_t Research::getPointersSize()
 //------------------------------------------------------------------------------
 void Research::serializeObject(void )
 {
-  serialize<int16_t>(RequiredTechs, getRequiredTechsSize());
+  serializeVec<int16_t>(RequiredTechs, getRequiredTechsSize());
               
   serializeSub<ResearchResourceCost>(ResourceCosts, getResourceCostsSize());
   serialize<int16_t>(RequiredTechCount);
@@ -105,17 +105,17 @@ void Research::serializeObject(void )
   serialize<int16_t>(Type);
   serialize<int16_t>(IconID);
   serialize<char>(ButtonID);
-  serialize<int32_t>(Pointers, getPointersSize()); //TODO: AoE/RoR: [0..1]: LanguagePointer
+  serializeVec<int32_t>(Pointers, getPointersSize()); //TODO: AoE/RoR: [0..1]: LanguagePointer
   
   serializeSize<uint16_t>(NameLength, Name);
   if (NameLength > 0)
-    serialize<std::string>(Name, NameLength);
+    serializeStr(Name, NameLength);
   
   if (getGameVersion() >= genie::GV_SWGB)
   {
     serializeSize<uint16_t>(NameLength2, Name2); 
     if (NameLength2 > 0)
-      serialize<std::string>(Name2, NameLength2);
+      serializeStr(Name2, NameLength2);
   }
   
 }

@@ -113,7 +113,7 @@ void ScnFile::serializeObject(void)
       writeString(playerNames[i], 256);
   
   if (getGameVersion() >= genie::GV_AoK)
-    serialize<uint32_t>(playerNamesStringTable, 16);
+    serializeVec<uint32_t>(playerNamesStringTable, 16);
   
   
   serializeSub<ScnPlayerData1>(playerData1, 16);
@@ -190,7 +190,7 @@ void ScnFile::serializeVersion(void)
     }
   }
   
-  serialize<std::string>(version_, 4);
+  serializeStr(version_, 4);
 }
 
 //------------------------------------------------------------------------------

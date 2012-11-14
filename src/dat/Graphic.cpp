@@ -144,12 +144,12 @@ void Graphic::serializeObject(void )
   if (isOperation(OP_WRITE))
   {
     if (CstrName == 0 || Name.compare(CstrName) != 0)
-      serialize<std::string>(Name, getNameSize());
+      serializeStr(Name, getNameSize());
     else
       serialize<char>(&CstrName, getNameSize());
     
     if (CstrName2 == 0 || Name2.compare(CstrName2) != 0)
-      serialize<std::string>(Name2, getName2Size());
+      serializeStr(Name2, getName2Size());
     else
       serialize<char>(&CstrName2, getName2Size());
   }
@@ -170,7 +170,7 @@ void Graphic::serializeObject(void )
   serialize<char>(Unknown4);
   serialize<char>(Replay);
   
-  serialize<int16_t>(Coordinates, 4);
+  serializeVec<int16_t>(Coordinates, 4);
   
   serializeSize<uint16_t>(DeltaCount, Deltas.size());
   serialize<int16_t>(SoundID);

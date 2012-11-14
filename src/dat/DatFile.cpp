@@ -133,10 +133,10 @@ void DatFile::serializeObject(void )
     std::cout << "TerCount: " << terrain_count_ << std::endl;
   }
   
-  serialize<int32_t>(TerrainRestrictionPointers1, terrain_restriction_count_);
+  serializeVec<int32_t>(TerrainRestrictionPointers1, terrain_restriction_count_);
   
   if (getGameVersion() >= genie::GV_AoK)
-    serialize<int32_t>(TerrainRestrictionPointers2, terrain_restriction_count_);
+    serializeVec<int32_t>(TerrainRestrictionPointers2, terrain_restriction_count_);
   
   TerrainRestriction::setTerrainCount(terrain_count_);
   serializeSub<TerrainRestriction>(TerrainRestrictions, terrain_restriction_count_);
@@ -156,7 +156,7 @@ void DatFile::serializeObject(void )
   serializeSub<Sound>(Sounds, sound_count_);
   
   serializeSize<uint16_t>(graphic_count_, GraphicPointers.size());
-  serialize<int32_t>(GraphicPointers, graphic_count_);
+  serializeVec<int32_t>(GraphicPointers, graphic_count_);
   serializeSubWithPointers<Graphic>(Graphics, graphic_count_, GraphicPointers);
   
   if (verbose_)
@@ -273,7 +273,7 @@ void DatFile::serializeObject(void )
   
   if (getGameVersion() >= genie::GV_AoK)
   {
-    serialize<int32_t>(UnknownPreTechTree, 7);
+    serializeVec<int32_t>(UnknownPreTechTree, 7);
     serialize<ISerializable>(TechTree);
     
   }

@@ -85,7 +85,7 @@ void Building::serializeObject(void )
     serialize<float>(GarrisonHealRate);
     serialize<int32_t>(Unknown35);
     serialize<int16_t>(Unknown36);
-    serialize<char>(Unknown37, UNKNOWN37_SIZE);
+    serializeVec<char>(Unknown37, UNKNOWN37_SIZE);
   }
 }
 

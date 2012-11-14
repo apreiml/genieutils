@@ -86,7 +86,7 @@ void UnitCommand::serializeObject(void )
   serialize<char>(Unknown9);
   serialize<char>(Unknown10);
   serialize<char>(Unknown11);
-  serialize<int16_t>(Graphics, getGraphicsSize());
+  serializeVec<int16_t>(Graphics, getGraphicsSize());
 }
 
 }

@@ -34,19 +34,28 @@ public:
   
   BinaryOutArchive(std::ostream &ostr)
   {
-    this->ostr = &ostr;
+    this->ostr_ = &ostr;
   }
   
   template<class T>
-  void save(T & t)
+  void save(const T & t)
   {
-    ostr->write(reinterpret_cast<const char *>(&t), sizeof(T)); 
+//     std::cout << "write: " << t << std::endl;
+    ostr_->write(reinterpret_cast<const char *>(&t), sizeof(T)); 
+  }
+ /* 
+  void save(const std::string &t) 
+  { 
+    std::cout << "string" << t << std::endl; 
+  }*/
+  
+  void save_binary(const void *address, std::size_t count)
+  {
+    ostr_->write(reinterpret_cast<const char*>(address), count);
   }
   
-  void save_binary(void *address, std::size_t count){};
-  
 private:
-  std::ostream *ostr;
+  std::ostream *ostr_;
   
   // Ignore additional stored information
   virtual void vsave(const boost::archive::version_type t) {}
@@ -58,9 +67,6 @@ private:
   virtual void vsave(const boost::archive::class_name_type & t) {}
   virtual void vsave(const boost::archive::tracking_type t) {}
 };
-
-// #define BOOST_SERIALIZATION_REGISTER_ARCHIVE(Archive)
-
 }
 
 #endif // GENIE_BINARYOUTARCHIVE_H

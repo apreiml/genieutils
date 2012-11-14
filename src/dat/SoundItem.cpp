@@ -19,6 +19,8 @@
 
 
 #include "genie/dat/SoundItem.h"
+#include <genie/file/BinaryInArchive.h>
+#include <genie/file/BinaryOutArchive.h>
 #include <string.h>
 
 namespace genie
@@ -46,8 +48,21 @@ short SoundItem::getFileNameSize()
 
 void SoundItem::serializeObject(void )
 {
+  
+  if (isOperation(OP_READ))
+  {
+    BinaryInArchive bia(*getIStream());
+    bia >> *this;
+  } 
+  else if (isOperation(OP_WRITE)) 
+  {
+    BinaryOutArchive boa(*getOStream());
+    boa << *this;
+  }
+  //*/
   /*
-  serialize<std::string>(FileName, getFileNameSize());
+  
+  serializeStr(FileName, getFileNameSize());
   
   serialize<int32_t>(ResourceID);
   serialize<int16_t>(Probability);
@@ -57,7 +72,7 @@ void SoundItem::serializeObject(void )
     serialize<int16_t>(Civ);
     serialize<int16_t>(Unknown1);
   }
-  */
+  //*/
 }
 
 

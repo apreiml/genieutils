@@ -79,7 +79,7 @@ void Projectile::serializeObject(void )
   serialize<int16_t>(AccuracyPercent);
   serialize<char>(TowerMode);
   serialize<int16_t>(Delay); //TODO: missle graphic delay
-  serialize<float>(GraphicDisplacement, getGraphicDisplacementSize());
+  serializeVec<float>(GraphicDisplacement, getGraphicDisplacementSize());
   serialize<char>(Unknown23); //TODO: AoE/RoR blast level
   serialize<float>(MinRange);
   

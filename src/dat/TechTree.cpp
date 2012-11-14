@@ -116,18 +116,18 @@ void TechTreeAge::serializeObject(void )
   serialize<char>(Unknown2);
   
   serializeSize<unsigned char>(building_count_, Buildings.size());
-  serialize<int32_t>(Buildings, building_count_);
+  serializeVec<int32_t>(Buildings, building_count_);
   
   serializeSize<unsigned char>(unit_count_, Units.size());
-  serialize<int32_t>(Units, unit_count_);
+  serializeVec<int32_t>(Units, unit_count_);
   
   serializeSize<unsigned char>(research_count_, Researches.size());
-  serialize<int32_t>(Researches, research_count_);
+  serializeVec<int32_t>(Researches, research_count_);
   
   serialize<int32_t>(Unknown3);
   serialize<int32_t>(Unknown4);
   
-  serialize<int16_t>(Zeroes, getZeroesSize());
+  serializeVec<int16_t>(Zeroes, getZeroesSize());
 } 
 
 //------------------------------------------------------------------------------
@@ -184,27 +184,27 @@ void BuildingConnection::serializeObject(void)
   serialize<char>(Unknown1);
   
   serializeSize<unsigned char>(building_count_, Buildings.size());
-  serialize<int32_t>(Buildings, building_count_);
+  serializeVec<int32_t>(Buildings, building_count_);
   
   serializeSize<unsigned char>(unit_count_, Units.size());
-  serialize<int32_t>(Units, unit_count_);
+  serializeVec<int32_t>(Units, unit_count_);
   
   serializeSize<unsigned char>(research_count_, Researches.size());
-  serialize<int32_t>(Researches, research_count_);
+  serializeVec<int32_t>(Researches, research_count_);
   
   serialize<int32_t>(RequiredResearches);
   serialize<int32_t>(Age);
   serialize<int32_t>(UnitOrResearch1);
   serialize<int32_t>(UnitOrResearch2);
   
-  serialize<int32_t>(Unknown2a, getUnknown2aSize());
+  serializeVec<int32_t>(Unknown2a, getUnknown2aSize());
   
   serialize<int32_t>(Mode1);
   serialize<int32_t>(Mode2);
   
-  serialize<int32_t>(Unknown2b, getUnknown2bSize());
+  serializeVec<int32_t>(Unknown2b, getUnknown2bSize());
   
-  serialize<char>(Unknown3, getUnknown3Size());
+  serializeVec<char>(Unknown3, getUnknown3Size());
   
   serialize<int32_t>(Connections);
   serialize<int32_t>(EnablingResearch); 
@@ -271,17 +271,17 @@ void UnitConnection::serializeObject(void)
   serialize<int32_t>(UnitOrResearch1);
   serialize<int32_t>(UnitOrResearch2);
 
-  serialize<int32_t>(Unknown2a, getUnknown2aSize());
+  serializeVec<int32_t>(Unknown2a, getUnknown2aSize());
   
   serialize<int32_t>(Mode1);
   serialize<int32_t>(Mode2);
   
-  serialize<int32_t>(Unknown2b, getUnknown2bSize());
+  serializeVec<int32_t>(Unknown2b, getUnknown2bSize());
   
   serialize<int32_t>(VerticalLine);
   
   serializeSize<unsigned char>(unit_count_, Units.size());
-  serialize<int32_t>(Units, unit_count_);
+  serializeVec<int32_t>(Units, unit_count_);
   
   serialize<int32_t>(LocationInAge);
   serialize<int32_t>(RequiredResearch);
@@ -344,23 +344,23 @@ void ResearchConnection::serializeObject(void)
   serialize<int32_t>(UpperBuilding);
   
   serializeSize<unsigned char>(building_count_, Buildings.size());
-  serialize<int32_t>(Buildings, building_count_);
+  serializeVec<int32_t>(Buildings, building_count_);
   
   serializeSize<unsigned char>(unit_count_, Units.size());
-  serialize<int32_t>(Units, unit_count_);
+  serializeVec<int32_t>(Units, unit_count_);
   
   serializeSize<unsigned char>(research_count_, Researches.size());
-  serialize<int32_t>(Researches, research_count_);
+  serializeVec<int32_t>(Researches, research_count_);
   
   serialize<int32_t>(RequiredResearches);
   serialize<int32_t>(Age);
   serialize<int32_t>(UpperResearch);
   
-  serialize<int32_t>(Unknown2a, getUnknown2aSize());
+  serializeVec<int32_t>(Unknown2a, getUnknown2aSize());
   
   serialize<int32_t>(LineMode);
   
-  serialize<int32_t>(Unknown2b, getUnknown2bSize());
+  serializeVec<int32_t>(Unknown2b, getUnknown2bSize());
   
   serialize<int32_t>(VerticalLine);
   serialize<int32_t>(LocationInAge);
