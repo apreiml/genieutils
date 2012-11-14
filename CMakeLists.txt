@@ -12,6 +12,12 @@ project(genieutils)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/cmake/)
 
+# boost options:
+
+set(Boost_USE_STATIC_LIBS        ON)
+set(Boost_USE_MULTITHREADED      ON)
+set(Boost_USE_STATIC_RUNTIME    OFF)
+
 # dependencies:
 
 find_package(ZLIB REQUIRED)
@@ -36,13 +42,6 @@ else (${ICONV_FOUND})
   set(GU_LANG_SUPPORT false)
 endif (${ICONV_FOUND})
 
-
-# boost options:
-
-set(Boost_USE_STATIC_LIBS        ON)
-set(Boost_USE_MULTITHREADED      ON)
-set(Boost_USE_STATIC_RUNTIME    OFF)
-
 # include directories:
 
 set(GU_INCLUDE_DIRS include/ extern/ ${Boost_INCLUDE_DIRS})
@@ -50,10 +49,6 @@ set(GU_INCLUDE_DIRS include/ extern/ ${Boost_INCLUDE_DIRS})
 if (${ICONV_FOUND})
   set(GU_INCLUDE_DIRS ${GU_INCLUDE_DIRS} ${ICONV_INCLUDE_DIR})
 endif (${ICONV_FOUND})
-
-if (${GUTILS_TEST})
-#  set(GU_INCLUDE_DIRS ${GU_INCLUDE_DIRS} ${SFML_INCLUDE_DIR})
-endif (${GUTILS_TEST})
 
 include_directories(${GU_INCLUDE_DIRS})
 
@@ -138,8 +133,8 @@ set(UTIL_SRC
 
 # Tool sources:
 
-set(TEST_SRC
-    src/tools/test/test.cpp
+set(DAT_TEST_SRC
+    tests/DatTest.cpp
     src/tools/bincompare/bincomp.cpp
    )
 
@@ -158,16 +153,9 @@ add_library(${Genieutils_LIBRARY} ${FILE_SRC} ${LANG_SRC} ${DAT_SRC}
                                   ${RESOURCE_SRC} ${UTIL_SRC} ${SCRIPT_SRC} )
 target_link_libraries(${Genieutils_LIBRARY} ${ZLIB_LIBRARIES} ${Boost_LIBRARIES} ${ICONV_LIBRARIES})
 
-#add_executable(main main.cpp)
-#target_link_libraries(main ${Genieutils_LIBRARY})
-
 #------------------------------------------------------------------------------#
 # Dev tools:
 #------------------------------------------------------------------------------#
-
- # test doesn't build :(
- # add_executable(test ${TEST_SRC})
- # target_link_libraries(test ${Genieutils_LIBRARY} ${Boost_LIBRARIES} ) #${ZLIB_LIBRARIES} ${Boost_LIBRARIES} ${Genieutils_LIBRARY})
 
 if (GUTILS_TOOLS)
   add_executable(datextract ${EXTRACT_SRC})
@@ -186,4 +174,17 @@ if (GUTILS_TEST)
 #                       ${SFML_SYSTEM_LIBRARY}
 #                       ${SFML_GRAPHICS_LIBRARY}
   )
+
+  enable_testing()
+
+  set(test_DIR ${CMAKE_BINARY_DIR}/tests)
+
+  file(MAKE_DIRECTORY ${test_DIR})
+
+  add_definitions(-DBOOST_TEST_DYN_LINK)
+  add_executable(tests/dat_test ${DAT_TEST_SRC})
+  target_link_libraries(tests/dat_test ${Boost_LIBRARIES} ${Genieutils_LIBRARY})
+
+  add_test(dat_test ${test_DIR}/dat_test)
 endif(GUTILS_TEST)
+
