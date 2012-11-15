@@ -1,10 +1,9 @@
-# Available settings:
-#
-# GUTILS_TOOLS:BOOL     if true to enable compilation of gutils tools
-# GUTILS_TEST:BOOL      if true some debug/test classes will be compiled
-#
-
 cmake_minimum_required(VERSION 2.8)
+
+# project options
+
+option(GU_TOOLS "build dev tools" OFF)
+option(GU_TEST "build test environment" OFF)
 
 set(Genieutils_LIBRARY genieutils)
 
@@ -23,14 +22,14 @@ set(Boost_USE_STATIC_RUNTIME    OFF)
 find_package(ZLIB REQUIRED)
 find_package(Boost 1.42 COMPONENTS iostreams REQUIRED)
 
-if (GUTILS_TOOLS)
+if (GU_TOOLS)
   find_package(Boost 1.42 COMPONENTS program_options REQUIRED)
-endif(GUTILS_TOOLS)
+endif(GU_TOOLS)
 
-if (GUTILS_TEST)
+if (GU_TEST)
   find_package(Boost 1.42 COMPONENTS unit_test_framework program_options REQUIRED)
 #  find_package(SFML COMPONENTS SYSTEM WINDOW GRAPHICS REQUIRED)
-endif (GUTILS_TEST)
+endif (GU_TEST)
 
 find_package(Iconv)
 
@@ -157,17 +156,17 @@ target_link_libraries(${Genieutils_LIBRARY} ${ZLIB_LIBRARIES} ${Boost_LIBRARIES}
 # Dev tools:
 #------------------------------------------------------------------------------#
 
-if (GUTILS_TOOLS)
+if (GU_TOOLS)
   add_executable(datextract ${EXTRACT_SRC})
   target_link_libraries(datextract ${ZLIB_LIBRARIES} ${Boost_LIBRARIES} ${Genieutils_LIBRARY})
 
   add_executable(bincomp ${BINCOMP_SRC})
-endif (GUTILS_TOOLS)
+endif (GU_TOOLS)
 
 #------------------------------------------------------------------------------#
 # Debug/Test:
 #------------------------------------------------------------------------------#
-if (GUTILS_TEST)
+if (GU_TEST)
   add_executable(main main.cpp)
   target_link_libraries(main ${Genieutils_LIBRARY}
 #                       ${SFML_WINDOW_LIBRARY}
@@ -186,5 +185,5 @@ if (GUTILS_TEST)
   target_link_libraries(tests/dat_test ${Boost_LIBRARIES} ${Genieutils_LIBRARY})
 
   add_test(dat_test ${test_DIR}/dat_test)
-endif(GUTILS_TEST)
+endif(GU_TEST)
 
