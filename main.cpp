@@ -255,12 +255,12 @@ int main(int argc, char **argv) {
   
   genie::SoundItem si2;
   
-//   bia >> si2;
-//   boa << si2;
+  bia >> si2;
+  boa << si2;
   
   std::cout << si2.FileName << std::endl;
   
-//   xoa << BOOST_SERIALIZATION_NVP(si);
+  xoa << boost::serialization::make_nvp("SoundItem", si);
   
 //   boost::archive::binary_oarchive oa(ofs, boost::archive::no_header | boost::archive::no_codecvt | boost::archive::no_tracking);
 //   oa << si;

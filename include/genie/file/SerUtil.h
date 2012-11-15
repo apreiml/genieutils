@@ -18,11 +18,22 @@
 
 #ifndef GENIE_SERUTIL_H
 #define GENIE_SERUTIL_H
+
 #include <iostream>
 #include <string>
+#include <string.h>
 
 #include <boost/serialization/binary_object.hpp>
-#include <string.h>
+#include <boost/serialization/string.hpp>
+
+#include "BinaryOutArchive.h"
+#include "BinaryInArchive.h"
+
+/// Macro for calling a SerUtil method, that sets the name parameter of a
+/// method to the variables name. Warning: The archive variable must be called
+/// ar when using this macro!
+#define GENIE_CALL_NVP_SER(method_name, name, arg2) \
+  genie::SerUtil::method_name(ar, "name", name, arg2)
 
 namespace genie
 {
@@ -36,19 +47,32 @@ public:
   template<class Archive>
   static void sFixString(Archive &ar, const char *name, std::string &str, std::size_t size)
   {
-    // TODO dyn cast: check if BinaryOutArchive, else write string
-    
-    char *cstr = new char[size];
-    boost::serialization::binary_object bo(cstr, size);
-    
-    if (typename Archive::is_saving())
-      strncpy(cstr, str.c_str(), size);
-      
-    ar & bo;
-      
-    if (typename Archive::is_loading())
-      str = std::string(cstr);
+    ar & boost::serialization::make_nvp<std::string>(name, str);
   }
+  
+  static void sFixString(BinaryOutArchive &ar, const char *name, std::string &str, std::size_t size)
+  {
+    char *cstr = new char[size]; //TODO test if buffer[highest string size] is faster
+    
+    strncpy(cstr, str.c_str(), size); // strncpy aligns dest with \0 until size
+      
+    ar & boost::serialization::make_binary_object(cstr, size);
+    
+    delete cstr;
+    
+  }
+  
+  static void sFixString(BinaryInArchive &ar, const char *name, std::string &str, std::size_t size)
+  {
+    char *cstr = new char[size];
+    
+    ar & boost::serialization::make_binary_object(cstr, size);
+      
+    str = std::string(cstr, size);
+    delete cstr;
+  }
+  
+  
 };
 
 }

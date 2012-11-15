@@ -63,8 +63,7 @@ private:
   template<class Archive>
   void serialize(Archive & ar, const unsigned int version)
   {
-//     ar & GENIE_NVP(FileName);
-    SerUtil::sFixString<Archive>(ar, "FileName", FileName, getFileNameSize());
+    GENIE_CALL_NVP_SER(sFixString, FileName, getFileNameSize());
     
     ar & GENIE_NVP(ResourceID);
     ar & GENIE_NVP(Probability);
@@ -75,8 +74,6 @@ private:
       ar & GENIE_NVP(Unknown1);
     }
   }
-  //*/
-  
 };
 
 }

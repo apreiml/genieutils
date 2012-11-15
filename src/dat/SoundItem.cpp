@@ -59,20 +59,6 @@ void SoundItem::serializeObject(void )
     BinaryOutArchive boa(*getOStream());
     boa << *this;
   }
-  //*/
-  /*
-  
-  serializeStr(FileName, getFileNameSize());
-  
-  serialize<int32_t>(ResourceID);
-  serialize<int16_t>(Probability);
-  
-  if (getGameVersion() >= genie::GV_AoK)
-  {
-    serialize<int16_t>(Civ);
-    serialize<int16_t>(Unknown1);
-  }
-  //*/
 }
 
 
