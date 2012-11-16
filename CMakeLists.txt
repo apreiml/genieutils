@@ -1,10 +1,9 @@
-# Available settings:
-#
-# GUTILS_TOOLS:BOOL     if true to enable compilation of gutils tools
-# GUTILS_TEST:BOOL      if true some debug/test classes will be compiled
-#
-
 cmake_minimum_required(VERSION 2.8)
+
+# project options
+
+option(GU_TOOLS "build dev tools" OFF)
+option(GU_TEST "build test environment" OFF)
 
 set(Genieutils_LIBRARY genieutils)
 
@@ -23,14 +22,14 @@ set(Boost_USE_STATIC_RUNTIME    OFF)
 find_package(ZLIB REQUIRED)
 find_package(Boost 1.42 COMPONENTS iostreams serialization REQUIRED)
 
-if (GUTILS_TOOLS)
+if (GU_TOOLS)
   find_package(Boost 1.42 COMPONENTS program_options REQUIRED)
-endif(GUTILS_TOOLS)
+endif(GU_TOOLS)
 
-if (GUTILS_TEST)
+if (GU_TEST)
   find_package(Boost 1.42 COMPONENTS unit_test_framework program_options REQUIRED)
 #  find_package(SFML COMPONENTS SYSTEM WINDOW GRAPHICS REQUIRED)
-endif (GUTILS_TEST)
+endif (GU_TEST)
 
 find_package(Iconv)
 
@@ -52,7 +51,7 @@ endif (${ICONV_FOUND})
 
 include_directories(${GU_INCLUDE_DIRS})
 
-add_definitions(-Wall -Wsign-compare)
+add_definitions(-Wall -Wsign-compare -DBOOST_IOSTREAMS_NO_LIB)
 
 #------------------------------------------------------------------------------#
 # Source files: 
@@ -62,17 +61,6 @@ set(FILE_SRC
     src/file/IFile.cpp
     src/file/Compressor.cpp
     )
-
-if (${GU_LANG_SUPPORT})
-  set(PCRIO_SRC extern/pcrio/pcrio.c)
-  set_source_files_properties(extern/pcrio/pcrio.c PROPERTIES LANGUAGE CXX )
-
-  set(LANG_SRC ${PCRIO_SRC}
-      src/lang/LangFile.cpp
-     )
-else (${GU_LANG_SUPPORT})
-  set(LANG_SRC)
-endif (${GU_LANG_SUPPORT})
     
 
 set(DAT_SRC
@@ -131,6 +119,23 @@ set(UTIL_SRC
     src/util/Logger.cpp
     )
 
+# extern
+
+if (${GU_LANG_SUPPORT})
+  set(PCRIO_SRC extern/pcrio/pcrio.c)
+  set_source_files_properties(extern/pcrio/pcrio.c PROPERTIES LANGUAGE CXX )
+
+  set(LANG_SRC ${PCRIO_SRC}
+      src/lang/LangFile.cpp
+     )
+else (${GU_LANG_SUPPORT})
+  set(LANG_SRC)
+endif (${GU_LANG_SUPPORT})
+
+set(ZLIB_SRC 
+    extern/zlib/zlib.cpp
+    )
+
 # Tool sources:
 
 set(DAT_TEST_SRC
@@ -150,24 +155,25 @@ set(BINCOMP_SRC src/tools/bincompare/bincomp.cpp
 #------------------------------------------------------------------------------#
 
 add_library(${Genieutils_LIBRARY} ${FILE_SRC} ${LANG_SRC} ${DAT_SRC} 
-                                  ${RESOURCE_SRC} ${UTIL_SRC} ${SCRIPT_SRC} )
+                                  ${RESOURCE_SRC} ${UTIL_SRC} ${SCRIPT_SRC}
+                                  ${ZLIB_SRC})
 target_link_libraries(${Genieutils_LIBRARY} ${ZLIB_LIBRARIES} ${Boost_LIBRARIES} ${ICONV_LIBRARIES})
 
 #------------------------------------------------------------------------------#
 # Dev tools:
 #------------------------------------------------------------------------------#
 
-if (GUTILS_TOOLS)
+if (GU_TOOLS)
   add_executable(datextract ${EXTRACT_SRC})
   target_link_libraries(datextract ${ZLIB_LIBRARIES} ${Boost_LIBRARIES} ${Genieutils_LIBRARY})
 
   add_executable(bincomp ${BINCOMP_SRC})
-endif (GUTILS_TOOLS)
+endif (GU_TOOLS)
 
 #------------------------------------------------------------------------------#
 # Debug/Test:
 #------------------------------------------------------------------------------#
-if (GUTILS_TEST)
+if (GU_TEST)
   add_executable(main main.cpp)
   target_link_libraries(main ${Genieutils_LIBRARY}
 #                       ${SFML_WINDOW_LIBRARY}
@@ -186,5 +192,5 @@ if (GUTILS_TEST)
   target_link_libraries(tests/dat_test ${Boost_LIBRARIES} ${Genieutils_LIBRARY})
 
   add_test(dat_test ${test_DIR}/dat_test)
-endif(GUTILS_TEST)
+endif(GU_TEST)
 
