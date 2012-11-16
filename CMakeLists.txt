@@ -51,7 +51,7 @@ endif (${ICONV_FOUND})
 
 include_directories(${GU_INCLUDE_DIRS})
 
-add_definitions(-Wall -Wsign-compare)
+add_definitions(-Wall -Wsign-compare -DBOOST_IOSTREAMS_NO_LIB)
 
 #------------------------------------------------------------------------------#
 # Source files: 
@@ -61,17 +61,6 @@ set(FILE_SRC
     src/file/IFile.cpp
     src/file/Compressor.cpp
     )
-
-if (${GU_LANG_SUPPORT})
-  set(PCRIO_SRC extern/pcrio/pcrio.c)
-  set_source_files_properties(extern/pcrio/pcrio.c PROPERTIES LANGUAGE CXX )
-
-  set(LANG_SRC ${PCRIO_SRC}
-      src/lang/LangFile.cpp
-     )
-else (${GU_LANG_SUPPORT})
-  set(LANG_SRC)
-endif (${GU_LANG_SUPPORT})
     
 
 set(DAT_SRC
@@ -130,6 +119,23 @@ set(UTIL_SRC
     src/util/Logger.cpp
     )
 
+# extern
+
+if (${GU_LANG_SUPPORT})
+  set(PCRIO_SRC extern/pcrio/pcrio.c)
+  set_source_files_properties(extern/pcrio/pcrio.c PROPERTIES LANGUAGE CXX )
+
+  set(LANG_SRC ${PCRIO_SRC}
+      src/lang/LangFile.cpp
+     )
+else (${GU_LANG_SUPPORT})
+  set(LANG_SRC)
+endif (${GU_LANG_SUPPORT})
+
+set(ZLIB_SRC 
+    extern/zlib/zlib.cpp
+    )
+
 # Tool sources:
 
 set(DAT_TEST_SRC
@@ -149,7 +155,8 @@ set(BINCOMP_SRC src/tools/bincompare/bincomp.cpp
 #------------------------------------------------------------------------------#
 
 add_library(${Genieutils_LIBRARY} ${FILE_SRC} ${LANG_SRC} ${DAT_SRC} 
-                                  ${RESOURCE_SRC} ${UTIL_SRC} ${SCRIPT_SRC} )
+                                  ${RESOURCE_SRC} ${UTIL_SRC} ${SCRIPT_SRC}
+                                  ${ZLIB_SRC})
 target_link_libraries(${Genieutils_LIBRARY} ${ZLIB_LIBRARIES} ${Boost_LIBRARIES} ${ICONV_LIBRARIES})
 
 #------------------------------------------------------------------------------#
