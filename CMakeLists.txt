@@ -187,7 +187,7 @@ if (GU_TEST)
 
   file(MAKE_DIRECTORY ${test_DIR})
 
-  add_definitions(-DBOOST_TEST_DYN_LINK)
+# add_definitions(-DBOOST_TEST_DYN_LINK)
   add_executable(tests/dat_test ${DAT_TEST_SRC})
   target_link_libraries(tests/dat_test ${Boost_LIBRARIES} ${Genieutils_LIBRARY})
 
