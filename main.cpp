@@ -237,6 +237,7 @@ int main(int argc, char **argv) {
   std::cout << df.Civs[0].Units[0].getGameVersion() << std::endl;
   std::cout << "Archive: " <<std::endl;
   */
+  /*
   genie::SoundItem si;
   si.FileName = "test.wav";
   si.Probability = 2;
@@ -246,21 +247,30 @@ int main(int argc, char **argv) {
   std::ofstream xofs("sout.xml");
   genie::BinaryOutArchive boa(ofs);
   boost::archive::xml_oarchive xoa(xofs);
-  
+ */ 
 //   boa << si;
   
 //   ofs.close();
-  std::ifstream ifs("iorw/sound_item.datp", std::ios_base::binary);
+  std::ifstream ifs("iorw/sound.datp", std::ios_base::binary);
+  std::ofstream ofs("tmp/sout.datp", std::ios_base::binary);
   genie::BinaryInArchive bia(ifs);
+  genie::BinaryOutArchive boa(ofs);
   
-  genie::SoundItem si2;
+  genie::Sound snd;
   
-  bia >> si2;
-  boa << si2;
+  bia >> snd;
   
-  std::cout << si2.FileName << std::endl;
+  std::cout << snd.Items.size() << std::endl;
   
-  xoa << boost::serialization::make_nvp("SoundItem", si);
+  boa << snd;
+  //genie::SoundItem si2;
+  
+//   bia >> si2;
+//   boa << si2;
+  
+//   std::cout << si2.FileName << std::endl;
+  
+//   xoa << boost::serialization::make_nvp("SoundItem", si);
   
 //   boost::archive::binary_oarchive oa(ofs, boost::archive::no_header | boost::archive::no_codecvt | boost::archive::no_tracking);
 //   oa << si;

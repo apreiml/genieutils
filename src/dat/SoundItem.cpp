@@ -48,17 +48,6 @@ short SoundItem::getFileNameSize()
 
 void SoundItem::serializeObject(void )
 {
-  
-  if (isOperation(OP_READ))
-  {
-    BinaryInArchive bia(*getIStream());
-    bia >> *this;
-  } 
-  else if (isOperation(OP_WRITE)) 
-  {
-    BinaryOutArchive boa(*getOStream());
-    boa << *this;
-  }
 }
 
 

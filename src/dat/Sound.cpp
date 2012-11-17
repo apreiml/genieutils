@@ -43,11 +43,25 @@ void Sound::setGameVersion(GameVersion gv)
 
 void Sound::serializeObject(void )
 {
+    if (isOperation(OP_READ))
+  {
+    BinaryInArchive bia(*getIStream());
+    bia.setGameVersion(getGameVersion());
+    bia >> *this;
+  } 
+  else if (isOperation(OP_WRITE)) 
+  {
+    BinaryOutArchive boa(*getOStream());
+    boa.setGameVersion(getGameVersion());;
+    boa << *this;
+  }
+  /*
   serialize<int32_t>(ID);
   serializeSize<uint16_t>(ItemCount, Items.size());
   serialize<int32_t>(Unknown1);
   
   serializeSub<SoundItem>(Items, ItemCount);
+  */
 }
 
 

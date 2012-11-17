@@ -7,19 +7,20 @@
 #include "../src/tools/bincompare/bincomp.h"
 
 const char * const DAT_PATH = "dat/";
+const char * const OUT_PATH = "tmp/";
 
 const char * getFileName(genie::GameVersion gv)
 {
-  std::string file_name(DAT_PATH);
+  std::string file_name;
   
   switch(gv)
   {
-    case genie::GV_AoE: file_name += "empires.dat"; break;
-    case genie::GV_RoR: file_name += "empires_x1.dat"; break;
-    case genie::GV_AoK: file_name += "empires2.dat"; break;
-    case genie::GV_TC: file_name += "empires2_x1_p1.dat"; break;
-    case genie::GV_SWGB: file_name += "genie.dat"; break;
-    case genie::GV_CC: file_name += "genie_x1.dat"; break;
+    case genie::GV_AoE: file_name = "empires.dat"; break;
+    case genie::GV_RoR: file_name = "empires_x1.dat"; break;
+    case genie::GV_AoK: file_name = "empires2.dat"; break;
+    case genie::GV_TC: file_name = "empires2_x1_p1.dat"; break;
+    case genie::GV_SWGB: file_name = "genie.dat"; break;
+    case genie::GV_CC: file_name = "genie_x1.dat"; break;
     
     case genie::GV_None: break;
   }
@@ -38,18 +39,21 @@ genie::DatFile *openFile(genie::GameVersion gv)
 
 int readWriteDiff(genie::GameVersion gv)
 {
-  std::string fn = std::string(getFileName(gv));
+  std::string fin = std::string(DAT_PATH) + std::string(getFileName(gv));
+  
+  std::string fn = std::string(OUT_PATH) + std::string(getFileName(gv));
   std::string fn_or = fn + ".raw_orig";
   std::string fn_gc = fn + ".genie";
   std::string fn_gr = fn + ".raw_genie";
   
+  std::cout << fin << std::endl;
 
   genie::DatFile file;
   file.setGameVersion(gv);
   
-  file.extractRaw(fn.c_str(), fn_or.c_str());
+  file.extractRaw(fin.c_str(), fn_or.c_str());
   
-  file.load(fn.c_str());
+  file.load(fin.c_str());
   file.saveAs(fn_gc.c_str());
 
   file.extractRaw(fn_gc.c_str(), fn_gr.c_str());

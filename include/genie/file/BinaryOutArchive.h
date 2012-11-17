@@ -22,6 +22,8 @@
 #include <boost/archive/detail/common_oarchive.hpp>
 #include <cstddef> // std::size_t
 
+#include "genie/Types.h"
+
 namespace genie
 {
 
@@ -43,19 +45,18 @@ public:
 //     std::cout << "write: " << t << std::endl;
     ostr_->write(reinterpret_cast<const char *>(&t), sizeof(T)); 
   }
- /* 
-  void save(const std::string &t) 
-  { 
-    std::cout << "string" << t << std::endl; 
-  }*/
   
   void save_binary(const void *address, std::size_t count)
   {
     ostr_->write(reinterpret_cast<const char*>(address), count);
   }
   
+  void setGameVersion(GameVersion gv) { gv_ = gv; }
+  GameVersion getGameVersion(void) const { return gv_; }
+  
 private:
   std::ostream *ostr_;
+  GameVersion gv_;
   
   // Ignore additional stored information
   virtual void vsave(const boost::archive::version_type t) {}

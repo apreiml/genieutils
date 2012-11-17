@@ -20,9 +20,10 @@
 
 #ifndef GENIE_SOUND_H
 #define GENIE_SOUND_H
-#include "genie/file/ISerializable.h"
 
 #include <vector>
+
+#include "genie/file/ISerializable.h"
 #include "SoundItem.h"
 
 namespace genie
@@ -44,6 +45,19 @@ private:
   uint16_t ItemCount;
   
   virtual void serializeObject(void);
+  
+  friend class boost::serialization::access;
+  
+  template<class Archive>
+  void serialize(Archive & ar, const unsigned int version)
+  {
+    ar & GENIE_NVP(ID);
+    GENIE_CALL_NVP_SER2(sSize, ItemCount, Items);
+    ar & GENIE_NVP(Unknown1);
+    
+    GENIE_CALL_NVP_SER(sVec, Items);
+  }
+  
 };
 
 }
