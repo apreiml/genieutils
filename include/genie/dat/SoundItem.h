@@ -28,7 +28,6 @@
 
 #include "genie/file/SerUtil.h"
 
-#define GENIE_NVP(var) BOOST_SERIALIZATION_NVP(var)
 
 namespace genie
 {
@@ -63,7 +62,7 @@ private:
   template<class Archive>
   void serialize(Archive & ar, const unsigned int version)
   {
-    GENIE_CALL_NVP_SER(sFixString, FileName, getFileNameSize());
+    GENIE_CALL_NVP_SER2(sFixString, FileName, getFileNameSize());
     
     ar & GENIE_NVP(ResourceID);
     ar & GENIE_NVP(Probability);

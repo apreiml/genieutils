@@ -22,6 +22,8 @@
 #include <boost/archive/detail/common_iarchive.hpp>
 #include <cstddef> // std::size_t
 
+#include "genie/Types.h"
+
 namespace genie
 {
 
@@ -43,14 +45,18 @@ public:
     istr_->read(reinterpret_cast<char *>(&t), sizeof(T)); 
     //std::cout << "Read: " << t << std::endl;
   }
-  
+
   void load_binary(void *address, std::size_t count)
   {
     istr_->read(reinterpret_cast<char *>(address), count);
   }
   
+  void setGameVersion(GameVersion gv) { gv_ = gv; }
+  GameVersion getGameVersion(void) const { return gv_; }
+  
 private:
   std::istream *istr_;
+  GameVersion gv_;
   
   // Ignore additional stored information
   virtual void vload(boost::archive::version_type &t) {}

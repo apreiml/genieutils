@@ -25,51 +25,107 @@
 
 #include <boost/serialization/binary_object.hpp>
 #include <boost/serialization/string.hpp>
+#include <boost/serialization/vector.hpp>
 
+#include "ISerializable.h"
 #include "BinaryOutArchive.h"
 #include "BinaryInArchive.h"
 
 /// Macro for calling a SerUtil method, that sets the name parameter of a
 /// method to the variables name. Warning: The archive variable must be called
 /// ar when using this macro!
-#define GENIE_CALL_NVP_SER(method_name, name, arg2) \
-  genie::SerUtil::method_name(ar, "name", name, arg2)
+#define GENIE_CALL_NVP_SER(method_name, var) \
+  genie::SerUtil::method_name(ar, #var, var)
+  
+#define GENIE_CALL_NVP_SER2(method_name, var, arg) \
+  genie::SerUtil::method_name(ar, #var, var, arg)
 
 namespace genie
 {
-  
+
 /// Serialization utils
 class SerUtil 
 {
 public:
   
   /// Serialize a string with fixed size.
+  //
   template<class Archive>
   static void sFixString(Archive &ar, const char *name, std::string &str, std::size_t size)
   {
-    ar & boost::serialization::make_nvp<std::string>(name, str);
+    ar & boost::serialization::make_nvp(name, str);
   }
   
   static void sFixString(BinaryOutArchive &ar, const char *name, std::string &str, std::size_t size)
   {
     char *cstr = new char[size]; //TODO test if buffer[highest string size] is faster
-    
     strncpy(cstr, str.c_str(), size); // strncpy aligns dest with \0 until size
-      
     ar & boost::serialization::make_binary_object(cstr, size);
-    
     delete cstr;
-    
   }
   
   static void sFixString(BinaryInArchive &ar, const char *name, std::string &str, std::size_t size)
   {
     char *cstr = new char[size];
-    
     ar & boost::serialization::make_binary_object(cstr, size);
-      
     str = std::string(cstr, size);
     delete cstr;
+  }
+  
+  /// Updates size on write and resizes vector on read
+  //
+  template<class Archive, class T, class S>
+  static void sSize(Archive &ar, const char *name, S &size, std::vector<T> &vec)
+  {
+    std::cout << "TODO: sSize \n";
+  }
+  
+  template<class T, class S>
+  static void sSize(BinaryInArchive &ar, const char *name, S &size, std::vector<T> &vec) 
+  {
+    ar >> size;
+    vec.resize(size);
+  }
+  
+  template<class T, class S>
+  static void sSize(BinaryOutArchive &ar, const char *name, S &size, std::vector<T> &vec)
+  {
+    size = vec.size();
+    ar << size;
+  }
+  
+  
+  /// Serialize a std::vector
+  //
+  template<class Archive, class T>
+  static void sVec(Archive &ar, const char *name, std::vector<T> &vec)
+  {
+    ar & boost::serialization::make_nvp(name, vec);
+  }
+  
+  template<class T>
+  static void sVec(BinaryInArchive &ar, const char *name, std::vector<T> &vec)
+  {
+    class std::vector<T>::iterator it = vec.begin();
+    ISerializable *ser = 0;
+    
+    // vector should already have proper size (updateSize)
+    for (; it != vec.end(); it++) 
+    {
+      if ( (ser = dynamic_cast<ISerializable*>(&(*it))) )
+        ser->setGameVersion(ar.getGameVersion());
+      
+      ar >> (*it);
+    }
+  }
+    
+  template<class T>
+  static void sVec(BinaryOutArchive &ar, const char *name, std::vector<T> &vec)
+  {
+    class std::vector<T>::iterator it = vec.begin();
+    
+    for (; it != vec.end(); it++) 
+      ar << (*it);
   }
   
   
