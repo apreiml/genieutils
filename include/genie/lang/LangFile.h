@@ -27,6 +27,24 @@ struct pcr_file;
 
 namespace genie
 {
+  
+class PcrioError : public std::ios::failure
+{
+public:
+  explicit PcrioError(int error);
+  int getError(void) const { return error_; }
+  
+  static void check(int error);
+  
+private:
+  int error_;
+};
+
+class IconvError : public std::ios::failure
+{
+public:
+  explicit IconvError(const std::string &str) : std::ios::failure(str) {};
+};
 
 /// TODO Proper error handling
 class LangFile : public IFile
@@ -62,7 +80,7 @@ private:
   uint32_t defaultCultureId_;
   uint32_t defaultCodepage_;
   
-  static const unsigned int CONV_BUF_SIZE = 7;
+  static const unsigned int CONV_BUF_SIZE = 100;
   static const char *CONV_DEFAULT_CHARSET;
   
   std::string systemDefaultCharset_;  // all strings will be converted from/to this charset
