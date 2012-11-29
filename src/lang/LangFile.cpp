@@ -33,6 +33,26 @@ const char *LangFile::CONV_DEFAULT_CHARSET = "UTF-8";
 Logger& LangFile::log = Logger::getLogger("freeaoe.DrsFile");
 
 //------------------------------------------------------------------------------
+PcrioError::PcrioError(int error) : 
+  std::ios::failure(pcr_error_message((pcr_error_code)error)), error_(error)
+{
+}
+
+//------------------------------------------------------------------------------
+void PcrioError::check(int error)
+{
+  switch(error)
+  {
+    case PCR_ERROR_NONE:
+      return;
+    case PCR_ERROR_BAD_ALLOC:
+      throw std::bad_alloc();
+    default:
+      throw PcrioError(error);
+  }
+}
+
+//------------------------------------------------------------------------------
 LangFile::LangFile() 
 {
   pfile_ = 0;
@@ -74,44 +94,56 @@ void LangFile::load(const char *filename) throw (std::ios_base::failure)
   
   pfile_ = pcr_read_file(filename, &errorCode_);
   
-  if (PCR_FAILURE(errorCode_))
+  PcrioError::check(errorCode_); // on error throw
+  
+  std::stringstream cName;
+  
+  const struct pcr_language *lang = pcr_get_default_language(pfile_);
+  
+  if (!lang)
   {
-    pcr_free(pfile_);
-    pfile_ = 0;
+    log.info("Trying to choose default language...");
     
-    throw std::ios_base::failure("Load: Can't load file: " + std::string(filename) +
-      ": Error: " + std::string(pcr_error_message(errorCode_)));
+    const struct language_info_array *linfos = pcr_get_language_info(pfile_);
+    
+    if (linfos->count == 0)
+      throw std::string("Not supported: There are no resources in dll file");
+    
+    struct language_info *linfo = &linfos->array[0];
+    
+    // Get most common language desc
+    for (unsigned int i=1; i<linfos->count; i++)
+      if (linfo->item_count < linfos->array[i].item_count)
+        linfo = &linfos->array[i];
+      
+    defaultCultureId_ = linfo->lang.id;
+    defaultCodepage_ = linfo->lang.codepage;
+        
   }
   else
   {
-    std::stringstream cName;
-    
-    const struct pcr_language *lang = pcr_get_default_language(pfile_);
-    
-    if (!lang)
-      throw std::string("pcrio couldn't set default culture, not supported yet!");
-    
     defaultCultureId_ = lang->id;
     defaultCodepage_ = lang->codepage;
-    
-    log.info("Culture Id: %d, Codepage: %d.", defaultCultureId_, defaultCodepage_); 
+  }
   
-    if (defaultCodepage_ > 0)
+  log.info("Culture Id: %d, Codepage: %d.", defaultCultureId_, defaultCodepage_); 
+
+  if (defaultCodepage_ > 0)
+  {
+    cName << "WINDOWS-" << defaultCodepage_;
+    
+    log.info("Loading \"%s\" charset converter description.", cName.str().c_str());
+    
+    toDefaultCharsetCd_ = iconv_open(systemDefaultCharset_.c_str(), cName.str().c_str());
+    fromDefaultCharsetCd_ = iconv_open(cName.str().c_str(), systemDefaultCharset_.c_str());
+    
+    std::cout << cName.str().c_str() << std::endl;
+    
+    if (toDefaultCharsetCd_ == (iconv_t) - 1 || fromDefaultCharsetCd_ == (iconv_t)-1)
     {
-      cName << "WINDOWS-" << defaultCodepage_;
-     
-      log.info("Loading \"%s\" charset converter description.", cName.str().c_str());
-      
-      toDefaultCharsetCd_ = iconv_open(systemDefaultCharset_.c_str(), cName.str().c_str());
-      fromDefaultCharsetCd_ = iconv_open(cName.str().c_str(), systemDefaultCharset_.c_str());
-      
-      std::cout << cName.str().c_str() << std::endl;
-      
-      if (toDefaultCharsetCd_ == (iconv_t) - 1 || fromDefaultCharsetCd_ == (iconv_t)-1)
-        throw std::string("Cannot open default converter.");
+      log.error("Can't open default converter");
+      throw IconvError("Can't open default converter.");
     }
-    else
-      log.info("Codepage: 0");
   }
 }
 
@@ -126,8 +158,7 @@ void LangFile::saveAs(const char *filename) throw (std::ios_base::failure)
   
   pcr_write_file(filename, pfile_, &errorCode);
   
-  if (PCR_FAILURE(errorCode))
-    throw std::ios_base::failure("Save: Cant write file: \"" + std::string(filename));
+  PcrioError::check(errorCode);
 }
 
 //----------------------------------------------------------------------------
@@ -135,7 +166,7 @@ std::string LangFile::getString(unsigned int id)
 {
   std::string encodedStr, decodedStr;
   char *strBuf;
-  int strBufSize = pcr_get_strlen(pfile_, id) + 1;
+  int strBufSize = pcr_get_strlenL(pfile_, id, defaultCultureId_) + 1;
   
   if (strBufSize <= 1)
   {
@@ -147,9 +178,20 @@ std::string LangFile::getString(unsigned int id)
   
   log.info("%s: getString(%d);", getFileName(), id);
   
-  pcr_get_string(pfile_, id, strBuf, strBufSize);
+  int flag = pcr_get_stringL(pfile_, id, defaultCultureId_, strBuf, strBufSize);
   
-  encodedStr = std::string(strBuf, strBufSize);
+  encodedStr = std::string(strBuf, strBufSize - 1); // excluding \0
+  
+  int codepage;
+  
+  if (flag)
+  {
+    codepage = pcr_get_codepageL(pfile_, id, defaultCultureId_);
+    
+    log.info("Codepage differs, loading converter for cp [%d]", codepage);
+  }
+  else
+    codepage = defaultCodepage_;
   
   decodedStr = convertFrom(encodedStr, defaultCodepage_);
   
@@ -171,12 +213,24 @@ void LangFile::setString(unsigned int id, std::string str)
   
   log.info("| Convert from \"%s\" to \"%s\".", str.c_str(), encodedStr.c_str());
   
-  const struct pcr_language *lang = pcr_get_default_language(pfile_);
+  struct pcr_language lang;
+  lang.id = defaultCultureId_;
+  lang.codepage = defaultCodepage_;
   
-  int err = pcr_set_stringC(pfile_, id, *lang, encodedStr.c_str());
+  int err = pcr_set_stringC(pfile_, id, lang, encodedStr.c_str());
   
-  if (err != 0)
-    throw std::string("Error pcr_set_stringC!");
+  if (err > 0)
+    PcrioError::check(err);
+  else if (err == -1)   // wrong codepage
+  {
+    log.info("Trying to rewrite string converted to wrong codepage");
+    
+    lang.codepage = pcr_get_codepageL(pfile_, id, lang.id);
+    
+    encodedStr = convertTo(str, lang.codepage);
+    
+    PcrioError::check(pcr_set_stringC(pfile_, id, lang, encodedStr.c_str()));
+  }
 }
   
 void LangFile::setDefaultCharset(const char *charset)

@@ -190,7 +190,12 @@ if (GU_TEST)
 # add_definitions(-DBOOST_TEST_DYN_LINK)
   add_executable(tests/dat_test ${DAT_TEST_SRC})
   target_link_libraries(tests/dat_test ${Boost_LIBRARIES} ${Genieutils_LIBRARY})
-
+  
+  #lang test 
+  add_executable(tests/lang_test tests/LangTest.cpp)
+  target_link_libraries(tests/lang_test ${Boost_LIBRARIES} ${Genieutils_LIBRARY})
+  
+  add_test(lang_text ${test_DIR}/lang_test)
   add_test(dat_test ${test_DIR}/dat_test)
 endif(GU_TEST)
 
