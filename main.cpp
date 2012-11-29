@@ -9,8 +9,8 @@
 #include "genie/resource/Color.h"
 #include <genie/script/ScnFile.h>
 #include <genie/file/Compressor.h>
-#include <genie/file/BinaryOutArchive.h>
-#include <genie/file/BinaryInArchive.h>
+#include <genie/serialization/BinaryOutArchive.h>
+#include <genie/serialization/BinaryInArchive.h>
 #include <genie/lang/LangFile.h>
 #include <genie/dat/Research.h>
 #include <genie/dat/DatFile.h>

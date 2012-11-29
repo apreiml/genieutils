@@ -26,8 +26,8 @@
 #include <boost/serialization/nvp.hpp>
 #include <boost/serialization/level.hpp>
 
-#include "genie/file/BinaryOutArchive.h"
-#include "genie/file/BinaryInArchive.h"
+#include "BinaryOutArchive.h"
+#include "BinaryInArchive.h"
 
 namespace genie
 {

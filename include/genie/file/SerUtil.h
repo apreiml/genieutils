@@ -28,8 +28,8 @@
 #include <boost/serialization/vector.hpp>
 
 #include "ISerializable.h"
-#include "BinaryOutArchive.h"
-#include "BinaryInArchive.h"
+#include "genie/serialization/BinaryOutArchive.h"
+#include "genie/serialization/BinaryInArchive.h"
 
 /// Macro for calling a SerUtil method, that sets the name parameter of a
 /// method to the variables name. Warning: The archive variable must be called

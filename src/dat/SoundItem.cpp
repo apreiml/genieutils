@@ -19,8 +19,8 @@
 
 
 #include "genie/dat/SoundItem.h"
-#include <genie/file/BinaryInArchive.h>
-#include <genie/file/BinaryOutArchive.h>
+#include "genie/serialization/BinaryInArchive.h"
+#include "genie/serialization/BinaryOutArchive.h"
 #include <string.h>
 
 namespace genie
