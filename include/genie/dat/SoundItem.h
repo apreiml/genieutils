@@ -28,6 +28,8 @@
 
 #include "genie/file/SerUtil.h"
 
+#include "genie/serialization/String.h"
+
 
 namespace genie
 {
@@ -62,7 +64,9 @@ private:
   template<class Archive>
   void serialize(Archive & ar, const unsigned int version)
   {
-    GENIE_CALL_NVP_SER2(sFixString, FileName, getFileNameSize());
+    serial::FixedString sFileName(FileName, getFileNameSize());
+    
+    ar & boost::serialization::make_nvp("FileName", sFileName);
     
     ar & GENIE_NVP(ResourceID);
     ar & GENIE_NVP(Probability);
@@ -73,6 +77,7 @@ private:
       ar & GENIE_NVP(Unknown1);
     }
   }
+  
 };
 
 }

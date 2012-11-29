@@ -48,30 +48,6 @@ class SerUtil
 {
 public:
   
-  /// Serialize a string with fixed size.
-  //
-  template<class Archive>
-  static void sFixString(Archive &ar, const char *name, std::string &str, std::size_t size)
-  {
-    ar & boost::serialization::make_nvp(name, str);
-  }
-  
-  static void sFixString(BinaryOutArchive &ar, const char *name, std::string &str, std::size_t size)
-  {
-    char *cstr = new char[size]; //TODO test if buffer[highest string size] is faster
-    strncpy(cstr, str.c_str(), size); // strncpy aligns dest with \0 until size
-    ar & boost::serialization::make_binary_object(cstr, size);
-    delete cstr;
-  }
-  
-  static void sFixString(BinaryInArchive &ar, const char *name, std::string &str, std::size_t size)
-  {
-    char *cstr = new char[size];
-    ar & boost::serialization::make_binary_object(cstr, size);
-    str = std::string(cstr, size);
-    delete cstr;
-  }
-  
   /// Updates size on write and resizes vector on read
   //
   template<class Archive, class T, class S>
