@@ -24,7 +24,11 @@
 #include <vector>
 
 #include "genie/file/ISerializable.h"
+#include "genie/serialization/Vector.h"
+#include "genie/file/SerUtil.h"
+
 #include "SoundItem.h"
+
 
 namespace genie
 {
@@ -42,7 +46,6 @@ public:
   std::vector<SoundItem> Items;
 
 private:
-  uint16_t ItemCount;
   
   virtual void serializeObject(void);
   
@@ -51,11 +54,13 @@ private:
   template<class Archive>
   void serialize(Archive & ar, const unsigned int version)
   {
+    serial::Vector<SoundItem, uint16_t> sItems(Items, getGameVersion());
+    
     ar & GENIE_NVP(ID);
-    GENIE_CALL_NVP_SER2(sSize, ItemCount, Items);
+    sItems.serialSize(ar);
     ar & GENIE_NVP(Unknown1);
     
-    GENIE_CALL_NVP_SER(sVec, Items);
+    ar & boost::serialization::make_nvp("Items", sItems);
   }
   
 };

@@ -25,6 +25,7 @@
 #include <boost/serialization/access.hpp>
 #include <boost/serialization/nvp.hpp>
 #include <boost/serialization/level.hpp>
+#include <boost/serialization/binary_object.hpp>
 
 #include "BinaryOutArchive.h"
 #include "BinaryInArchive.h"

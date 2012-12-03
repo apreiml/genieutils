@@ -23,7 +23,7 @@
 namespace genie
 {
 
-Sound::Sound()
+Sound::Sound() 
 {
   ID = -1;
   Unknown1 = 300000;

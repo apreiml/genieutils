@@ -26,8 +26,6 @@
 #include <boost/serialization/access.hpp>
 #include <boost/serialization/nvp.hpp>
 
-#include "genie/file/SerUtil.h"
-
 #include "genie/serialization/String.h"
 
 

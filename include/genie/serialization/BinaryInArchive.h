@@ -43,7 +43,6 @@ public:
   void load(T & t)
   {
     istr_->read(reinterpret_cast<char *>(&t), sizeof(T)); 
-    //std::cout << "Read: " << t << std::endl;
   }
 
   void load_binary(void *address, std::size_t count)

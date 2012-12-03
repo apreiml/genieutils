@@ -251,7 +251,7 @@ int main(int argc, char **argv) {
 //   boa << si;
   
 //   ofs.close();
-  std::ifstream ifs("iorw/sound_item.datp", std::ios_base::binary);
+  std::ifstream ifs("iorw/sound.datp", std::ios_base::binary);
   std::ofstream ofs("tmp/sout.datp", std::ios_base::binary);
   std::ofstream xofs("sout.xml");
   
@@ -260,14 +260,14 @@ int main(int argc, char **argv) {
   genie::BinaryInArchive bia(ifs);
   genie::BinaryOutArchive boa(ofs);
   
-  genie::SoundItem snd;
+  genie::Sound snd;
   
   bia >> snd;
   
   
   boa << snd;
   
-  xoa << boost::serialization::make_nvp("Sitem", snd);
+  xoa << boost::serialization::make_nvp("Sound", snd);
   //genie::SoundItem si2;
   
 //   bia >> si2;
