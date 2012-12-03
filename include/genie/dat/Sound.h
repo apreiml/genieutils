@@ -25,7 +25,6 @@
 
 #include "genie/file/ISerializable.h"
 #include "genie/serialization/Vector.h"
-#include "genie/file/SerUtil.h"
 
 #include "SoundItem.h"
 
