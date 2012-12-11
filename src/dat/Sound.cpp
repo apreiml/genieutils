@@ -38,11 +38,12 @@ void Sound::setGameVersion(GameVersion gv)
 {
   ISerializable::setGameVersion(gv);
   
-  updateGameVersion(Items);
+  serial::ISerializable::updateGameVersion(gv, Items); //TODO iorw change
 }
 
 void Sound::serializeObject(void )
 {
+  // TODO remove if implemented
     if (isOperation(OP_READ))
   {
     BinaryInArchive bia(*getIStream());

@@ -21,10 +21,7 @@
 #ifndef GENIE_SOUNDITEM_H
 #define GENIE_SOUNDITEM_H
 
-#include "genie/file/ISerializable.h"
-
-#include <boost/serialization/access.hpp>
-#include <boost/serialization/nvp.hpp>
+#include "genie/serialization/ISerializable.h"
 
 #include "genie/serialization/String.h"
 
@@ -32,7 +29,7 @@
 namespace genie
 {
 
-class SoundItem : public ISerializable
+class SoundItem : public serial::ISerializable
 {
 
 public:
@@ -55,8 +52,6 @@ public:
   int16_t Unknown1;//not in aoe/ror; seems to be unused in tc
   
 private:
-  virtual void serializeObject(void);
-  
   friend class boost::serialization::access;
   
   template<class Archive>
@@ -64,7 +59,7 @@ private:
   {
     serial::FixedString sFileName(FileName, getFileNameSize());
     
-    ar & boost::serialization::make_nvp("FileName", sFileName);
+    ar & GENIE_NVP2("FileName", sFileName);
     
     ar & GENIE_NVP(ResourceID);
     ar & GENIE_NVP(Probability);

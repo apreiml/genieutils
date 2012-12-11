@@ -268,6 +268,21 @@ int main(int argc, char **argv) {
   boa << snd;
   
   xoa << boost::serialization::make_nvp("Sound", snd);
+  
+  /*
+  genie::LangFile lf;
+  
+  lf.load("LANGUAGE.DLL");
+  
+  for (int i=0; i<10000; i++)
+  {
+    std::string str = lf.getString(i);
+    
+    if (str.empty() == false)
+      std::cout << str << std::endl;
+  }
+  */
+  
   //genie::SoundItem si2;
   
 //   bia >> si2;

@@ -20,7 +20,12 @@
 
 #ifndef GENIE_GRAPHICDELTA_H
 #define GENIE_GRAPHICDELTA_H
+
 #include "genie/file/ISerializable.h"
+
+#include "genie/serialization/ISerializable.h"
+#include "genie/serialization/BinaryInArchive.h"
+#include "genie/serialization/BinaryOutArchive.h"
 
 namespace genie
 {
@@ -43,6 +48,21 @@ public:
   
 private:
   virtual void serializeObject(void);
+  
+  friend class boost::serialization::access;
+  
+  template<class Archive>
+  void serialize(Archive & ar, const unsigned int version)
+  {
+    ar & GENIE_NVP(GraphicID);
+    ar & GENIE_NVP(Unknown1);
+    ar & GENIE_NVP(Unknown2);
+    ar & GENIE_NVP(Unknown3);
+    ar & GENIE_NVP(DirectionX);
+    ar & GENIE_NVP(DirectionY);
+    ar & GENIE_NVP(Unknown4);
+    ar & GENIE_NVP(Unknown5);
+  }
 };
 
 }

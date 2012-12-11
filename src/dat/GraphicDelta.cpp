@@ -42,6 +42,20 @@ GraphicDelta::~GraphicDelta()
 
 void GraphicDelta::serializeObject(void )
 {
+    // TODO remove if implemented
+    if (isOperation(OP_READ))
+  {
+    BinaryInArchive bia(*getIStream());
+    bia.setGameVersion(getGameVersion());
+    bia >> *this;
+  } 
+  else if (isOperation(OP_WRITE)) 
+  {
+    BinaryOutArchive boa(*getOStream());
+    boa.setGameVersion(getGameVersion());;
+    boa << *this;
+  }
+  /*
   serialize<int16_t>(GraphicID);
   serialize<int16_t>(Unknown1);
   serialize<int16_t>(Unknown2);
@@ -50,6 +64,7 @@ void GraphicDelta::serializeObject(void )
   serialize<int16_t>(DirectionY);
   serialize<int16_t>(Unknown4);
   serialize<int16_t>(Unknown5);
+  */
 }
 
 }

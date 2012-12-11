@@ -19,9 +19,6 @@
 
 
 #include "genie/dat/SoundItem.h"
-#include "genie/serialization/BinaryInArchive.h"
-#include "genie/serialization/BinaryOutArchive.h"
-#include <string.h>
 
 namespace genie
 {
@@ -45,10 +42,5 @@ short SoundItem::getFileNameSize()
   else
     return 27;
 }
-
-void SoundItem::serializeObject(void )
-{
-}
-
 
 }

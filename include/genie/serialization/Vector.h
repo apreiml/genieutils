@@ -23,8 +23,9 @@
 #include <boost/serialization/nvp.hpp>
 #include <boost/serialization/level.hpp>
 #include <boost/serialization/binary_object.hpp>
+#include <boost/serialization/vector.hpp>
 
-#include "genie/file/ISerializable.h"
+#include "genie/serialization/ISerializable.h"
 #include "BinaryOutArchive.h"
 #include "BinaryInArchive.h"
 
@@ -33,13 +34,13 @@ namespace genie
 namespace serial
 {
 
-/// class for serializing Vectors with build in types or Objects of ISerializable
-template<class VecType, class SizeType>
-class Vector
+/// class for serializing Vectors containing Objects of ISerializable
+template<class ItemType, class SizeType>
+class ObjVector
 {
 public:
-  Vector(std::vector<VecType> &vec) : vec_(vec) { size_ = 0; gameVersion_ = GV_None; };
-  Vector(std::vector<VecType> &vec, GameVersion gv) : vec_(vec), gameVersion_(gv) { size_ = 0; };
+  ObjVector(std::vector<ItemType> &vec) : vec_(vec) { size_ = 0; gameVersion_ = GV_None; };
+  ObjVector(std::vector<ItemType> &vec, GameVersion gv) : vec_(vec), gameVersion_(gv) { size_ = 0; };
   
   template<class Archive>
   void serialSize(Archive &ar) {}
@@ -57,7 +58,7 @@ public:
   }
   
 private: 
-  std::vector<VecType> &vec_;
+  std::vector<ItemType> &vec_;
   SizeType size_;
   GameVersion gameVersion_;
   
@@ -66,8 +67,8 @@ private:
   template<class Archive>
   void serialize(Archive & ar, const unsigned int version)
   {
-    class std::vector<VecType>::iterator it = vec_.begin();
-    genie::ISerializable *ser = 0;
+    class std::vector<ItemType>::iterator it = vec_.begin();
+    ISerializable *ser = 0;
     
     // vector should already have proper size (serialSize)
     for (; it != vec_.end(); it++) 
@@ -81,8 +82,8 @@ private:
   
   void serialize(BinaryInArchive &ar, const unsigned int version)
   {
-    class std::vector<VecType>::iterator it = vec_.begin();
-    genie::ISerializable *ser = 0;
+    class std::vector<ItemType>::iterator it = vec_.begin();
+    ISerializable *ser = 0;
     
     // vector should already have proper size (updateSize)
     for (; it != vec_.end(); it++) 
@@ -96,7 +97,7 @@ private:
   
   void serialize(BinaryOutArchive &ar, const unsigned int version)
   {
-    class std::vector<VecType>::iterator it = vec_.begin();
+    class std::vector<ItemType>::iterator it = vec_.begin();
     
     for (; it != vec_.end(); it++) 
       ar & (*it);

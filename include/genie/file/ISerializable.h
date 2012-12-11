@@ -27,8 +27,6 @@
 #include <string.h>
 #include <stdint.h>
 
-#define GENIE_NVP(var) BOOST_SERIALIZATION_NVP(var)
-
 namespace genie
 {
   

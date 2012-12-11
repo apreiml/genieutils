@@ -53,13 +53,13 @@ private:
   template<class Archive>
   void serialize(Archive & ar, const unsigned int version)
   {
-    serial::Vector<SoundItem, uint16_t> sItems(Items, getGameVersion());
+    serial::ObjVector<SoundItem, uint16_t> sItems(Items, getGameVersion());
     
     ar & GENIE_NVP(ID);
     sItems.serialSize(ar);
     ar & GENIE_NVP(Unknown1);
     
-    ar & boost::serialization::make_nvp("Items", sItems);
+    ar & GENIE_NVP2("Items", sItems);
   }
   
 };

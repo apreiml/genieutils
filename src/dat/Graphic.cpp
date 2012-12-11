@@ -109,6 +109,7 @@ void Graphic::setGameVersion(GameVersion gv)
 {
   ISerializable::setGameVersion(gv);
   
+  //serial::ISerializable::updateGameVersion(gv, Deltas); //TODO change to updateGameVersion(Deltas)
   updateGameVersion(Deltas);
   updateGameVersion(AttackSounds);
 }
