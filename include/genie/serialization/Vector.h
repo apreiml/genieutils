@@ -67,7 +67,7 @@ private:
   template<class Archive>
   void serialize(Archive & ar, const unsigned int version)
   {
-    class std::vector<ItemType>::iterator it = vec_.begin();
+    typename std::vector<ItemType>::iterator it = vec_.begin();
     ISerializable *ser = 0;
     
     // vector should already have proper size (serialSize)
@@ -82,7 +82,7 @@ private:
   
   void serialize(BinaryInArchive &ar, const unsigned int version)
   {
-    class std::vector<ItemType>::iterator it = vec_.begin();
+    typename std::vector<ItemType>::iterator it = vec_.begin();
     ISerializable *ser = 0;
     
     // vector should already have proper size (updateSize)
@@ -97,7 +97,7 @@ private:
   
   void serialize(BinaryOutArchive &ar, const unsigned int version)
   {
-    class std::vector<ItemType>::iterator it = vec_.begin();
+    typename std::vector<ItemType>::iterator it = vec_.begin();
     
     for (; it != vec_.end(); it++) 
       ar & (*it);

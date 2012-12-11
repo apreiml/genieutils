@@ -7,7 +7,7 @@
 *.kdev4
 
 # build subdirectory
-build/
+build*
 
 # generated files by doxygen
 doc/html/
