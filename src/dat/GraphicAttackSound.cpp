@@ -17,7 +17,6 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 #include "genie/dat/GraphicAttackSound.h"
 #include <string.h>
 
@@ -26,11 +25,11 @@ namespace genie
 
 GraphicAttackSound::GraphicAttackSound()
 {
-  SoundDelay = 0;
+  SoundDelay = -1;
   SoundID = -1;
-  SoundDelay2 = 0;
+  SoundDelay2 = -1;
   SoundID2 = -1;
-  SoundDelay3 = 0;
+  SoundDelay3 = -1;
   SoundID3 = -1;
 }
 
@@ -47,6 +46,5 @@ void GraphicAttackSound::serializeObject(void )
   serialize<int16_t>(SoundDelay3);
   serialize<int16_t>(SoundID3);
 }
-
 
 }
