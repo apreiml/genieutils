@@ -22,6 +22,8 @@
 #include <string>
 #include <genie/lang/LangFile.h>
 
+#include <time.h>
+
 const char * const LANG_PATH = "lang/";
 
 BOOST_AUTO_TEST_CASE( simple_read_write_test )
@@ -58,6 +60,39 @@ BOOST_AUTO_TEST_CASE( simple_read_write_test )
   lptr->getString(3064);
   
   delete lptr;
+}
+
+BOOST_AUTO_TEST_CASE( random_write )
+{
+  std::string randStr;
+  genie::LangFile lf;
+
+  std::string langFilename = LANG_PATH;
+  langFilename += "aok/language.dll";
+  lf.load(langFilename.c_str());
+
+  srand(time(NULL));
+
+  int i,j;
+
+  for (j=0; j<10000; j++)
+  {
+    int wordLen = rand() % 30;
+
+    for (i = 0; i<wordLen; i++)
+    {
+      char c = rand() % 26 + 65;  
+
+      randStr += c;
+    }
+
+    lf.setString(rand() % 10000, randStr);
+
+    randStr = "";
+  }
+
+  lf.saveAs("temp.dat");
+
 }
 
 /// Testing language file containting one language, but 2 different codepages
