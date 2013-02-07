@@ -3,16 +3,16 @@
     Copyright (C) 2011  Armin Preiml <email>
 
     This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
+    it under the terms of the GNU Lesser General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+    GNU Lesser General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
+    You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
@@ -27,6 +27,24 @@ struct pcr_file;
 
 namespace genie
 {
+  
+class PcrioError : public std::ios::failure
+{
+public:
+  explicit PcrioError(int error);
+  int getError(void) const { return error_; }
+  
+  static void check(int error);
+  
+private:
+  int error_;
+};
+
+class IconvError : public std::ios::failure
+{
+public:
+  explicit IconvError(const std::string &str) : std::ios::failure(str) {};
+};
 
 /// TODO Proper error handling
 class LangFile : public IFile
@@ -62,7 +80,7 @@ private:
   uint32_t defaultCultureId_;
   uint32_t defaultCodepage_;
   
-  static const unsigned int CONV_BUF_SIZE = 7;
+  static const unsigned int CONV_BUF_SIZE = 100;
   static const char *CONV_DEFAULT_CHARSET;
   
   std::string systemDefaultCharset_;  // all strings will be converted from/to this charset

@@ -4,16 +4,16 @@
     Copyright (C) 2011  Armin Preiml <email>
 
     This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
+    it under the terms of the GNU Lesser General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+    GNU Lesser General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
+    You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
@@ -72,8 +72,9 @@ void TechTree::serializeObject(void )
 }
 
 //------------------------------------------------------------------------------
-TechTreeAge::TechTreeAge() : Zeroes(getZeroesSize())
+TechTreeAge::TechTreeAge(GameVersion gv) : Zeroes(0)
 {
+  setGameVersion(gv);
   Unknown1 = 0;
   ID = 0;
   Unknown2 = 2;
@@ -131,9 +132,10 @@ void TechTreeAge::serializeObject(void )
 } 
 
 //------------------------------------------------------------------------------
-BuildingConnection::BuildingConnection() : Unknown2a(getUnknown2aSize()),
-Unknown2b(getUnknown2bSize()), Unknown3(getUnknown3Size())
+BuildingConnection::BuildingConnection(GameVersion gv) : Unknown2a(0),
+Unknown2b(0), Unknown3(getUnknown3Size())
 {
+  setGameVersion(gv);
   ID = 0;
   Unknown1 = 2;
   RequiredResearches = 0;
@@ -211,8 +213,9 @@ void BuildingConnection::serializeObject(void)
 }
 
 //------------------------------------------------------------------------------
-UnitConnection::UnitConnection() : Unknown2a(getUnknown2aSize()), Unknown2b(getUnknown2bSize())
+UnitConnection::UnitConnection(GameVersion gv) : Unknown2a(0), Unknown2b(0)
 {
+  setGameVersion(gv);
   ID = 0;
   Unknown1 = 2;
   UpperBuilding = -1;
@@ -291,8 +294,9 @@ void UnitConnection::serializeObject(void)
 }
 
 //------------------------------------------------------------------------------
-ResearchConnection::ResearchConnection() : Unknown2a(getUnknown2aSize()), Unknown2b(getUnknown2bSize())
+ResearchConnection::ResearchConnection(GameVersion gv) : Unknown2a(0), Unknown2b(0)
 {
+  setGameVersion(gv);
   ID = 0;
   Unknown1 = 2;
   UpperBuilding = -1;
