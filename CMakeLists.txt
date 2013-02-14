@@ -87,6 +87,7 @@ set(DAT_SRC
     src/dat/UnitCommand.cpp
     src/dat/UnitHeader.cpp
     src/dat/UnitLine.cpp
+    src/dat/Unknown.cpp
 
     src/dat/unit/AttackOrArmor.cpp
     src/dat/unit/DamageGraphic.cpp
