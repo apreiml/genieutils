@@ -48,7 +48,7 @@ void TerrainRestriction::setGameVersion(GameVersion gv)
 }
 
 //------------------------------------------------------------------------------
-void TerrainRestriction::setTerrainCount(short int Terrain_Count)
+void TerrainRestriction::setTerrainCount(short Terrain_Count)
 {
   Terrain_Count_ = Terrain_Count;
 }

@@ -25,6 +25,7 @@ namespace genie
 
 Civ::Civ(GameVersion gv)
 {
+  setGameVersion(gv);
   One = 1;
   Name = "";
   Name2 = "";
@@ -40,7 +41,6 @@ Civ::~Civ()
 
 void Civ::setGameVersion(GameVersion gv)
 {
-  setGameVersion(gv);
   ISerializable::setGameVersion(gv);
   
   updateGameVersion(Units);
