@@ -24,10 +24,11 @@ namespace genie
 {
 
 //------------------------------------------------------------------------------
-Research::Research() : RequiredTechs(0),
+Research::Research(GameVersion gv) : RequiredTechs(0),
                        ResourceCosts(getResourceCostsSize()),
                        Pointers(getPointersSize())
 {
+  setGameVersion(gv);
   RequiredTechCount = 0;
   Civ = -1;
   FullTechMode = 0;

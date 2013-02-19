@@ -25,8 +25,9 @@ namespace genie
 {
  
 //------------------------------------------------------------------------------
-Unit::Unit() : Unknown9(getUnknown9Size())
+Unit::Unit(GameVersion gv) : Unknown9(getUnknown9Size())
 {
+  setGameVersion(gv);
 //    Type 10+
 
   Type = UT_EyeCandy;

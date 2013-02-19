@@ -23,8 +23,9 @@
 namespace genie
 {
 
-Civ::Civ()
+Civ::Civ(GameVersion gv)
 {
+  setGameVersion(gv);
   One = 1;
   Name = "";
   Name2 = "";

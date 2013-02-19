@@ -31,7 +31,7 @@ class Civ : public ISerializable
 {
 
 public:
-  Civ();
+  Civ(GameVersion gv = GV_None);
   virtual ~Civ();
   virtual void setGameVersion(GameVersion gv);
   

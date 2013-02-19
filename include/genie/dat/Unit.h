@@ -75,7 +75,7 @@ enum UnitType
 class Unit : public ISerializable
 {
 public:
-  Unit();
+  Unit(GameVersion gv = GV_None);
   virtual ~Unit();
   virtual void setGameVersion(GameVersion gv); 
   
