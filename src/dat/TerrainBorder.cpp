@@ -57,8 +57,7 @@ void TerrainBorder::setGameVersion(GameVersion gv)
 
 //------------------------------------------------------------------------------
 void TerrainBorder::serializeObject(void )
-{ 
-  //serialize<int16_t>(Unknown1);
+{
   serialize<int16_t>(Enabled);
   
   serialize<std::string>(Name, getNameSize());

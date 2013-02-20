@@ -26,8 +26,9 @@ namespace genie
 namespace unit
 {
 
-DeadFish::DeadFish() : Unknown16(0)
+DeadFish::DeadFish(GameVersion gv) : Unknown16(0)
 {
+  setGameVersion(gv);
   WalkingGraphic.first = -1;
   WalkingGraphic.second = -1;
   RotationSpeed = 0;

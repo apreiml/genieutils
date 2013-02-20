@@ -62,7 +62,7 @@ private:
 class TechTreeAge : public ISerializable
 {
 public:
-  TechTreeAge();
+  TechTreeAge(GameVersion gv = GV_None);
   virtual ~TechTreeAge();
   virtual void setGameVersion(GameVersion gv);
   
@@ -91,7 +91,7 @@ private:
 class BuildingConnection : public ISerializable
 {
 public:
-  BuildingConnection();
+  BuildingConnection(GameVersion gv = GV_None);
   virtual ~BuildingConnection();
   virtual void setGameVersion(GameVersion gv);
   
@@ -140,7 +140,7 @@ private:
 class UnitConnection : public ISerializable
 {
 public:
-  UnitConnection();
+  UnitConnection(GameVersion gv = GV_None);
   virtual ~UnitConnection();
   virtual void setGameVersion(GameVersion gv);
   
@@ -188,7 +188,7 @@ private:
 class ResearchConnection : public ISerializable
 {
 public:
-  ResearchConnection();
+  ResearchConnection(GameVersion gv = GV_None);
   virtual ~ResearchConnection();
   virtual void setGameVersion(GameVersion gv);
   
