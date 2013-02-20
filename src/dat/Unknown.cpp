@@ -48,6 +48,7 @@ void Unknown::serializeObject()
 //------------------------------------------------------------------------------
 Unknown1stBlock::Unknown1stBlock() : Unknown1(UNKNOWN1_LEN), Unknown2(UNKNOWN2_LEN)
 {
+  UnknownLevel = 0;
   Pointer1 = 0;
   Pointer2 = 0;
   Pointer3 = 0;

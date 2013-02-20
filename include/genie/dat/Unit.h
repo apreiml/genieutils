@@ -194,7 +194,6 @@ public:
   int16_t CommandAttribute;// Page for Build button: 2 = Page 1, 10 = Page 2, ?11 = Page 3?
   int16_t Unknown3;
   int16_t Unknown3B;
-  char Unknown3a;//only in aoe/ror
   int32_t LanguageDLLHelp;
   int32_t LanguageDLLHotKeyText;
   int16_t HotKey;

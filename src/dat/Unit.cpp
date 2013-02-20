@@ -75,7 +75,6 @@ Unit::Unit(GameVersion gv) : Unknown9(getUnknown9Size())
   CommandAttribute = 0;
   Unknown3 = 0;
   Unknown3B = 0;
-  Unknown3a = 0;
   LanguageDLLHelp = 105000;
   LanguageDLLHotKeyText = 155000;
   HotKey = 16000;
@@ -197,22 +196,9 @@ void Unit::serializeObject(void )
   serialize<char>(Unknown2);
   serialize<char>(InteractionMode);
   serialize<char>(MinimapMode);
-  
-  if (getGameVersion() >= genie::GV_AoK)// || getGameVersion() == genie::GV_TC)
-    serialize<int16_t>(CommandAttribute);
-  else
-  {
-    char attr = CommandAttribute;
-    serialize<char>(attr);
-    CommandAttribute = attr;
-  }
-  
+  serialize<int16_t>(CommandAttribute);
   serialize<int16_t>(Unknown3);
   serialize<int16_t>(Unknown3B);
-  
-  if (getGameVersion() <= genie::GV_RoR)
-    serialize<char>(Unknown3a);
-  
   serialize<int32_t>(LanguageDLLHelp);
   serialize<int32_t>(LanguageDLLHotKeyText);
   serialize<int16_t>(HotKey);

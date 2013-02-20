@@ -282,7 +282,6 @@ void DatFile::serializeObject(void )
   {
     serialize<int32_t>(UnknownPreTechTree, 7);
     serialize<ISerializable>(TechTree);
-
   }
 
   if (verbose_)
