@@ -24,7 +24,7 @@ namespace genie
 {
 
 //------------------------------------------------------------------------------
-Terrain::Terrain() : Colors(3),
+Terrain::Terrain(GameVersion gv) : Colors(3),
                      Unknown7(UNKNOWN7_LEN), Unknown8(UNKNOWN8_LEN),
                      Unknown9(UNKNOWN9_LEN),
                      TerrainBorderIDs(0),
@@ -33,6 +33,7 @@ Terrain::Terrain() : Colors(3),
                      TerrainUnitPriority(TERRAIN_UNITS_LEN),
                      SWGBUnknown1(SWGBUNKNOWN1_LEN)
 {
+  setGameVersion(gv);
   Unknown1 = 0;
   Unknown2 = 1;
   Name = "";

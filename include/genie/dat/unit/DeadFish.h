@@ -34,7 +34,7 @@ class DeadFish : public ISerializable
 {
 
 public:
-  DeadFish();
+  DeadFish(GameVersion gv = GV_None);
   virtual ~DeadFish();
   virtual void setGameVersion(GameVersion gv);
   

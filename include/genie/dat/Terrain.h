@@ -29,7 +29,7 @@ class Terrain : public ISerializable
 {
 
 public:
-  Terrain();
+  Terrain(GameVersion gv = GV_None);
   virtual ~Terrain();
   virtual void setGameVersion(GameVersion gv);
   

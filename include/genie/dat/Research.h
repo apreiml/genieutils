@@ -31,7 +31,7 @@ class Research : public ISerializable
 {
 
 public:
-  Research();
+  Research(GameVersion gv = GV_None);
   virtual ~Research();
   virtual void setGameVersion(GameVersion gv);
   

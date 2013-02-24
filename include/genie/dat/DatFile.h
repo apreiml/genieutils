@@ -40,6 +40,7 @@
 #include "TerrainBorder.h"
 #include "UnitLine.h"
 #include "TechTree.h"
+#include "Unknown.h"
 
 namespace boost {
 namespace iostreams {
@@ -94,15 +95,18 @@ public:
   std::vector<int32_t> GraphicPointers;
   std::vector<Graphic> Graphics;
         
-  static const uint16_t TERRAIN_HEADER_SIZE = 138;
-  char *GraphicsRendering;
+  static const uint16_t TERRAIN_HEADER_SIZE = 69;
+  int16_t *GraphicsRendering;
   std::vector<Terrain> Terrains;
   
   std::vector<TerrainBorder> TerrainBorders;
   
   int32_t *ZeroSpace;
-  char *RenderingPlusSomething;
+  int16_t *Rendering;
+  int32_t *Something;
   
+  genie::Unknown Unknown;
+
   std::vector<Techage> Techages;
 
   std::vector<UnitHeader> UnitHeaders;
@@ -118,8 +122,9 @@ public:
   
   std::vector<int32_t> UnknownPreTechTree;
    
-  /// TC runs fine without this empty data
-  char *Unknown2;
+  uint16_t NumberOfTerrainsUsed;
+  uint16_t NumberOfTerrainsUsed2;
+  int16_t Unknown2;
   
    //SWGB Unknowns:
   /// Seems to be the CivCount
@@ -143,8 +148,6 @@ private:
   Compressor compressor_;
   
   uint16_t terrain_restriction_count_;
-  uint16_t terrain_count_;
-  uint16_t terrain_count2_;
   
   uint16_t player_color_count_;
   uint16_t sound_count_;
